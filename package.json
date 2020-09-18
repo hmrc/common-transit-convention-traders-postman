@@ -1,0 +1,14 @@
+{
+  "name": "common-transit-convention-traders-postman",
+  "version": "1.0.0",
+  "description": "Project for storing Postman tests",
+  "directories": {
+    "test": "Collections"
+  },
+  "scripts": {
+    "ctc-api-smoke-tests": "newman run Collections/03_CTC API Smoke Testing.postman_collection.json -e EnvironmentVariables/Local.postman_environment.json --reporters cli,junit --reporter-junit-export newman.xml"
+  },
+  "dependencies": {
+    "newman": "5.1.0"
+  }
+}

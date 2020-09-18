@@ -1,0 +1,3548 @@
+{
+	"info": {
+		"_postman_id": "a4d20506-77f3-4b7e-9b56-db57f89a35b0",
+		"name": "03_CTC API Smoke Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Arrival Endpoints",
+			"item": [
+				{
+					"name": "POST IE007",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0bff5214-3d94-4a51-823a-60b8444f57b4",
+								"exec": [
+									"var loc = postman.getResponseHeader(\"Location\").toString();",
+									"tests[loc] = loc;",
+									"var arrivalId = loc.split(\"/\")[5];",
+									"pm.environment.set(\"arrivalId\", arrivalId);",
+									"console.log(\"arrival id is \" + arrivalId)",
+									"",
+									"pm.test(\"POST IE007 must return status code 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"pm.test(\"Validate location \", function () {",
+									"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+									"});",
+									"",
+									"if (pm.response.code !== 202) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>0920</TimOfPreMES10>\n    <IntConRefMES11>WE191015102564</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <CusSubPlaHEA66>EXAMPLE1</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAgrLocOfGooHEA63LNG>EN</ArrAgrLocOfGooHEA63LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>20191015</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>EXAMPLE2</NamTRD7>\n        <StrAndNumTRD22>Street</StrAndNumTRD22>\n        <PosCodTRD23>AA11AA</PosCodTRD23>\n        <CitTRD24>London</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT IE007",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5a982e5-cd32-450c-8e80-d314393aa642",
+								"exec": [
+									"var loc = postman.getResponseHeader(\"Location\").toString();",
+									"tests[loc] = loc;",
+									"var arrivalId = loc.split(\"/\")[5];",
+									"pm.environment.set(\"arrivalId\", arrivalId);",
+									"console.log(\"arrival id is \" + arrivalId)",
+									"",
+									"pm.test(\"PUT IE007 message must return status code 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"pm.test(\"Validate location for PUT IE007 \", function () {",
+									"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+									"});",
+									"",
+									"if (pm.response.code !== 202) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>1752</TimOfPreMES10>\n    <IntConRefMES11>WE191015102564</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <CusSubPlaHEA66>EXAMPLE1</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAgrLocOfGooHEA63LNG>EN</ArrAgrLocOfGooHEA63LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>20191015</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>EXAMPLE2</NamTRD7>\n        <StrAndNumTRD22>Street</StrAndNumTRD22>\n        <PosCodTRD23>AA11AA</PosCodTRD23>\n        <CitTRD24>London</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals",
+								"{{arrivalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST IE044",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "751c8134-b256-4de9-85f0-8a5e54feda74",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Validate location\", function () {",
+									"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+									"});",
+									"",
+									"var loc = postman.getResponseHeader(\"Location\").toString();",
+									"tests[loc] = loc;",
+									"var messageId = loc.split(\"/\")[7];",
+									"pm.environment.set(\"messageId\",messageId);",
+									"console.log(\"message id is \"+messageId)",
+									"",
+									"if (pm.response.code !== 202) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<CC044A>\n   <SynIdeMES1>UNOC</SynIdeMES1>\n   <SynVerNumMES2>3</SynVerNumMES2>\n\n   <MesRecMES6>NCTS</MesRecMES6>\n   <DatOfPreMES9>20191015</DatOfPreMES9>\n   <TimOfPreMES10>1129</TimOfPreMES10>\n   <IntConRefMES11>WE191015102567</IntConRefMES11>\n   <AppRefMES14>NCTS</AppRefMES14>\n   <TesIndMES18>0</TesIndMES18>\n   <MesIdeMES19>1</MesIdeMES19>\n   <MesTypMES20>GB044A</MesTypMES20>\n   <HEAHEA>\n      <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n      <IdeOfMeaOfTraAtDHEA78>Websols Analysis</IdeOfMeaOfTraAtDHEA78>\n      <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n      <NatOfMeaOfTraAtDHEA80>IT</NatOfMeaOfTraAtDHEA80>\n      <TotNumOfIteHEA305>3</TotNumOfIteHEA305>\n      <TotNumOfPacHEA306>6</TotNumOfPacHEA306>\n      <TotGroMasHEA307>6000</TotGroMasHEA307>\n   </HEAHEA>\n   <TRADESTRD>\n      <NamTRD7>The Luggage Carriers</NamTRD7>\n      <StrAndNumTRD22>225 Suedopolish Yard,</StrAndNumTRD22>\n      <CitTRD24>,</CitTRD24>\n      <CouTRD25>GB</CouTRD25>\n      <NADLNGRD>EN</NADLNGRD>\n      <TINTRD59>GB163910077000</TINTRD59>\n   </TRADESTRD>\n   <CUSOFFPREOFFRES>\n      <RefNumRES1>GB000060</RefNumRES1>\n   </CUSOFFPREOFFRES>\n   <UNLREMREM>\n      <StaOfTheSeaOKREM19>0</StaOfTheSeaOKREM19>\n      <UnlRemREM53>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6 to 8, Identities of seals updated each and added 2 new seals.</UnlRemREM53>\n      <UnlRemREM53LNG>EN</UnlRemREM53LNG>\n      <ConREM65>0</ConREM65>\n      <UnlComREM66>1</UnlComREM66>\n      <UnlDatREM67>20190101</UnlDatREM67>\n   </UNLREMREM>\n   <RESOFCON534>\n      <DesTOC2LNG>EN</DesTOC2LNG>\n      <ConInd424>DI</ConInd424>\n      <PoiToTheAttTOC5>6</PoiToTheAttTOC5>\n      <CorValTOC4>8</CorValTOC4>\n   </RESOFCON534>\n   <RESOFCON534>\n      <DesTOC2LNG>EN</DesTOC2LNG>\n      <ConInd424>DI</ConInd424>\n      <PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n      <CorValTOC4>12000</CorValTOC4>\n   </RESOFCON534>\n   <RESOFCON534>\n      <DesTOC2>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6 to 8, Identities of seals updated each an</DesTOC2>\n      <DesTOC2LNG>EN</DesTOC2LNG>\n      <ConInd424>OT</ConInd424>\n   </RESOFCON534>\n   <SEAINFSLI>\n      <SeaNumSLI2>8</SeaNumSLI2>\n      <SEAIDSID>\n         <SeaIdeSID1>S1.Websols#01.01-new</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>S2.Websols#02.01-new</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>S3.Websols#02.02-new</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>S4.Websols#03.01-new</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>S5.Websols#03.02-new</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>S6.Websols#03.03-new</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>New seal #1 header</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n      <SEAIDSID>\n         <SeaIdeSID1>New seal #2 header</SeaIdeSID1>\n         <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n      </SEAIDSID>\n   </SEAINFSLI>\n   <GOOITEGDS>\n      <IteNumGDS7>1</IteNumGDS7>\n      <GooDesGDS23>Windsurfing equipment</GooDesGDS23>\n      <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n      <GroMasGDS46>1000</GroMasGDS46>\n      <NetMasGDS48>999</NetMasGDS48>\n      <PRODOCDC2>\n         <DocTypDC21>235</DocTypDC21>\n         <DocRefDC23>Websols#001</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <RESOFCONROC>\n         <ConIndROC1>OR</ConIndROC1>\n      </RESOFCONROC>\n      <CONNR2>\n         <ConNumNR21>C1.Websols#01.01</ConNumNR21>\n      </CONNR2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 1 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n   </GOOITEGDS>\n   <GOOITEGDS>\n      <IteNumGDS7>1</IteNumGDS7>\n      <RESOFCONROC>\n         <ConIndROC1>DI</ConIndROC1>\n      </RESOFCONROC>\n   </GOOITEGDS>\n   <GOOITEGDS>\n      <IteNumGDS7>2</IteNumGDS7>\n      <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n      <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n      <GroMasGDS46>2000</GroMasGDS46>\n      <NetMasGDS48>1998</NetMasGDS48>\n      <PRODOCDC2>\n         <DocTypDC21>235</DocTypDC21>\n         <DocRefDC23>Websols#001</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <RESOFCONROC>\n         <ConIndROC1>OR</ConIndROC1>\n      </RESOFCONROC>\n      <CONNR2>\n         <ConNumNR21>C2.Websols#02.01</ConNumNR21>\n      </CONNR2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n   </GOOITEGDS>\n   <GOOITEGDS>\n      <IteNumGDS7>2</IteNumGDS7>\n      <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n      <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n      <GroMasGDS46>4000</GroMasGDS46>\n      <NetMasGDS48>3996</NetMasGDS48>\n      <PRODOCDC2>\n         <DocTypDC21>235</DocTypDC21>\n         <DocRefDC23>Websols#001</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <PRODOCDC2>\n         <DocTypDC21>ZZZ</DocTypDC21>\n         <DocRefDC23>NEW Doc</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <RESOFCONROC>\n         <ConIndROC1>DI</ConIndROC1>\n      </RESOFCONROC>\n      <RESOFCONROC>\n         <DesROC2>Item 2 Other things to report, updated Gross mass, Net mass, added new package, updated Container numbers &amp; added 2 new, added new doc.</DesROC2>\n         <DesROC2LNG>EN</DesROC2LNG>\n         <ConIndROC1>OT</ConIndROC1>\n      </RESOFCONROC>\n      <CONNR2>\n         <ConNumNR21>C2.Websols#02.01N</ConNumNR21>\n      </CONNR2>\n      <CONNR2>\n         <ConNumNR21>Item2 NEW CNTNR01</ConNumNR21>\n      </CONNR2>\n      <CONNR2>\n         <ConNumNR21>Item2 NEW CNTNR02</ConNumNR21>\n      </CONNR2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>NEW Pack found for item 3</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>2</NumOfPacGS24>\n      </PACGS2>\n   </GOOITEGDS>\n   <GOOITEGDS>\n      <IteNumGDS7>3</IteNumGDS7>\n      <GooDesGDS23>SUP Equipment</GooDesGDS23>\n      <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n      <GroMasGDS46>3000</GroMasGDS46>\n      <NetMasGDS48>2997</NetMasGDS48>\n      <PRODOCDC2>\n         <DocTypDC21>235</DocTypDC21>\n         <DocRefDC23>Websols#001</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <RESOFCONROC>\n         <ConIndROC1>OR</ConIndROC1>\n      </RESOFCONROC>\n      <CONNR2>\n         <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n      </CONNR2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n   </GOOITEGDS>\n   <GOOITEGDS>\n      <IteNumGDS7>3</IteNumGDS7>\n      <GooDesGDS23>SUP Equipment</GooDesGDS23>\n      <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n      <GroMasGDS46>6000</GroMasGDS46>\n      <NetMasGDS48>5994</NetMasGDS48>\n      <PRODOCDC2>\n         <DocTypDC21>235</DocTypDC21>\n         <DocRefDC23>Websols#001</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <RESOFCONROC>\n         <ConIndROC1>DI</ConIndROC1>\n      </RESOFCONROC>\n      <RESOFCONROC>\n         <DesROC2>Item 2 Other things to report. updated Gross mass (kg) and Net mass (kg)</DesROC2>\n         <DesROC2LNG>EN</DesROC2LNG>\n         <ConIndROC1>OT</ConIndROC1>\n      </RESOFCONROC>\n      <CONNR2>\n         <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n      </CONNR2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n      <PACGS2>\n         <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n   </GOOITEGDS>\n   <GOOITEGDS>\n      <IteNumGDS7>4</IteNumGDS7>\n      <GooDesGDS23>Foils - Wind/Kite/SUP</GooDesGDS23>\n      <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n      <GroMasGDS46>2000</GroMasGDS46>\n      <NetMasGDS48>1998</NetMasGDS48>\n      <PRODOCDC2>\n         <DocTypDC21>235</DocTypDC21>\n         <DocRefDC23>Websols#001</DocRefDC23>\n         <DocRefDCLNG>EN</DocRefDCLNG>\n      </PRODOCDC2>\n      <RESOFCONROC>\n         <ConIndROC1>NE</ConIndROC1>\n      </RESOFCONROC>\n      <CONNR2>\n         <ConNumNR21>NC4.Websols#04.01</ConNumNR21>\n      </CONNR2>\n      <PACGS2>\n         <MarNumOfPacGS21>NEW Item 4 - Foils</MarNumOfPacGS21>\n         <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n         <KinOfPacGS23>BX</KinOfPacGS23>\n         <NumOfPacGS24>1</NumOfPacGS24>\n      </PACGS2>\n   </GOOITEGDS>\n</CC044A>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals",
+								"{{arrivalId}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET arrivals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09420de2-9b49-416d-8fdd-b932f41790e7",
+								"exec": [
+									"pm.test(\"Get all arrival must return status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.hmrc.1.0+json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET arrival Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0a1ff9f-f143-4108-85f5-45620798a290",
+								"exec": [
+									"pm.test(\"Get all arrival must return status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.hmrc.1.0+json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals",
+								"{{arrivalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d30c5042-1718-4287-adc5-a112b8e3cbea",
+								"exec": [
+									"pm.test(\"Get all messages must return status code 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.hmrc.1.0+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals",
+								"{{arrivalId}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET message Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "043a68ac-1315-4aaa-812b-a47b636d878d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.hmrc.1.0+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages/{{messageId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"arrivals",
+								"{{arrivalId}}",
+								"messages",
+								"{{messageId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Departures Endpoints",
+			"item": [
+				{
+					"name": "POST IE015",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41cb186d-6d0b-466f-80c5-017eb0cc12c0",
+								"exec": [
+									"var loc = postman.getResponseHeader(\"Location\").toString();",
+									"var depId = loc.split(\"/\")[5];",
+									"pm.environment.set(\"deptId\",depId);",
+									"console.log(\"department id is \"+depId)",
+									"",
+									"pm.test(\"POST IE015 must return response code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Validate location \", function () {",
+									"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+									"});",
+									"",
+									"if (pm.response.code !== 202) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<CC015B>\r\n    <SynIdeMES1>UNOC</SynIdeMES1>\r\n    <SynVerNumMES2>3</SynVerNumMES2>\r\n\r\n    <MesRecMES6>NCTS</MesRecMES6>\r\n    <DatOfPreMES9>20190912</DatOfPreMES9>\r\n    <TimOfPreMES10>1222</TimOfPreMES10>\r\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\r\n    <AppRefMES14>NCTS</AppRefMES14>\r\n    <TesIndMES18>0</TesIndMES18>\r\n    <MesIdeMES19>1</MesIdeMES19>\r\n    <MesTypMES20>GB015B</MesTypMES20>\r\n    <HEAHEA>\r\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\r\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\r\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\r\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\r\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\r\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\r\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\r\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\r\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\r\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\r\n        <InlTraModHEA75>20</InlTraModHEA75>\r\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\r\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\r\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\r\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\r\n        <ConIndHEA96>0</ConIndHEA96>\r\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\r\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\r\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\r\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\r\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\r\n        <DecDatHEA383>20190912</DecDatHEA383>\r\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\r\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\r\n    </HEAHEA>\r\n    <TRAPRIPC1>\r\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\r\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\r\n        <PosCodPC123>SS99 1AA</PosCodPC123>\r\n        <CitPC124>Ank-Morpork</CitPC124>\r\n        <CouPC125>GB</CouPC125>\r\n        <NADLNGPC>EN</NADLNGPC>\r\n        <TINPC159>GB652420267000</TINPC159>\r\n    </TRAPRIPC1>\r\n    <TRACONCO1>\r\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\r\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\r\n        <PosCodCO123>SS99 1AA</PosCodCO123>\r\n        <CitCO124>Ank-Morpork</CitCO124>\r\n        <CouCO125>GB</CouCO125>\r\n        <TINCO159>GB602070107000</TINCO159>\r\n    </TRACONCO1>\r\n    <TRACONCE1>\r\n        <NamCE17>DROFL POTTERY</NamCE17>\r\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\r\n        <PosCodCE123>SS99 1AA</PosCodCE123>\r\n        <CitCE124>Ank-Morpork</CitCE124>\r\n        <CouCE125>GB</CouCE125>\r\n        <NADLNGCE>EN</NADLNGCE>\r\n        <TINCE159>GB658120050000</TINCE159>\r\n    </TRACONCE1>\r\n    <CUSOFFDEPEPT>\r\n        <RefNumEPT1>GB000060</RefNumEPT1>\r\n    </CUSOFFDEPEPT>\r\n    <CUSOFFTRARNS>\r\n        <RefNumRNS1>FR001260</RefNumRNS1>\r\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\r\n    </CUSOFFTRARNS>\r\n    <CUSOFFDESEST>\r\n        <RefNumEST1>IT021100</RefNumEST1>\r\n    </CUSOFFDESEST>\r\n    <SEAINFSLI>\r\n        <SeaNumSLI2>1</SeaNumSLI2>\r\n        <SEAIDSID>\r\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\r\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\r\n        </SEAIDSID>\r\n    </SEAINFSLI>\r\n    <GUAGUA>\r\n        <GuaTypGUA1>3</GuaTypGUA1>\r\n        <GUAREFREF>\r\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\r\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\r\n            <AccCodREF6>test</AccCodREF6>\r\n        </GUAREFREF>\r\n    </GUAGUA>\r\n    <GOOITEGDS>\r\n        <IteNumGDS7>1</IteNumGDS7>\r\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\r\n        <DecTypGDS15>default</DecTypGDS15>\r\n        <GooDesGDS23>Flowers</GooDesGDS23>\r\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\r\n        <GroMasGDS46>1000</GroMasGDS46>\r\n        <NetMasGDS48>999</NetMasGDS48>\r\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\r\n        <PREADMREFAR2>\r\n            <PreDocTypAR21>T2</PreDocTypAR21>\r\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\r\n            <PreDocRefLNG>EN</PreDocRefLNG>\r\n            <ComOfInfAR29>default</ComOfInfAR29>\r\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\r\n        </PREADMREFAR2>\r\n        <PRODOCDC2>\r\n            <DocTypDC21>720</DocTypDC21>\r\n            <DocRefDC23>EU_EXIT</DocRefDC23>\r\n            <DocRefDCLNG>EN</DocRefDCLNG>\r\n            <ComOfInfDC25>default</ComOfInfDC25>\r\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\r\n        </PRODOCDC2>\r\n        <PACGS2>\r\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\r\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\r\n            <KinOfPacGS23>BX</KinOfPacGS23>\r\n            <NumOfPacGS24>1</NumOfPacGS24>\r\n        </PACGS2>\r\n    </GOOITEGDS>\r\n</CC015B>",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/departures",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"departures"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET dept Id details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9f972dc8-624f-41a0-beb3-306a9000e562",
+								"exec": [
+									"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.hmrc.1.0+json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"departures",
+								"{{deptId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all departure messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9af83a19-8f75-4425-840c-43215a9c6473",
+								"exec": [
+									"pm.test(\"Get all messages must return status code 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.hmrc.1.0+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"departures",
+								"{{deptId}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Test Support API",
+			"item": [
+				{
+					"name": "Arrivals - IE007 > IE008",
+					"item": [
+						{
+							"name": "01 Arrival of Goods IE007",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4c2f36ab-8dfd-43a7-bd34-9d2a1498227f",
+										"exec": [
+											"pm.test(\"POST IE007 must return status code 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"pm.test(\"Validate location \", function () {",
+											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"tests[loc] = loc;",
+											"var arrivalId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"arrivalId\", arrivalId);",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true,
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n \n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>0920</TimOfPreMES10>\n    <IntConRefMES11>WE191015102564</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <CusSubPlaHEA66>EXAMPLE1</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAgrLocOfGooHEA63LNG>EN</ArrAgrLocOfGooHEA63LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>20191015</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>EXAMPLE2</NamTRD7>\n        <StrAndNumTRD22>Street</StrAndNumTRD22>\n        <PosCodTRD23>AA11AA</PosCodTRD23>\n        <CitTRD24>London</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE008",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "96604b66-b5f2-47d8-b761-76a10c561f35",
+										"exec": [
+											"pm.test(\"POST IE008 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ea631657-2897-48d1-960f-3b4e6e58e562",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE008\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d25f289b-41c8-49ef-aa5d-35ede4aa424a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fae53fa1-8a64-4d2a-a726-c84b08885339",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Arrivals - IE007 > IE025",
+					"item": [
+						{
+							"name": "01 Arrival of Goods IE007",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fb3c6a77-98e5-4cbf-9688-cce5caab2929",
+										"exec": [
+											"pm.test(\"POST IE007 must return status code 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"pm.test(\"Validate location \", function () {",
+											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"tests[loc] = loc;",
+											"var arrivalId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"arrivalId\", arrivalId);",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true,
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n \n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>0920</TimOfPreMES10>\n    <IntConRefMES11>WE191015102564</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <CusSubPlaHEA66>EXAMPLE1</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAgrLocOfGooHEA63LNG>EN</ArrAgrLocOfGooHEA63LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>20191015</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>EXAMPLE2</NamTRD7>\n        <StrAndNumTRD22>Street</StrAndNumTRD22>\n        <PosCodTRD23>AA11AA</PosCodTRD23>\n        <CitTRD24>London</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE025",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4709008c-eabc-4ba3-941e-972ce1aa4a96",
+										"exec": [
+											"pm.test(\"POST IE025 must return response code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE025\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a43fadd6-4a77-4660-b871-74bf630ccbe1",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "033dbe32-38b8-448a-a54c-8ea20087945b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Arrivals - IE007>IE043>IE044>IE025",
+					"item": [
+						{
+							"name": "POST Arrival IE007",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e9cb342c-548e-4d68-9389-006a48d4c8f9",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"",
+											"var arrivalId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"arrivalId\",arrivalId);",
+											"console.log(\"arrival id is \"+arrivalId)",
+											"",
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20200115</DatOfPreMES9>\n    <TimOfPreMES10>0920</TimOfPreMES10>\n    <IntConRefMES11>WE191015102564</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <CusSubPlaHEA66>EXAMPLE1</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAgrLocOfGooHEA63LNG>EN</ArrAgrLocOfGooHEA63LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>20200115</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>EXAMPLE2</NamTRD7>\n        <StrAndNumTRD22>Street</StrAndNumTRD22>\n        <PosCodTRD23>AA11AA</PosCodTRD23>\n        <CitTRD24>London</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE043",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b87d6870-9f30-4458-9756-e610d335f132",
+										"exec": [
+											"pm.test(\"POST IE043 must return response code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE043\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Unloading Remark - IE044",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "556a79da-4d88-46aa-9c88-0764fadd30d0",
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>1129</TimOfPreMES10>\n    <IntConRefMES11>WE191015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>Websols Analysis</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <NatOfMeaOfTraAtDHEA80>IT</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>3</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>6</TotNumOfPacHEA306>\n        <TotGroMasHEA307>6000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>The Luggage Carriers</NamTRD7>\n        <StrAndNumTRD22>225 Suedopolish Yard,</StrAndNumTRD22>\n        <CitTRD24>,</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>0</StaOfTheSeaOKREM19>\n        <UnlRemREM53>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6\n            to 8, Identities of seals updated each and added 2 new seals.\n        </UnlRemREM53>\n        <UnlRemREM53LNG>EN</UnlRemREM53LNG>\n        <ConREM65>0</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>20190101</UnlDatREM67>\n    </UNLREMREM>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>6</PoiToTheAttTOC5>\n        <CorValTOC4>8</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n        <CorValTOC4>12000</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6 to\n            8, Identities of seals updated each an\n        </DesTOC2>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>OT</ConInd424>\n    </RESOFCON534>\n    <SEAINFSLI>\n        <SeaNumSLI2>8</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>S1.Websols#01.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S2.Websols#02.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S3.Websols#02.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S4.Websols#03.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S5.Websols#03.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S6.Websols#03.03-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #1 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #2 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <GooDesGDS23>Windsurfing equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C1.Websols#01.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 1 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>4000</GroMasGDS46>\n        <NetMasGDS48>3996</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <PRODOCDC2>\n            <DocTypDC21>ZZZ</DocTypDC21>\n            <DocRefDC23>NEW Doc</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report, updated Gross mass, Net mass, added new package, updated Container\n                numbers &amp; added 2 new, added new doc.\n            </DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01N</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR01</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR02</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Pack found for item 3</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>2</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>3000</GroMasGDS46>\n        <NetMasGDS48>2997</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>6000</GroMasGDS46>\n        <NetMasGDS48>5994</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report. updated Gross mass (kg) and Net mass (kg)</DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>4</IteNumGDS7>\n        <GooDesGDS23>Foils - Wind/Kite/SUP</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>NE</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>NC4.Websols#04.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Item 4 - Foils</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC044A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE025",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "469f26e2-8686-4b11-ae5c-ad65adb2b3aa",
+										"exec": [
+											"pm.test(\"POST IE025 must return response code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE025\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2354b003-3946-4c8e-8d93-3993a8ae90ef",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5febff80-bf76-4529-9360-492c7b498032",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Arrivals - IE007>IE043>IE044>IE058>IE044>IE025",
+					"item": [
+						{
+							"name": "POST Arrival IE007",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3b7e306e-f85c-44ec-857c-d85372bfc45b",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"",
+											"var arrivalId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"arrivalId\",arrivalId);",
+											"console.log(\"arrival id is \"+arrivalId)",
+											"",
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20200115</DatOfPreMES9>\n    <TimOfPreMES10>0920</TimOfPreMES10>\n    <IntConRefMES11>WE191015102564</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <CusSubPlaHEA66>EXAMPLE1</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAgrLocOfGooHEA63LNG>EN</ArrAgrLocOfGooHEA63LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>20200115</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>EXAMPLE2</NamTRD7>\n        <StrAndNumTRD22>Street</StrAndNumTRD22>\n        <PosCodTRD23>AA11AA</PosCodTRD23>\n        <CitTRD24>London</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE043",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0a63939b-66c5-4c93-84c5-8b2eb95f5df5",
+										"exec": [
+											"pm.test(\"POST IE043 must return response code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE043\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Unloading Remark - IE044",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "356a2cd1-9b7d-4958-a3f0-2d8ebcab0238",
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>1129</TimOfPreMES10>\n    <IntConRefMES11>WE191015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>Websols Analysis</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <NatOfMeaOfTraAtDHEA80>IT</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>3</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>6</TotNumOfPacHEA306>\n        <TotGroMasHEA307>6000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>The Luggage Carriers</NamTRD7>\n        <StrAndNumTRD22>225 Suedopolish Yard,</StrAndNumTRD22>\n        <CitTRD24>,</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>0</StaOfTheSeaOKREM19>\n        <UnlRemREM53>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6\n            to 8, Identities of seals updated each and added 2 new seals.\n        </UnlRemREM53>\n        <UnlRemREM53LNG>EN</UnlRemREM53LNG>\n        <ConREM65>0</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>20190101</UnlDatREM67>\n    </UNLREMREM>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>6</PoiToTheAttTOC5>\n        <CorValTOC4>8</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n        <CorValTOC4>12000</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6 to\n            8, Identities of seals updated each an\n        </DesTOC2>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>OT</ConInd424>\n    </RESOFCON534>\n    <SEAINFSLI>\n        <SeaNumSLI2>8</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>S1.Websols#01.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S2.Websols#02.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S3.Websols#02.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S4.Websols#03.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S5.Websols#03.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S6.Websols#03.03-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #1 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #2 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <GooDesGDS23>Windsurfing equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C1.Websols#01.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 1 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>4000</GroMasGDS46>\n        <NetMasGDS48>3996</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <PRODOCDC2>\n            <DocTypDC21>ZZZ</DocTypDC21>\n            <DocRefDC23>NEW Doc</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report, updated Gross mass, Net mass, added new package, updated Container\n                numbers &amp; added 2 new, added new doc.\n            </DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01N</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR01</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR02</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Pack found for item 3</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>2</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>3000</GroMasGDS46>\n        <NetMasGDS48>2997</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>6000</GroMasGDS46>\n        <NetMasGDS48>5994</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report. updated Gross mass (kg) and Net mass (kg)</DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>4</IteNumGDS7>\n        <GooDesGDS23>Foils - Wind/Kite/SUP</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>NE</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>NC4.Websols#04.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Item 4 - Foils</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC044A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE058",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a8d47b89-a900-4bb6-b2c6-aba3b42c96c9",
+										"exec": [
+											"pm.test(\"POST IE058 must return response code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE058\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Unloading Remark - IE044",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5eeaf06a-4256-4cbd-9f5b-635586b3c8dc",
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20191015</DatOfPreMES9>\n    <TimOfPreMES10>1129</TimOfPreMES10>\n    <IntConRefMES11>WE191015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>19IT02110010007BA9</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>Websols Analysis</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <NatOfMeaOfTraAtDHEA80>IT</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>3</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>6</TotNumOfPacHEA306>\n        <TotGroMasHEA307>6000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>The Luggage Carriers</NamTRD7>\n        <StrAndNumTRD22>225 Suedopolish Yard,</StrAndNumTRD22>\n        <CitTRD24>,</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>0</StaOfTheSeaOKREM19>\n        <UnlRemREM53>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6\n            to 8, Identities of seals updated each and added 2 new seals.\n        </UnlRemREM53>\n        <UnlRemREM53LNG>EN</UnlRemREM53LNG>\n        <ConREM65>0</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>20190101</UnlDatREM67>\n    </UNLREMREM>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>6</PoiToTheAttTOC5>\n        <CorValTOC4>8</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n        <CorValTOC4>12000</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6 to\n            8, Identities of seals updated each an\n        </DesTOC2>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>OT</ConInd424>\n    </RESOFCON534>\n    <SEAINFSLI>\n        <SeaNumSLI2>8</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>S1.Websols#01.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S2.Websols#02.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S3.Websols#02.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S4.Websols#03.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S5.Websols#03.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S6.Websols#03.03-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #1 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #2 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <GooDesGDS23>Windsurfing equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C1.Websols#01.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 1 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>4000</GroMasGDS46>\n        <NetMasGDS48>3996</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <PRODOCDC2>\n            <DocTypDC21>ZZZ</DocTypDC21>\n            <DocRefDC23>NEW Doc</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report, updated Gross mass, Net mass, added new package, updated Container\n                numbers &amp; added 2 new, added new doc.\n            </DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01N</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR01</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR02</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Pack found for item 3</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>2</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>3000</GroMasGDS46>\n        <NetMasGDS48>2997</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>6000</GroMasGDS46>\n        <NetMasGDS48>5994</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report. updated Gross mass (kg) and Net mass (kg)</DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>4</IteNumGDS7>\n        <GooDesGDS23>Foils - Wind/Kite/SUP</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>NE</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>NC4.Websols#04.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Item 4 - Foils</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC044A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE025",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "03926c3f-a523-44d2-955c-79ff97433c56",
+										"exec": [
+											"pm.test(\"POST IE025 must return response code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE025\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b5061404-5702-4617-96c8-ca7d50db847b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "35ab78f9-ea47-47e3-b959-bd699bd9d5cc",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Departure - IE015 > IE016",
+					"item": [
+						{
+							"name": "POST IE015",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "69c892e6-1ab0-4766-9be7-fed46a330dd6",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"var depId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"deptId\",depId);",
+											"console.log(\"department id is \"+depId)",
+											"",
+											"pm.test(\"POST IE015 must return response code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"pm.test(\"Validate location \", function () {",
+											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20190912</DatOfPreMES9>\n    <TimOfPreMES10>1222</TimOfPreMES10>\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB015B</MesTypMES20>\n    <HEAHEA>\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\n        <InlTraModHEA75>20</InlTraModHEA75>\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\n        <ConIndHEA96>0</ConIndHEA96>\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n        <DecDatHEA383>20190912</DecDatHEA383>\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\n    </HEAHEA>\n    <TRAPRIPC1>\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n        <PosCodPC123>SS99 1AA</PosCodPC123>\n        <CitPC124>Ank-Morpork</CitPC124>\n        <CouPC125>GB</CouPC125>\n        <NADLNGPC>EN</NADLNGPC>\n        <TINPC159>GB652420267000</TINPC159>\n    </TRAPRIPC1>\n    <TRACONCO1>\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\n        <PosCodCO123>SS99 1AA</PosCodCO123>\n        <CitCO124>Ank-Morpork</CitCO124>\n        <CouCO125>GB</CouCO125>\n        <TINCO159>GB602070107000</TINCO159>\n    </TRACONCO1>\n    <TRACONCE1>\n        <NamCE17>DROFL POTTERY</NamCE17>\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\n        <PosCodCE123>SS99 1AA</PosCodCE123>\n        <CitCE124>Ank-Morpork</CitCE124>\n        <CouCE125>GB</CouCE125>\n        <NADLNGCE>EN</NADLNGCE>\n        <TINCE159>GB658120050000</TINCE159>\n    </TRACONCE1>\n    <CUSOFFDEPEPT>\n        <RefNumEPT1>GB000060</RefNumEPT1>\n    </CUSOFFDEPEPT>\n    <CUSOFFTRARNS>\n        <RefNumRNS1>FR001260</RefNumRNS1>\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\n    </CUSOFFTRARNS>\n    <CUSOFFDESEST>\n        <RefNumEST1>IT021100</RefNumEST1>\n    </CUSOFFDESEST>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GUAGUA>\n        <GuaTypGUA1>3</GuaTypGUA1>\n        <GUAREFREF>\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\n            <AccCodREF6>test</AccCodREF6>\n        </GUAREFREF>\n    </GUAGUA>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\n        <DecTypGDS15>default</DecTypGDS15>\n        <GooDesGDS23>Flowers</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\n        <PREADMREFAR2>\n            <PreDocTypAR21>T2</PreDocTypAR21>\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\n            <PreDocRefLNG>EN</PreDocRefLNG>\n            <ComOfInfAR29>default</ComOfInfAR29>\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\n        </PREADMREFAR2>\n        <PRODOCDC2>\n            <DocTypDC21>720</DocTypDC21>\n            <DocRefDC23>EU_EXIT</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n            <ComOfInfDC25>default</ComOfInfDC25>\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\n        </PRODOCDC2>\n        <PACGS2>\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE016",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3ccee7cd-2e9c-47bf-b2c3-bf4da183cc18",
+										"exec": [
+											"pm.test(\"POST IE016 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE016\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "76116e09-b00b-4226-be49-67842a662831",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "65049e25-b32b-4e6e-9780-7e6fd5dbee0f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Departure - IE015 > IE928 > IE028 > IE029",
+					"item": [
+						{
+							"name": "POST IE015",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8942b06e-0c94-4a6d-9845-9f122b862bd4",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"var depId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"deptId\",depId);",
+											"console.log(\"department id is \"+depId)",
+											"",
+											"pm.test(\"POST IE015 must return response code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"pm.test(\"Validate location \", function () {",
+											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "771a27cd-9e22-47b7-82f8-4d85dea74752",
+										"exec": [
+											"pm.environment.unset(\"deptId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20190912</DatOfPreMES9>\n    <TimOfPreMES10>1222</TimOfPreMES10>\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB015B</MesTypMES20>\n    <HEAHEA>\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\n        <InlTraModHEA75>20</InlTraModHEA75>\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\n        <ConIndHEA96>0</ConIndHEA96>\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n        <DecDatHEA383>20190912</DecDatHEA383>\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\n    </HEAHEA>\n    <TRAPRIPC1>\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n        <PosCodPC123>SS99 1AA</PosCodPC123>\n        <CitPC124>Ank-Morpork</CitPC124>\n        <CouPC125>GB</CouPC125>\n        <NADLNGPC>EN</NADLNGPC>\n        <TINPC159>GB652420267000</TINPC159>\n    </TRAPRIPC1>\n    <TRACONCO1>\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\n        <PosCodCO123>SS99 1AA</PosCodCO123>\n        <CitCO124>Ank-Morpork</CitCO124>\n        <CouCO125>GB</CouCO125>\n        <TINCO159>GB602070107000</TINCO159>\n    </TRACONCO1>\n    <TRACONCE1>\n        <NamCE17>DROFL POTTERY</NamCE17>\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\n        <PosCodCE123>SS99 1AA</PosCodCE123>\n        <CitCE124>Ank-Morpork</CitCE124>\n        <CouCE125>GB</CouCE125>\n        <NADLNGCE>EN</NADLNGCE>\n        <TINCE159>GB658120050000</TINCE159>\n    </TRACONCE1>\n    <CUSOFFDEPEPT>\n        <RefNumEPT1>GB000060</RefNumEPT1>\n    </CUSOFFDEPEPT>\n    <CUSOFFTRARNS>\n        <RefNumRNS1>FR001260</RefNumRNS1>\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\n    </CUSOFFTRARNS>\n    <CUSOFFDESEST>\n        <RefNumEST1>IT021100</RefNumEST1>\n    </CUSOFFDESEST>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GUAGUA>\n        <GuaTypGUA1>3</GuaTypGUA1>\n        <GUAREFREF>\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\n            <AccCodREF6>test</AccCodREF6>\n        </GUAREFREF>\n    </GUAGUA>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\n        <DecTypGDS15>default</DecTypGDS15>\n        <GooDesGDS23>Flowers</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\n        <PREADMREFAR2>\n            <PreDocTypAR21>T2</PreDocTypAR21>\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\n            <PreDocRefLNG>EN</PreDocRefLNG>\n            <ComOfInfAR29>default</ComOfInfAR29>\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\n        </PREADMREFAR2>\n        <PRODOCDC2>\n            <DocTypDC21>720</DocTypDC21>\n            <DocRefDC23>EU_EXIT</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n            <ComOfInfDC25>default</ComOfInfDC25>\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\n        </PRODOCDC2>\n        <PACGS2>\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE928",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ff812391-f476-4e59-9a9f-217e48ac63cc",
+										"exec": [
+											"pm.test(\"POST IE928 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE928\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE028",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e13a9a0a-342b-4b85-84dc-7b3855cfc9c3",
+										"exec": [
+											"pm.test(\"POST IE028 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE028\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE029",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dc988840-b04d-444d-84d5-11386993a18c",
+										"exec": [
+											"pm.test(\"POST IE029 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE029\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "183d87fc-9ef0-42d8-abd1-73b7684c6001",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "61a3e5ee-dbcb-4ff4-9992-ddf69e549ecf",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Departure - IE015 > IE928 > IE028 >IE060> IE029",
+					"item": [
+						{
+							"name": "POST IE015",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7ec8f4e3-8887-479d-93dd-9be65a270c1d",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"var depId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"deptId\",depId);",
+											"console.log(\"department id is \"+depId)",
+											"",
+											"pm.test(\"POST IE015 must return response code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"pm.test(\"Validate location \", function () {",
+											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ec6b49b0-2a9e-49a0-8d7c-945fd5fe840d",
+										"exec": [
+											"pm.environment.unset(\"deptId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20190912</DatOfPreMES9>\n    <TimOfPreMES10>1222</TimOfPreMES10>\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB015B</MesTypMES20>\n    <HEAHEA>\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\n        <InlTraModHEA75>20</InlTraModHEA75>\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\n        <ConIndHEA96>0</ConIndHEA96>\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n        <DecDatHEA383>20190912</DecDatHEA383>\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\n    </HEAHEA>\n    <TRAPRIPC1>\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n        <PosCodPC123>SS99 1AA</PosCodPC123>\n        <CitPC124>Ank-Morpork</CitPC124>\n        <CouPC125>GB</CouPC125>\n        <NADLNGPC>EN</NADLNGPC>\n        <TINPC159>GB652420267000</TINPC159>\n    </TRAPRIPC1>\n    <TRACONCO1>\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\n        <PosCodCO123>SS99 1AA</PosCodCO123>\n        <CitCO124>Ank-Morpork</CitCO124>\n        <CouCO125>GB</CouCO125>\n        <TINCO159>GB602070107000</TINCO159>\n    </TRACONCO1>\n    <TRACONCE1>\n        <NamCE17>DROFL POTTERY</NamCE17>\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\n        <PosCodCE123>SS99 1AA</PosCodCE123>\n        <CitCE124>Ank-Morpork</CitCE124>\n        <CouCE125>GB</CouCE125>\n        <NADLNGCE>EN</NADLNGCE>\n        <TINCE159>GB658120050000</TINCE159>\n    </TRACONCE1>\n    <CUSOFFDEPEPT>\n        <RefNumEPT1>GB000060</RefNumEPT1>\n    </CUSOFFDEPEPT>\n    <CUSOFFTRARNS>\n        <RefNumRNS1>FR001260</RefNumRNS1>\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\n    </CUSOFFTRARNS>\n    <CUSOFFDESEST>\n        <RefNumEST1>IT021100</RefNumEST1>\n    </CUSOFFDESEST>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GUAGUA>\n        <GuaTypGUA1>3</GuaTypGUA1>\n        <GUAREFREF>\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\n            <AccCodREF6>test</AccCodREF6>\n        </GUAREFREF>\n    </GUAGUA>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\n        <DecTypGDS15>default</DecTypGDS15>\n        <GooDesGDS23>Flowers</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\n        <PREADMREFAR2>\n            <PreDocTypAR21>T2</PreDocTypAR21>\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\n            <PreDocRefLNG>EN</PreDocRefLNG>\n            <ComOfInfAR29>default</ComOfInfAR29>\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\n        </PREADMREFAR2>\n        <PRODOCDC2>\n            <DocTypDC21>720</DocTypDC21>\n            <DocRefDC23>EU_EXIT</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n            <ComOfInfDC25>default</ComOfInfDC25>\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\n        </PRODOCDC2>\n        <PACGS2>\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE928",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "219f8988-c14c-4e93-917d-ccc8e7332571",
+										"exec": [
+											"pm.test(\"POST IE928 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE928\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE028",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b9a039ab-d6f0-45ef-ad5e-d31bc303e522",
+										"exec": [
+											"pm.test(\"POST IE028 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE028\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE060",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d02b07b8-3699-41e3-b1e5-f524226625c7",
+										"exec": [
+											"pm.test(\"POST IE060 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE029\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE029",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "07162f37-23ed-4e05-83ac-a5efa81bd70e",
+										"exec": [
+											"pm.test(\"POST IE029 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE029\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b0c25d35-beaa-446b-ba31-5c8e36d48bac",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a889fce-d442-4b70-9296-97379d153757",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Departures - IE015 > IE928 > IE028 > IE051",
+					"item": [
+						{
+							"name": "POST IE015",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "48ff2f23-7b6a-4b4b-a0e3-9491a468b56a",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"var depId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"deptId\",depId);",
+											"console.log(\"department id is \"+depId)",
+											"",
+											"pm.test(\"POST IE015 must return response code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"pm.test(\"Validate location \", function () {",
+											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "83ecfb84-aa88-46b6-a36d-129cd2fb34e6",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20190912</DatOfPreMES9>\n    <TimOfPreMES10>1222</TimOfPreMES10>\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB015B</MesTypMES20>\n    <HEAHEA>\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\n        <InlTraModHEA75>20</InlTraModHEA75>\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\n        <ConIndHEA96>0</ConIndHEA96>\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n        <DecDatHEA383>20190912</DecDatHEA383>\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\n    </HEAHEA>\n    <TRAPRIPC1>\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n        <PosCodPC123>SS99 1AA</PosCodPC123>\n        <CitPC124>Ank-Morpork</CitPC124>\n        <CouPC125>GB</CouPC125>\n        <NADLNGPC>EN</NADLNGPC>\n        <TINPC159>GB652420267000</TINPC159>\n    </TRAPRIPC1>\n    <TRACONCO1>\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\n        <PosCodCO123>SS99 1AA</PosCodCO123>\n        <CitCO124>Ank-Morpork</CitCO124>\n        <CouCO125>GB</CouCO125>\n        <TINCO159>GB602070107000</TINCO159>\n    </TRACONCO1>\n    <TRACONCE1>\n        <NamCE17>DROFL POTTERY</NamCE17>\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\n        <PosCodCE123>SS99 1AA</PosCodCE123>\n        <CitCE124>Ank-Morpork</CitCE124>\n        <CouCE125>GB</CouCE125>\n        <NADLNGCE>EN</NADLNGCE>\n        <TINCE159>GB658120050000</TINCE159>\n    </TRACONCE1>\n    <CUSOFFDEPEPT>\n        <RefNumEPT1>GB000060</RefNumEPT1>\n    </CUSOFFDEPEPT>\n    <CUSOFFTRARNS>\n        <RefNumRNS1>FR001260</RefNumRNS1>\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\n    </CUSOFFTRARNS>\n    <CUSOFFDESEST>\n        <RefNumEST1>IT021100</RefNumEST1>\n    </CUSOFFDESEST>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GUAGUA>\n        <GuaTypGUA1>3</GuaTypGUA1>\n        <GUAREFREF>\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\n            <AccCodREF6>test</AccCodREF6>\n        </GUAREFREF>\n    </GUAGUA>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\n        <DecTypGDS15>default</DecTypGDS15>\n        <GooDesGDS23>Flowers</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\n        <PREADMREFAR2>\n            <PreDocTypAR21>T2</PreDocTypAR21>\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\n            <PreDocRefLNG>EN</PreDocRefLNG>\n            <ComOfInfAR29>default</ComOfInfAR29>\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\n        </PREADMREFAR2>\n        <PRODOCDC2>\n            <DocTypDC21>720</DocTypDC21>\n            <DocRefDC23>EU_EXIT</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n            <ComOfInfDC25>default</ComOfInfDC25>\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\n        </PRODOCDC2>\n        <PACGS2>\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE928",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fb0ae019-3242-4a21-8456-e76db62ab6b0",
+										"exec": [
+											"pm.test(\"POST IE928 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE928\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE028",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0796e687-1c3c-493e-87cb-42a766d4d586",
+										"exec": [
+											"pm.test(\"POST IE028 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE028\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE051",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fcc41fa3-b317-4674-93ed-3a372423b95e",
+										"exec": [
+											"pm.test(\"POST IE051 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE051\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8578f654-013d-4c11-9a37-0460ac9f4a4f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a93bb48-d7cd-4073-90c7-2dcbbb309676",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Departures -  IE015 > IE928 > IE028 > IE014 >IE009",
+					"item": [
+						{
+							"name": "POST IE015",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "80070717-feb5-45e2-9d83-5dc442f26183",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"var depId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"deptId\",depId);",
+											"console.log(\"department id is \"+depId)",
+											"",
+											"pm.test(\"POST IE015 must return response code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"pm.test(\"Validate location \", function () {",
+											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n   \n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20190912</DatOfPreMES9>\n    <TimOfPreMES10>1222</TimOfPreMES10>\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB015B</MesTypMES20>\n    <HEAHEA>\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\n        <InlTraModHEA75>20</InlTraModHEA75>\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\n        <ConIndHEA96>0</ConIndHEA96>\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n        <DecDatHEA383>20190912</DecDatHEA383>\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\n    </HEAHEA>\n    <TRAPRIPC1>\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n        <PosCodPC123>SS99 1AA</PosCodPC123>\n        <CitPC124>Ank-Morpork</CitPC124>\n        <CouPC125>GB</CouPC125>\n        <NADLNGPC>EN</NADLNGPC>\n        <TINPC159>GB652420267000</TINPC159>\n    </TRAPRIPC1>\n    <TRACONCO1>\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\n        <PosCodCO123>SS99 1AA</PosCodCO123>\n        <CitCO124>Ank-Morpork</CitCO124>\n        <CouCO125>GB</CouCO125>\n        <TINCO159>GB602070107000</TINCO159>\n    </TRACONCO1>\n    <TRACONCE1>\n        <NamCE17>DROFL POTTERY</NamCE17>\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\n        <PosCodCE123>SS99 1AA</PosCodCE123>\n        <CitCE124>Ank-Morpork</CitCE124>\n        <CouCE125>GB</CouCE125>\n        <NADLNGCE>EN</NADLNGCE>\n        <TINCE159>GB658120050000</TINCE159>\n    </TRACONCE1>\n    <CUSOFFDEPEPT>\n        <RefNumEPT1>GB000060</RefNumEPT1>\n    </CUSOFFDEPEPT>\n    <CUSOFFTRARNS>\n        <RefNumRNS1>FR001260</RefNumRNS1>\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\n    </CUSOFFTRARNS>\n    <CUSOFFDESEST>\n        <RefNumEST1>IT021100</RefNumEST1>\n    </CUSOFFDESEST>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GUAGUA>\n        <GuaTypGUA1>3</GuaTypGUA1>\n        <GUAREFREF>\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\n            <AccCodREF6>test</AccCodREF6>\n        </GUAREFREF>\n    </GUAGUA>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\n        <DecTypGDS15>default</DecTypGDS15>\n        <GooDesGDS23>Flowers</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\n        <PREADMREFAR2>\n            <PreDocTypAR21>T2</PreDocTypAR21>\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\n            <PreDocRefLNG>EN</PreDocRefLNG>\n            <ComOfInfAR29>default</ComOfInfAR29>\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\n        </PREADMREFAR2>\n        <PRODOCDC2>\n            <DocTypDC21>720</DocTypDC21>\n            <DocRefDC23>EU_EXIT</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n            <ComOfInfDC25>default</ComOfInfDC25>\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\n        </PRODOCDC2>\n        <PACGS2>\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE928",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5cf00b12-2a71-4732-ad98-236412210d09",
+										"exec": [
+											"pm.test(\"POST IE928 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201 ) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE928\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE028",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c5fe4189-3527-481d-8d2e-ee263d5c78de",
+										"exec": [
+											"pm.test(\"POST IE028 after IE928 must return 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201 ) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE028\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE014",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d73fd193-b594-4769-a4fa-276d7fa02e6e",
+										"exec": [
+											"pm.test(\"IE014 must return Status code as 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>20190912</DatOfPreMES9>\n<TimOfPreMES10>1550</TimOfPreMES10>\n<IntConRefMES11>WE190912102539</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<TesIndMES18>0</TesIndMES18>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>GB014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>19GB00006010021477</DocNumHEA5>\n<DatOfCanReqHEA147>20190912</DatOfCanReqHEA147>\n<CanReaHEA250>Steve asked me to.....</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>CITY WATCH SHIPPING</NamPC17>\n<StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n<PosCodPC123>SS99 1AA</PosCodPC123>\n<CitPC124>Ank-Morpork</CitPC124>\n<CouPC125>GB</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>GB652420267000</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>GB000060</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE009",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6042faa4-b7ca-4799-a6b1-b2ca0f80d4a5",
+										"exec": [
+											"pm.test(\"POST IE009 must return 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201 ) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE009\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fe6f95e2-1c93-467f-ae80-642feef2e55a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1aabfa4-f90b-49a6-bef6-e50ebad74e08",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Departures - IE015 > IE928 > IE028 > IE029 > IE014 > IE009",
+					"item": [
+						{
+							"name": "POST IE015",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "851d8fce-8c02-4832-93e8-2cf52ab9b4cd",
+										"exec": [
+											"var loc = postman.getResponseHeader(\"Location\").toString();",
+											"var depId = loc.split(\"/\")[5];",
+											"pm.environment.set(\"deptId\",depId);",
+											"console.log(\"department id is \"+depId)",
+											"",
+											"pm.test(\"POST IE015 must return response code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"pm.test(\"Validate location \", function () {",
+											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"});",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "cb957eaa-90d9-450c-ad73-c8f81265a109",
+										"exec": [
+											"pm.environment.unset(\"deptId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>20190912</DatOfPreMES9>\n    <TimOfPreMES10>1222</TimOfPreMES10>\n    <IntConRefMES11>WE190912102530</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB015B</MesTypMES20>\n    <HEAHEA>\n        <RefNumHEA4>01CTC201909121215</RefNumHEA4>\n        <TypOfDecHEA24>T2</TypOfDecHEA24>\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\n        <AgrLocOfGooCodHEA38>default</AgrLocOfGooCodHEA38>\n        <AgrLocOfGooHEA39>default</AgrLocOfGooHEA39>\n        <AgrLocOfGooHEA39LNG>EN</AgrLocOfGooHEA39LNG>\n        <AutLocOfGooCodHEA41>default</AutLocOfGooCodHEA41>\n        <PlaOfLoaCodHEA46>DOVER</PlaOfLoaCodHEA46>\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\n        <CusSubPlaHEA66>default</CusSubPlaHEA66>\n        <InlTraModHEA75>20</InlTraModHEA75>\n        <IdeOfMeaOfTraAtDHEA78>EU_EXIT</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <IdeOfMeaOfTraCroHEA85>EU_EXIT</IdeOfMeaOfTraCroHEA85>\n        <IdeOfMeaOfTraCroHEA85LNG>EN</IdeOfMeaOfTraCroHEA85LNG>\n        <ConIndHEA96>0</ConIndHEA96>\n        <DiaLanIndAtDepHEA254>EN</DiaLanIndAtDepHEA254>\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>1</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n        <DecDatHEA383>20190912</DecDatHEA383>\n        <DecPlaHEA394>DOVER</DecPlaHEA394>\n        <DecPlaHEA394LNG>EN</DecPlaHEA394LNG>\n    </HEAHEA>\n    <TRAPRIPC1>\n        <NamPC17>CITY WATCH SHIPPING</NamPC17>\n        <StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n        <PosCodPC123>SS99 1AA</PosCodPC123>\n        <CitPC124>Ank-Morpork</CitPC124>\n        <CouPC125>GB</CouPC125>\n        <NADLNGPC>EN</NADLNGPC>\n        <TINPC159>GB652420267000</TINPC159>\n    </TRAPRIPC1>\n    <TRACONCO1>\n        <NamCO17>QUIRM ENGINEERING</NamCO17>\n        <StrAndNumCO122>125 Psuedopolis Yard</StrAndNumCO122>\n        <PosCodCO123>SS99 1AA</PosCodCO123>\n        <CitCO124>Ank-Morpork</CitCO124>\n        <CouCO125>GB</CouCO125>\n        <TINCO159>GB602070107000</TINCO159>\n    </TRACONCO1>\n    <TRACONCE1>\n        <NamCE17>DROFL POTTERY</NamCE17>\n        <StrAndNumCE122>125 Psuedopolis Yard</StrAndNumCE122>\n        <PosCodCE123>SS99 1AA</PosCodCE123>\n        <CitCE124>Ank-Morpork</CitCE124>\n        <CouCE125>GB</CouCE125>\n        <NADLNGCE>EN</NADLNGCE>\n        <TINCE159>GB658120050000</TINCE159>\n    </TRACONCE1>\n    <CUSOFFDEPEPT>\n        <RefNumEPT1>GB000060</RefNumEPT1>\n    </CUSOFFDEPEPT>\n    <CUSOFFTRARNS>\n        <RefNumRNS1>FR001260</RefNumRNS1>\n        <ArrTimTRACUS085>201909160100</ArrTimTRACUS085>\n    </CUSOFFTRARNS>\n    <CUSOFFDESEST>\n        <RefNumEST1>IT021100</RefNumEST1>\n    </CUSOFFDESEST>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>Seal001</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GUAGUA>\n        <GuaTypGUA1>3</GuaTypGUA1>\n        <GUAREFREF>\n            <GuaRefNumGRNREF1>default</GuaRefNumGRNREF1>\n            <OthGuaRefREF4>EU_EXIT</OthGuaRefREF4>\n            <AccCodREF6>test</AccCodREF6>\n        </GUAREFREF>\n    </GUAGUA>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <ComCodTarCodGDS10>default</ComCodTarCodGDS10>\n        <DecTypGDS15>default</DecTypGDS15>\n        <GooDesGDS23>Flowers</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <CouOfDesGDS59>ex</CouOfDesGDS59>\n        <PREADMREFAR2>\n            <PreDocTypAR21>T2</PreDocTypAR21>\n            <PreDocRefAR26>EU_EXIT-T2</PreDocRefAR26>\n            <PreDocRefLNG>EN</PreDocRefLNG>\n            <ComOfInfAR29>default</ComOfInfAR29>\n            <ComOfInfAR29LNG>EN</ComOfInfAR29LNG>\n        </PREADMREFAR2>\n        <PRODOCDC2>\n            <DocTypDC21>720</DocTypDC21>\n            <DocRefDC23>EU_EXIT</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n            <ComOfInfDC25>default</ComOfInfDC25>\n            <ComOfInfDC25LNG>EN</ComOfInfDC25LNG>\n        </PRODOCDC2>\n        <PACGS2>\n            <MarNumOfPacGS21>Bloomingales</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE928",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0ce1d14a-306a-4216-86bd-f7520718cde9",
+										"exec": [
+											"pm.test(\"POST IE928 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE928\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE028",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7ec3e905-e6c8-479d-8f63-9a898e9d9288",
+										"exec": [
+											"pm.test(\"POST IE028  must return 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE028\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE029",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2dd11375-8c03-4c1e-ac88-ff1bc6ea817f",
+										"exec": [
+											"pm.test(\"POST IE029 must return response code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE029\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE014",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6dcdc04c-e50c-406d-b32e-da9b40db836e",
+										"exec": [
+											"pm.test(\"IE014 must return Status code as 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											"",
+											"",
+											"if (pm.response.code !== 202) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>20190912</DatOfPreMES9>\n<TimOfPreMES10>1550</TimOfPreMES10>\n<IntConRefMES11>WE190912102539</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<TesIndMES18>0</TesIndMES18>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>GB014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>19GB00006010021477</DocNumHEA5>\n<DatOfCanReqHEA147>20190912</DatOfCanReqHEA147>\n<CanReaHEA250>Steve asked me to.....</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>CITY WATCH SHIPPING</NamPC17>\n<StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n<PosCodPC123>SS99 1AA</PosCodPC123>\n<CitPC124>Ank-Morpork</CitPC124>\n<CouPC125>GB</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>GB652420267000</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>GB000060</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>"
+								},
+								"url": {
+									"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST IE009",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "df6686e0-6f8b-4ca0-a141-9a7adeedcf30",
+										"exec": [
+											"pm.test(\"POST IE009 must return 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if (pm.response.code !== 201 ) {",
+											"    return;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"message\": {\n         \"messageType\": \"IE009\"\n     }\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/test/customs/transits/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"test",
+										"customs",
+										"transits",
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d5ef3493-f638-40aa-9be6-fda6e41f4785",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7c97764-f68c-45a6-a3a6-8cdd46512045",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e17f28a-1d07-44ae-b8a9-d1163c9d0e34",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3df2a1a2-5df4-41a5-bbe6-f57abe89bb69",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cc11cc51-9629-4e44-adbe-8d4cd4f85736",
+				"type": "text/javascript",
+				"exec": [
+					"setTimeout(function(){}, [100]);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "40f81d68-2f79-49fd-9326-fa7567ffb5bc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
