@@ -14,18 +14,34 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9ce71f17-35f9-4aa3-8c24-3fd0ab45fd7a",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"const $ = cheerio.load(responseBody);",
-									"var location = $(\"[class='form-field']\").html()",
-									"var grant_scope= (location.split(\"=\")[1]).split(\"\\\"\")[1]",
-									"pm.environment.set(\"grant_scope\",grant_scope);",
 									"",
-									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
-									"pm.environment.set(\"auth_id\",auth_id);"
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" "
 								],
 								"type": "text/javascript"
 							}
@@ -92,7 +108,7 @@
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999999911",
+									"value": "{{eori}}",
 									"type": "text"
 								},
 								{
@@ -103,11 +119,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.development.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
 								"www",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -127,7 +143,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a002ad47-0efa-4db8-abf8-e21f26df10eb",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -143,7 +158,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ba200fa5-7b20-4f41-9db6-778e65e84d12",
 								"exec": [
 									"",
 									"",
@@ -171,15 +185,25 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://www.development.tax.service.gov.uk{{grant_scope}}={{auth_id}}",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
 							"protocol": "https",
 							"host": [
 								"www",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
-								"uk{{grant_scope}}={{auth_id}}"
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
 							]
 						}
 					},
@@ -191,7 +215,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1a15e792-7d47-4a84-a92f-44375e34683f",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -232,11 +255,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.development.tax.service.gov.uk/oauth/grantscope",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
 							"protocol": "https",
 							"host": [
 								"www",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -256,7 +279,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7f0f22f9-1416-4c24-a28b-2c51bb0cfb42",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -268,6 +290,7 @@
 									"pm.environment.unset(\"auth_id\")",
 									"pm.environment.unset(\"csrfToken\")",
 									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
 									"",
 									"",
 									""
@@ -317,11 +340,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://api.development.tax.service.gov.uk/oauth/token",
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
 							"protocol": "https",
 							"host": [
 								"api",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -335,8 +358,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Auth_Dev_W/o_Enrolment",
@@ -347,18 +369,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0e3508cd-b0d4-4bf2-bf40-c0df58dff574",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"const $ = cheerio.load(responseBody);",
-									"var location = $(\"[class='form-field']\").html()",
-									"var grant_scope= (location.split(\"=\")[1]).split(\"\\\"\")[1]",
-									"pm.environment.set(\"grant_scope\",grant_scope);",
 									"",
-									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
-									"pm.environment.set(\"auth_id\",auth_id);"
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -440,11 +469,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.development.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
 								"www",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -464,7 +493,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8fe745b2-e3c0-44c6-972c-4cf104714be5",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -480,7 +508,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b83651e4-5480-491f-b389-817823e23a62",
 								"exec": [
 									"",
 									"",
@@ -508,15 +535,25 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://www.development.tax.service.gov.uk{{grant_scope}}={{auth_id}}",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
 							"protocol": "https",
 							"host": [
 								"www",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
-								"uk{{grant_scope}}={{auth_id}}"
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
 							]
 						}
 					},
@@ -528,7 +565,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "819c1b96-caac-4d35-aac2-5c052a06474b",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -570,11 +606,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.development.tax.service.gov.uk/oauth/grantscope",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
 							"protocol": "https",
 							"host": [
 								"www",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -594,7 +630,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0e547897-9d50-40be-bdbd-4f9b47a4a34b",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -608,6 +643,7 @@
 									"pm.environment.unset(\"grant_scope\")",
 									"pm.environment.unset(\"code\")",
 									"",
+									"",
 									""
 								],
 								"type": "text/javascript"
@@ -655,11 +691,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://api.development.tax.service.gov.uk/oauth/token",
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
 							"protocol": "https",
 							"host": [
 								"api",
-								"development",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -673,11 +709,10 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
-			"name": "Auth_With_Enrolment_ET",
+			"name": "Auth_QA_With_Enrolment",
 			"item": [
 				{
 					"name": "POST Auth Details",
@@ -685,18 +720,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b60e2e00-0652-4a95-a798-e96b0ebcd5b8",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"const $ = cheerio.load(responseBody);",
-									"var location = $(\"[class='form-field']\").html()",
-									"var grant_scope= (location.split(\"=\")[1]).split(\"\\\"\")[1]",
-									"pm.environment.set(\"grant_scope\",grant_scope);",
 									"",
-									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
-									"pm.environment.set(\"auth_id\",auth_id);"
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -723,7 +765,7 @@
 							"urlencoded": [
 								{
 									"key": "redirectionUrl",
-									"value": "https://test-www.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"value": "https://www.qa.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
 									"type": "text"
 								},
 								{
@@ -763,7 +805,7 @@
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999999911",
+									"value": "{{eori}}",
 									"type": "text"
 								},
 								{
@@ -774,10 +816,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://test-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
-								"test-www",
+								"www",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -797,7 +840,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ff4411ad-736f-4e6a-8950-0705542e0ea9",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -813,7 +855,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ac669324-2811-4ab3-9350-bf391e935735",
 								"exec": [
 									"",
 									"",
@@ -841,14 +882,25 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://test-www.tax.service.gov.uk{{grant_scope}}={{auth_id}}",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
 							"protocol": "https",
 							"host": [
-								"test-www",
+								"www",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
-								"uk{{grant_scope}}={{auth_id}}"
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
 							]
 						}
 					},
@@ -860,7 +912,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1b577126-1ab0-4094-9bb6-99457902bd23",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -901,10 +952,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://test-www.tax.service.gov.uk/oauth/grantscope",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
 							"protocol": "https",
 							"host": [
-								"test-www",
+								"www",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -924,7 +976,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "503e8aa2-59c8-4227-ad42-865fd68d0a99",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -936,6 +987,740 @@
 									"pm.environment.unset(\"auth_id\")",
 									"pm.environment.unset(\"csrfToken\")",
 									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"setTimeout(function(){}, [200]);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth_QA_W/o_Enrolment",
+			"item": [
+				{
+					"name": "POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.qa.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "9999999911",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token1\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"setTimeout(function(){}, [200]);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth_With_Enrolment_ET",
+			"item": [
+				{
+					"name": "POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://test-www.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
 									"",
 									"",
 									""
@@ -985,10 +1770,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://test-api.service.hmrc.gov.uk/oauth/token",
+							"raw": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token",
 							"protocol": "https",
 							"host": [
-								"test-api",
+								"{{env}}-api",
 								"service",
 								"hmrc",
 								"gov",
@@ -1007,7 +1792,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "b508113a-70c3-4cbb-9f86-6625f7e51c88",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1017,15 +1801,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1567a136-e868-42ec-af12-5cdf5d702bde",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Auth_W/0_Enrolment_ET",
@@ -1036,18 +1818,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b34ea663-ef6b-4615-8405-dfdc8e3f3daf",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"const $ = cheerio.load(responseBody);",
-									"var location = $(\"[class='form-field']\").html()",
-									"var grant_scope= (location.split(\"=\")[1]).split(\"\\\"\")[1]",
-									"pm.environment.set(\"grant_scope\",grant_scope);",
 									"",
-									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
-									"pm.environment.set(\"auth_id\",auth_id);"
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1129,10 +1918,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://test-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
-								"test-www",
+								"{{env}}-www",
 								"tax",
 								"service",
 								"gov",
@@ -1152,7 +1941,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "acef7a50-26c6-4db3-a027-7a0cd39c0fc7",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1168,7 +1956,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "746d322a-21e1-4bc0-96ca-40439cf4a169",
 								"exec": [
 									"",
 									"",
@@ -1196,14 +1983,24 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://test-www.tax.service.gov.uk{{grant_scope}}={{auth_id}}",
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
 							"protocol": "https",
 							"host": [
-								"test-www",
+								"{{env}}-www",
 								"tax",
 								"service",
 								"gov",
-								"uk{{grant_scope}}={{auth_id}}"
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
 							]
 						}
 					},
@@ -1215,7 +2012,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c422d74f-9de7-45e6-bea3-991aeaba38c7",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1256,10 +2052,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://test-www.tax.service.gov.uk/oauth/grantscope",
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope",
 							"protocol": "https",
 							"host": [
-								"test-www",
+								"{{env}}-www",
 								"tax",
 								"service",
 								"gov",
@@ -1279,7 +2075,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "816738b1-0472-4726-b7b2-a5f14275b3af",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1291,6 +2086,7 @@
 									"pm.environment.unset(\"auth_id\")",
 									"pm.environment.unset(\"csrfToken\")",
 									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
 									"",
 									"",
 									""
@@ -1340,10 +2136,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://test-api.service.hmrc.gov.uk/oauth/token",
+							"raw": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token",
 							"protocol": "https",
 							"host": [
-								"test-api",
+								"{{env}}-api",
 								"service",
 								"hmrc",
 								"gov",
@@ -1362,7 +2158,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c5daeb09-e009-4dbf-a232-46002f87f283",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1372,15 +2167,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c0f0868c-f577-4fd8-b8c7-1513bc4d0f49",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Auth_Staging_With_Enrolment",
@@ -1391,7 +2184,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98d828a0-54fe-4151-8676-c9fcbbe19905",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1403,7 +2195,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2f22a593-cbb4-4842-924b-a1670bf272ef",
 								"exec": [
 									"",
 									"",
@@ -1455,7 +2246,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4e1ad4b2-b890-48e1-a2c3-ccb578ff1663",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1463,6 +2253,10 @@
 									"",
 									"const $ = cheerio.load(responseBody);",
 									"var location = $(\"[class='form-field']\").html()",
+									"console.log(location)",
+									"var grant_scope= (location.split(\"=\")[1]).split(\"\\\"\")[1]",
+									"pm.environment.set(\"grant_scope\",grant_scope);",
+									"",
 									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
 									"pm.environment.set(\"auth_id\",auth_id);",
 									"console.log(\"Auth Id is \"+auth_id)"
@@ -1532,7 +2326,7 @@
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999999911",
+									"value": "{{eori}}",
 									"type": "text"
 								},
 								{
@@ -1543,11 +2337,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -1567,7 +2361,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f57a1357-8f8b-4a59-be79-d32a1d030005",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1615,7 +2408,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "82e0ad95-a3f4-4a8a-b4b3-648213266faa",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1663,7 +2455,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "858921c4-2452-4c43-b42d-e7b1881b7942",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1681,7 +2472,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8071a3e2-849a-4e68-b1d2-122bb5e206aa",
 								"exec": [
 									"",
 									"",
@@ -1709,11 +2499,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -1739,7 +2529,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b62a0ade-178a-4c74-8c56-35e6e4b78a0b",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1781,11 +2570,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/oauth/grantscope",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -1805,7 +2594,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c1b4bc5-63f9-4100-9ad3-539c6cf16f5c",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1814,9 +2602,11 @@
 									"var accessToken = JSON.parse(responseBody);",
 									"pm.environment.set(\"access_token\", accessToken.access_token);",
 									"",
-									"pm.environment.unset(\"auth_id\",\"\")",
-									"pm.environment.unset(\"csrfToken\",\"\")",
-									"pm.environment.unset(\"code\",\"\")"
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1863,11 +2653,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://api.staging.tax.service.gov.uk/oauth/token",
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
 							"protocol": "https",
 							"host": [
 								"api",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -1881,8 +2671,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Auth_Staging_W/o_Enrolment",
@@ -1893,7 +2682,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "93093449-5db1-4431-9d29-f967bfe1f9b0",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1905,7 +2693,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b566e4ca-e020-4a3a-83d2-99dafd7024ff",
 								"exec": [
 									"",
 									"",
@@ -1933,11 +2720,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -1957,7 +2744,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "26902c1c-495c-4bbb-b7f8-f1cc844b0fcb",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2049,11 +2835,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2073,7 +2859,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "db9e43cf-8a68-4b86-9bd7-07a7ad02b305",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2087,11 +2872,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/gg/sign-in?continue=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/gg/sign-in?continue=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2121,7 +2906,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1eab97f2-6f26-404f-b618-5e46a27960ce",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2135,11 +2919,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/bas-gateway/sign-in?continue_url=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/bas-gateway/sign-in?continue_url=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2169,7 +2953,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0ea51e57-ced0-4258-9a28-75fc901520bc",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2187,7 +2970,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4e854007-b507-440f-944c-96be5689713a",
 								"exec": [
 									"",
 									"",
@@ -2215,11 +2997,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2245,7 +3027,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d43f30c9-0560-4619-8db3-5965a5bc6d92",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2287,11 +3068,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/oauth/grantscope",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2311,7 +3092,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc38c392-b9b1-47a0-ab19-9f4c0d3055b8",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2322,7 +3102,9 @@
 									"",
 									"pm.environment.unset(\"auth_id\")",
 									"pm.environment.unset(\"csrfToken\")",
-									"pm.environment.unset(\"code\")"
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2369,11 +3151,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://api.staging.tax.service.gov.uk/oauth/token",
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
 							"protocol": "https",
 							"host": [
 								"api",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2387,31 +3169,27 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1ab7a77a-da4a-417e-920e-d9c5b7451a6e",
 				"type": "text/javascript",
 				"exec": [
-					"setTimeout(function(){}, [100]);"
+					"setTimeout(function(){}, [200]);"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "4c47fe0a-7a94-4e3c-aacb-7a6f01941654",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
