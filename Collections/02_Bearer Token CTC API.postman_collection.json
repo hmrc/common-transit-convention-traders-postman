@@ -9,7 +9,7 @@
 			"name": "Auth_Dev_With_Enrolment",
 			"item": [
 				{
-					"name": "POST Auth Details",
+					"name": "01-POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -138,7 +138,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 303",
+					"name": "02- GET Grant Auth 303",
 					"event": [
 						{
 							"listen": "test",
@@ -210,7 +210,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "03- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -274,7 +274,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "04- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -364,7 +364,7 @@
 			"name": "Auth_Dev_W/o_Enrolment",
 			"item": [
 				{
-					"name": "POST Auth Details",
+					"name": "01- POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -488,7 +488,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 303",
+					"name": "02- GET Grant Auth 303",
 					"event": [
 						{
 							"listen": "test",
@@ -560,7 +560,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "03- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -625,7 +625,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "04- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -715,7 +715,7 @@
 			"name": "Auth_QA_With_Enrolment",
 			"item": [
 				{
-					"name": "POST Auth Details",
+					"name": "01- POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -835,7 +835,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 303",
+					"name": "02- GET Grant Auth 303",
 					"event": [
 						{
 							"listen": "test",
@@ -907,7 +907,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "03- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -971,7 +971,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "04- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -1081,7 +1081,7 @@
 			"name": "Auth_QA_W/o_Enrolment",
 			"item": [
 				{
-					"name": "POST Auth Details",
+					"name": "01- POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -1205,7 +1205,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 303",
+					"name": "02- GET Grant Auth 303",
 					"event": [
 						{
 							"listen": "test",
@@ -1277,7 +1277,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "03- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -1341,7 +1341,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "04- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -1451,7 +1451,7 @@
 			"name": "Auth_With_Enrolment_ET",
 			"item": [
 				{
-					"name": "POST Auth Details",
+					"name": "01-POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -1570,7 +1570,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 303",
+					"name": "02- GET Grant Auth 303",
 					"event": [
 						{
 							"listen": "test",
@@ -1641,7 +1641,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "03- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -1704,7 +1704,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "04- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -1813,7 +1813,7 @@
 			"name": "Auth_W/0_Enrolment_ET",
 			"item": [
 				{
-					"name": "POST Auth Details",
+					"name": "01- POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -1936,7 +1936,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 303",
+					"name": "02- GET Grant Auth 303",
 					"event": [
 						{
 							"listen": "test",
@@ -2007,7 +2007,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "03- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -2070,7 +2070,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "04- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -2179,7 +2179,7 @@
 			"name": "Auth_Staging_With_Enrolment",
 			"item": [
 				{
-					"name": "GET Credentials",
+					"name": "01-GET Credentials",
 					"event": [
 						{
 							"listen": "test",
@@ -2222,11 +2222,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2241,7 +2241,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Auth Details",
+					"name": "02- POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -2356,7 +2356,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Authority 2nd Redirect",
+					"name": "03- GET Grant Authority 2nd Redirect",
 					"event": [
 						{
 							"listen": "test",
@@ -2374,11 +2374,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/gg/sign-in?continue=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/gg/sign-in?continue=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2403,7 +2403,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Authority Redirect2",
+					"name": "04- GET Grant Authority Redirect2",
 					"event": [
 						{
 							"listen": "test",
@@ -2421,11 +2421,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://www.staging.tax.service.gov.uk/bas-gateway/sign-in?continue_url=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"raw": "https://www.{{env}}.tax.service.gov.uk/bas-gateway/sign-in?continue_url=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
 							"protocol": "https",
 							"host": [
 								"www",
-								"staging",
+								"{{env}}",
 								"tax",
 								"service",
 								"gov",
@@ -2450,7 +2450,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 200",
+					"name": "05- GET Grant Auth 200",
 					"event": [
 						{
 							"listen": "test",
@@ -2524,7 +2524,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "06- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -2589,7 +2589,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "07- Access Token",
 					"event": [
 						{
 							"listen": "test",
@@ -2677,7 +2677,7 @@
 			"name": "Auth_Staging_W/o_Enrolment",
 			"item": [
 				{
-					"name": "GET Credentials",
+					"name": "01- GET Credentials",
 					"event": [
 						{
 							"listen": "test",
@@ -2739,7 +2739,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Auth Details",
+					"name": "02- POST Auth Details",
 					"event": [
 						{
 							"listen": "test",
@@ -2854,7 +2854,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Authority 2nd Redirect",
+					"name": "03- GET Grant Authority 2nd Redirect",
 					"event": [
 						{
 							"listen": "test",
@@ -2901,7 +2901,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Authority Redirect2",
+					"name": "04- GET Grant Authority Redirect2",
 					"event": [
 						{
 							"listen": "test",
@@ -2948,7 +2948,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Grant Auth 200",
+					"name": "05- GET Grant Auth 200",
 					"event": [
 						{
 							"listen": "test",
@@ -3022,7 +3022,7 @@
 					"response": []
 				},
 				{
-					"name": "POST Submit Grant Authority",
+					"name": "06- POST Submit Grant Authority",
 					"event": [
 						{
 							"listen": "test",
@@ -3087,7 +3087,7 @@
 					"response": []
 				},
 				{
-					"name": "Access Token",
+					"name": "07- Access Token",
 					"event": [
 						{
 							"listen": "test",
