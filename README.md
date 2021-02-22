@@ -101,6 +101,10 @@ In order to run the Collections
 4. 04_CTC Traders API  Arrivals - CTC API tests for Arrivals Journey.
 5. 05_CTC Traders API Departures - CTC API tests for Departures Journey.
 6. 06_CTC_Test_Support_API - CTC API tests for Test Support APIs.
-7. 07-EIS Endpoints - CTC API test to test EIS routing endpoints.
-8. 09_E2E Testing -Business Test - CTC API tests for End to End Testing.
+7. 09_E2E Testing -Business Test - CTC API tests for End to End Testing.
+8. 09a_E2E Testing - Trader Test.postman_collection.json for Trader Test Pack Scenarios.
+9. 10_10K Guarantee Handling.postman_collection.json for 10K Guarantee Changes for GB.
+
+
+
 
