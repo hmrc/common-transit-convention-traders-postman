@@ -2252,14 +2252,19 @@
 									"});",
 									"",
 									"const $ = cheerio.load(responseBody);",
-									"var location = $(\"[class='form-field']\").html()",
-									"console.log(location)",
-									"var grant_scope= (location.split(\"=\")[1]).split(\"\\\"\")[1]",
-									"pm.environment.set(\"grant_scope\",grant_scope);",
+									"var path;",
 									"",
-									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
-									"pm.environment.set(\"auth_id\",auth_id);",
-									"console.log(\"Auth Id is \"+auth_id)"
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2750,10 +2755,19 @@
 									"});",
 									"",
 									"const $ = cheerio.load(responseBody);",
-									"var location = $(\"[class='form-field']\").html()",
-									"var auth_id = (location.split(\"=\")[2]).split(\"\\\" class\")[0];",
-									"pm.environment.set(\"auth_id\",auth_id);",
-									"console.log(\"Auth Id is \"+auth_id)"
+									"var path;",
+									"",
+									"links = $('a'); //jquery get all hyperlinks",
+									"  $(links).each(function(i, link){",
+									"    if(i==5)",
+									"    {",
+									"      path = $(link).attr('href');",
+									"      var auth_id = path.split(\"=\")[1];",
+									"      pm.environment.set(\"auth_id\",auth_id)",
+									"   ",
+									"    }",
+									"  })",
+									""
 								],
 								"type": "text/javascript"
 							}

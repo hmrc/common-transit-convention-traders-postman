@@ -1,110 +1,113 @@
 
 # Postman Collections for CTC API Traders
 
+### Pre-requisite 
+* Install latest version of Postman
+* Download the latest Postman collection from https://github.com/hmrc/common-transit-convention-traders-postman
+
+### If you want to run the CTC API Trader Tests on External Test
+
+### To test APIs
+
+In order to test the APIs on External Test you would need register on HMRC Developer Hub and have your client credentails like client secret and client Id.
+
+Kindly see the section - How to get set up for testing on the link :
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/common-transit-convention-traders-test-support/1.0
+
+As the CTC Traders API is user restricted endpoint, you would need to generate an access token. This can be done using the curl commands and following instructions on:
+https://developer.service.hmrc.gov.uk/api-documentation/docs/authorisation/user-restricted-endpoints
+
+### Importing Environment Variables
+
+1. Open Postman, select Manage Environment (top right cog icon).
+2. Under the Manage Environments box select Import and add the CTC_ExternalTest json file to run from the EnvironmentVariables folder.
+3. Select the environment CTC_ExternalTest from the drop down, if you want to run the API tests on External Test.
+4. Click on Edit and key in your bearer token against the access_token variable.
+
+### Importing the Collections
+
+In order to submit messages using CTC Traders API you need to import the json files within the Collections folder, into Postman.
+
+1. Open Postman
+2. Select Import -> Upload files from collections folder (Details on List Collection can be found at the end of this file).
+3. Select 05_E2E Testing Business Test collection ,if you want to test the scenarios from Trader Test Pack on Business Test environment.
+4. Select 06_E2E Testing Trader Test,if you want to test the scenarios from Trader Test Pack on Trader Test environment.
+
+Note: Before you can use the collections **YOU MUST import the EnvironmentVariables**
+
+### Run the Collections
+
+In order to run the Collections 
+
+1. Make sure you select the Environment Variable from the drop down.CTC_ExternalTest for Trader Test environment.
+2. Go back to the Collection pane, select and run the tests you want to test .
+
+Note: Trader Test Postman Collection needs to be run manually.
+
+
+
 ### If you want to test the CTC API Trader tests locally
 
-* Pull in the latest service manager and service-manager-config
+* Pull in the latest service manager and service-manager-config :
 
   https://github.com/hmrc/service-manager
   https://github.com/hmrc/service-manager-config
   
-* Make sure you have mongo db and CTC_TRADERS_ARRIVAL service profile running
-* Install latest version of Postman
+* Make sure you have mongo db and CTC_TRADERS_ARRIVAL service profile running.
 
 ### To test APIs
 
-In order to test the CTC APIs locally ,you would need a bearer token. Please follow the instructions on the page below to create a bearer token
-<Link to Matthews page for creating bearer token locally>
+In order to test the CTC APIs locally ,you would need a bearer token. Please follow the instructions below to create a bearer token:
+
+1. Open the Auth-wizard link
+   http://localhost:9949/auth-login-stub/gg-sign-in
+2. Keyin the Redirect URL as -  http://localhost:9949/auth-login-stub/session.
+3. Enter the values for Enrolments:
+        Enrolment Key - HMCE-NCTS-ORG 
+        Identifier Name- VATRegNoTURN 
+        Identifier Value - 334 
+4. Click on Submit and Copy the authToken,if using Postman you just need the token details after Bearer.
 
 ### Importing Environment Variables
 
 To use the collections, Postman uses environment varaibles which needs importing before you can run any collection
 
-1. Within Postman, select Manage Environment (top right cog icon)
-2. Under the Manage Environments box select Import and CTC_Local from the EnvironmentVariables folder
-3. Select the environment from the drop down, before you run the API tests. 
+1. Within Postman, select Manage Environment (top right cog icon).
+2. Under the Manage Environments box select Import and CTC_Local from the EnvironmentVariables folder.
+3. Select the environment as CTC_Local from the drop down, before you run the API tests. 
 4. Click on Edit and key in your bearer_token created.
 
 ### Importing the Collections
 
 In order to submit messages using CTC Traders API you need to import the json files within the Collections folder, into Postman.
 
-1. Open Postman
-
-2. Select Import -> Drag the json file 01_CTC API Testing Local from collections folder 
-
-In the Collections tab on the left you can click on the parent folder which would list the different collections related to CTC tests you imported.
+1. Open Postman.
+2. Select Import -> Upload files and click on 01_CTC API Testing Local from collections folder.
 
 Note: Before you can use the collections **YOU MUST import the EnvironmentVariables**
+
 
 ### Run the Collections
 
 In order to run the Collections 
 
 1. Make sure you select the Environment Variable and this is set to CTC_Local.
-2. Go to the Collection pane, select and run the collection you want to test .This must run all the tests for the selected collection and give you the Pass and Fail Results.
+2. Go to the Collection pane, select and run the collection 01_CTC API Testing Local.This must run all the tests for the selected collection and give you the Pass and Fail Results.
 
-### If you want to run the CTC API Trader Tests on External Test
+### Generate Bearer Token using Postman Collection (Alternate way to create Bearer token for internal users only)
 
-
-### To test APIs
-
-In order to test the APIs on External Test you would need register to GG and have your client credentails like client secret and client Id.
-
-This is one off process and can be created by following the guidelines on the page:
-<Link to Matthews page for creating bearer token on ET>
-
-### Importing Environment Variables
-
-> To use the collections Postman uses custom environment variables for setting bearer tokens, base_urls etc. These need importing before you can run any collection.
-
-1. Within Postman, select Manage Environment (top right cog icon)
-2. Under the Manage Environments box select Import and add the json files you want to run from the EnvironmentVariables folder
-3. Select the environment CTC_ExternalTest from the drop down, if you want to run the API tests on ET.
-4. Click on Edit and key in your bearer token against the access_token variable.
-
-You should have the environment and required client credentials you can now use to run your collections against
-
-### Importing the Collections
-
-In order to submit messages using CTC Traders API you need to import the json files within the Collections folder, into Postman.
-
-1. Open Postman
-
-2. Select Import -> Drag all json files from collections folder(description of collection avaliable at the end of file)
-
-In the Collections tab on the left you should have a list of different collections related to CTC
-
-Note: Before you can use the collections **YOU MUST import the EnvironmentVariables**
-
-### Run the Collections
-
-In order to run the Collections 
-
-1. Make sure you select the Environment Variable you want to execute the collection.
-2. Go back to the Collection pane, select and run the collection you want to test .This must run all the tests for the selected collection and give you the Pass and Fail Results.
-
-
-###  Generate Bearer Token using Postman Collection
-
-1. If you want to create the bearer token using the Postman scripts, make sure you have added your Client credentials in the Environment variable setting.
+1. If you want to create the bearer token using the Postman scripts, make sure you have added your Client credentials and eori in the Environment variable setting.
 2. To generate the token,click on the collection 02_Bearer_Token_CTC_API. Hover over the collection and Click on the arrow. Select the folder "Auth_With_Enrolment_ET" from the list to create the token for External Test.
 3. Hit the Run button and 02_Bearer_Token_CTC_API button again.
-4. This should have created the bearer token you need for the API tests.Click on the environment varaible and see if access_token is populated with value.
-5. You can now run the collections for CTC API Testing
+4. This should have created the bearer token you need for the API tests.Re-run the test if any of the step fails.Click on the environment varaible and see if access_token is populated with value.
+5. You can now run the collections for CTC API Testing.
 
-###  Collections
+### Collections
 
 1. 01_CTC API Testing Local - Collection of APIs that can be run locally.
 2. 02_Bearer Token CTC API - Generates Bearer Tokens for managed environment.
-3. 03_CTC API Smoke Testing - Subset of tests used for smoke testing CTC Traders API.
-4. 04_CTC Traders API  Arrivals - CTC API tests for Arrivals Journey.
-5. 05_CTC Traders API Departures - CTC API tests for Departures Journey.
-6. 06_CTC_Test_Support_API - CTC API tests for Test Support APIs.
-7. 09_E2E Testing -Business Test - CTC API tests for End to End Testing.
-8. 09a_E2E Testing - Trader Test.postman_collection.json for Trader Test Pack Scenarios.
-9. 10_10K Guarantee Handling.postman_collection.json for 10K Guarantee Changes for GB.
-
-
-
-
+3. 03_CTC API Smoke Testing - Subset of tests used for smoke testing CTC Traders API for Dev and Staging environment.
+4. 04_CTC Traders API Regression Pack - Regression Pack for CTC Traders API can be run on Dev and Staging environment.
+5. 05_E2E Testing Business Test  - CTC API tests for End to End Testing on Business Test.
+6. 06_E2E Testing Trader Test - Trader Test Pack Scenarios for External Test.
+7. 07_10K Guarantee Handling - 10K Guarantee Changes for GB on Business Test.
