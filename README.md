@@ -9,7 +9,7 @@
 
 ### To test APIs
 
-In order to test the APIs on External Test you would need register on HMRC Developer Hub and have your client credentials like client secret and client Id.
+In order to test the APIs on External Test you would need register on HMRC Developer Hub and have your client credentials like client secret and client ID.
 
 Refer to section - How to get set up for testing on the link :
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/common-transit-convention-traders-test-support/1.0
@@ -99,7 +99,7 @@ In order to run the Collections
 1. If you want to create the bearer token using the Postman scripts, make sure you have added your Client credentials and eori in the Environment variable setting.
 2. To generate the token,click on the collection 02_Bearer_Token_CTC_API. Hover over the collection and Click on the arrow. Select the folder "Auth_With_Enrolment_ET" from the list to create the token for External Test.
 3. Hit the Run button and 02_Bearer_Token_CTC_API button again.
-4. This should have created the bearer token you need for the API tests. Re-run the test if any of the step fails. Click on the environment varaible and see if access_token is populated with value.
+4. This should have created the bearer token you need for the API tests. Re-run the test if any of the step fails. Click on the environment variable and see if access_token is populated with value.
 5. You can now run the collections for CTC API Testing.
 
 ### Collections
