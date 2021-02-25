@@ -53,7 +53,7 @@ You must note: Trader Test Postman Collection needs to be run manually.
   https://github.com/hmrc/service-manager
   https://github.com/hmrc/service-manager-config
   
-* Make sure you have mongo db and CTC_TRADERS_ARRIVAL service profile running.
+* Make sure you have mongo db and CTC_TRADERS_API service profile running.
 
 ### To test APIs
 
