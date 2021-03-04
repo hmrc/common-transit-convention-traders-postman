@@ -1,5 +1,9 @@
 
-# Postman Collections for CTC API Traders
+# Curl Commands for CTC Traders API
+
+* Download the latest folder from https://github.com/hmrc/common-transit-convention-traders-postman .The folder "Curl commands" has curl commands for CTC Arrivals and Departures.
+
+# Postman Collections for CTC Traders API
 
 ### Pre-requisite 
 * Install latest version of Postman

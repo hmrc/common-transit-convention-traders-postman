@@ -1,0 +1,354 @@
+
+# ### Note : Please include your CLIENT_SECRET, CLIENT_ID and ACCESS_TOKEN where required in the curl commands below.
+
+# ## Create NEW test user
+
+## Generate an application security token
+
+curl -H "content-type: application/x-www-form-urlencoded" --data \
+"client_secret=${CLIENT_SECRET}\
+&client_id=${CLIENT_ID}\
+&grant_type=client_credentials\
+&scope=common-transit-convention-traders" \
+https://test-api.service.hmrc.gov.uk/oauth/token
+
+## Test User Creation
+
+Note : If you need an individuals user, use https://test-api.service.hmrc.gov.uk/create-test-user/individuals url in the curl command above instead of the 'organisations' url.
+
+curl \
+https://test-api.service.hmrc.gov.uk/create-test-user/organisations \
+-H 'accept: application/vnd.hmrc.1.0+json' \
+-H 'Content-Type: application/json' \
+-H 'cache-control: no-cache' \
+-H "Authorization: Bearer ${ACCESS_TOKEN}" \
+-d '{"serviceNames": [ "common-transit-convention-traders" ] }'
+
+# ### START HERE IF YOU ALREADY HAVE A TEST USER ###
+
+## Login and generate an auth code ##
+
+https://test-www.tax.service.gov.uk/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=https://localhost&scope=common-transit-convention-traders&response_type=code
+
+export AUTH_CODE=4df1560b5XXXe4bc1a2f0ddc335f31d65
+
+## Generate a session code ##
+curl \
+https://test-api.service.hmrc.gov.uk/oauth/token \
+-H 'accept: application/vnd.hmrc.1.0+json' \
+-H 'cache-control: no-cache' \
+-H 'content-type: application/x-www-form-urlencoded' \
+-d "code=${AUTH_CODE}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=${AUTH_CODE}&redirect_uri=${REDIRECT_URI}"
+
+export ACCESS_TOKEN=XXX0ca049d8XXXX39814fb8a13a9eb
+export REFRESH_TOKEN=XXX53eeca8XXXXXb804095b02d160
+
+## Retrieve a NEW session token after the ACCESS TOKEN is expired ##
+curl \
+https://test-api.service.hmrc.gov.uk/oauth/token \
+-H 'accept: application/vnd.hmrc.1.0+json' \
+-H 'cache-control: no-cache' \
+-H 'content-type: application/x-www-form-urlencoded' \
+-d "grant_type=refresh_token&refresh_token=${REFRESH_TOKEN}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}"
+
+#########  DEPARTURES #########
+
+## Example : Send an IE015 Departure Notification ##
+
+curl --location --request POST 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/departures' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}' \
+--header 'Content-Type: application/xml' \
+--data-raw '<CC015B>
+    <SynIdeMES1>UNOC</SynIdeMES1>
+    <SynVerNumMES2>3</SynVerNumMES2>
+    <MesRecMES6>NCTS</MesRecMES6>
+    <DatOfPreMES9>20210303</DatOfPreMES9>
+    <TimOfPreMES10>1333</TimOfPreMES10>
+    <IntConRefMES11>17662776033187</IntConRefMES11>
+    <AppRefMES14>NCTS</AppRefMES14>
+    <MesIdeMES19>1</MesIdeMES19>
+    <MesTypMES20>GB015B</MesTypMES20>
+    <HEAHEA>
+        <RefNumHEA4>TRATESTDEC22103031153</RefNumHEA4>
+        <TypOfDecHEA24>T1</TypOfDecHEA24>
+        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>
+        <AutLocOfGooCodHEA41>954131533-GB60DEP</AutLocOfGooCodHEA41>
+        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>
+        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>
+        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>
+        <ConIndHEA96>0</ConIndHEA96>
+        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>
+        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>
+        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>
+        <TotGroMasHEA307>1000</TotGroMasHEA307>
+        <DecDatHEA383>20210303</DecDatHEA383>
+        <DecPlaHEA394>Dover</DecPlaHEA394>
+    </HEAHEA>
+    <TRAPRIPC1>
+        <NamPC17>NCTS UK TEST LAB HMCE</NamPC17>
+        <StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>
+        <PosCodPC123>SS99 1AA</PosCodPC123>
+        <CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>
+        <CouPC125>GB</CouPC125>
+        <NADLNGPC>EN</NADLNGPC>
+        <TINPC159>GB954131533000</TINPC159>
+    </TRAPRIPC1>
+    <TRACONCO1>
+        <NamCO17>NCTS UK TEST LAB HMCE</NamCO17>
+        <StrAndNumCO122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumCO122>
+        <PosCodCO123>SS99 1AA</PosCodCO123>
+        <CitCO124>SOUTHEND-ON-SEA, ESSEX</CitCO124>
+        <CouCO125>GB</CouCO125>
+        <TINCO159>GB954131533000</TINCO159>
+    </TRACONCO1>
+    <TRACONCE1>
+        <NamCE17>NCTS UK TEST LAB HMCE</NamCE17>
+        <StrAndNumCE122>ITALIAN OFFICE</StrAndNumCE122>
+        <PosCodCE123>IT99 1IT</PosCodCE123>
+        <CitCE124>MILAN</CitCE124>
+        <CouCE125>IT</CouCE125>
+        <TINCE159>IT11ITALIANC11</TINCE159>
+    </TRACONCE1>
+    <CUSOFFDEPEPT>
+        <RefNumEPT1>GB000060</RefNumEPT1>
+    </CUSOFFDEPEPT>
+    <CUSOFFTRARNS>
+        <RefNumRNS1>FR001260</RefNumRNS1>
+        <ArrTimTRACUS085>202103051153</ArrTimTRACUS085>
+    </CUSOFFTRARNS>
+    <CUSOFFDESEST>
+        <RefNumEST1>IT018105</RefNumEST1>
+    </CUSOFFDESEST>
+    <CONRESERS>
+         <ConResCodERS16>A3</ConResCodERS16>
+         <DatLimERS69>20210311</DatLimERS69>
+    </CONRESERS>
+    <SEAINFSLI>
+        <SeaNumSLI2>1</SeaNumSLI2>
+        <SEAIDSID>
+            <SeaIdeSID1>NCTS001</SeaIdeSID1>
+        </SEAIDSID>
+    </SEAINFSLI>
+    <GUAGUA>
+        <GuaTypGUA1>1</GuaTypGUA1>
+        <GUAREFREF>
+            <GuaRefNumGRNREF1>20GB0000010000GX1</GuaRefNumGRNREF1>
+            <AccCodREF6>AC01</AccCodREF6>
+        </GUAREFREF>
+    </GUAGUA>
+   <GOOITEGDS>
+        <IteNumGDS7>1</IteNumGDS7>
+        <GooDesGDS23>Daffodils</GooDesGDS23>
+        <GooDesGDS23LNG>EN</GooDesGDS23LNG>
+        <GroMasGDS46>1000</GroMasGDS46>
+        <NetMasGDS48>950</NetMasGDS48>
+        <SPEMENMT2>
+        <AddInfMT21>20.22EUR20GB0000010000GX1</AddInfMT21>
+        <AddInfCodMT23>CAL</AddInfCodMT23>
+        </SPEMENMT2>
+         <PACGS2>
+            <MarNumOfPacGS21>AB234</MarNumOfPacGS21>
+            <KinOfPacGS23>BX</KinOfPacGS23>
+            <NumOfPacGS24>10</NumOfPacGS24>
+        </PACGS2>
+    </GOOITEGDS>
+</CC015B>'
+
+## Example : Retrieve all departures ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/departures' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization:  Bearer ${ACCESS_TOKEN}' 
+
+## Example : Retrieve specific departure ID ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/departures/${DEPARTURE_ID}' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}' 
+
+## Example : Send an IE014 Departure Cancellation Request ##
+
+curl --location --request POST 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/departures/${DEPARTURE_ID}/messages' \
+--header 'Content-Type: application/xml' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}' \
+--data-raw '<CC014A>
+<SynIdeMES1>UNOC</SynIdeMES1>
+<SynVerNumMES2>3</SynVerNumMES2>
+<MesRecMES6>NCTS</MesRecMES6>
+<DatOfPreMES9>20210304</DatOfPreMES9>
+<TimOfPreMES10>1047</TimOfPreMES10>
+<IntConRefMES11>18123420756863</IntConRefMES11>
+<AppRefMES14>NCTS</AppRefMES14>
+<TesIndMES18>0</TesIndMES18>
+<MesIdeMES19>1</MesIdeMES19>
+<MesTypMES20>GB014A</MesTypMES20>
+<HEAHEA>
+<DocNumHEA5>20GB000060100246E9</DocNumHEA5>
+<DatOfCanReqHEA147>20210304</DatOfCanReqHEA147>
+<CanReaHEA250>Guarantee Does Not Exist</CanReaHEA250>
+</HEAHEA>
+<TRAPRIPC1>
+<NamPC17>NCTS UK TEST LAB HMCE</NamPC17>
+<StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>
+<PosCodPC123>SS99 1AA</PosCodPC123>
+<CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>
+<CouPC125>GB</CouPC125>
+<TINPC159>GB954131533000</TINPC159>
+</TRAPRIPC1>
+<CUSOFFDEPEPT>
+<RefNumEPT1>GB000060</RefNumEPT1>
+</CUSOFFDEPEPT>
+</CC014A>'
+
+## Example : Retrieve all messages for a departure ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/departures/${DEPARTURE_ID}/messages' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}' 
+
+## Example : Retrieve specific message for a departure ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/departures/${DEPARTURE_ID}/messages/${MESSAGE_ID}' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN} 
+
+
+#########  ARIVALS #########
+
+## Example : Send an IE007 Arrival Notification ##
+curl -X POST -D - \
+https://test-api.service.hmrc.gov.uk/customs/transits/movements/arrivals \
+--header 'Content-Type: application/xml' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}' \
+--data-raw \
+"<CC007A>
+    <SynIdeMES1>UNOC</SynIdeMES1>
+    <SynVerNumMES2>3</SynVerNumMES2>
+    <MesRecMES6>NCTS</MesRecMES6>
+    <DatOfPreMES9>20190912</DatOfPreMES9>
+    <TimOfPreMES10>1222</TimOfPreMES10>
+    <IntConRefMES11>AF2027776572</IntConRefMES11>
+    <AppRefMES14>NCTS</AppRefMES14>
+    <TesIndMES18>0</TesIndMES18>
+    <MesIdeMES19>1</MesIdeMES19>
+    <MesTypMES20>XI007A</MesTypMES20>
+    <HEAHEA>
+        <DocNumHEA5>20GB00006010024748</DocNumHEA5>
+        <ArrNotPlaHEA60>953574106-GB60DEP</ArrNotPlaHEA60>
+        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>
+        <SimProFlaHEA132>1</SimProFlaHEA132>
+        <ArrNotDatHEA141>20190912</ArrNotDatHEA141>
+    </HEAHEA>
+    <TRADESTRD>
+        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>
+        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>
+        <PosCodTRD23>BT2 2AA</PosCodTRD23>
+        <CitTRD24>BELFAST</CitTRD24>
+        <CouTRD25>XI</CouTRD25>
+        <NADLNGRD>EN</NADLNGRD>
+        <TINTRD59>XI198654787835</TINTRD59>
+    </TRADESTRD>
+    <CUSOFFPREOFFRES>
+        <RefNumRES1>XI000142</RefNumRES1>
+    </CUSOFFPREOFFRES>
+    <ENROUEVETEV>
+        <PlaTEV10>Rome</PlaTEV10>
+        <PlaTEV10LNG>EN</PlaTEV10LNG>
+        <CouTEV13>IT</CouTEV13>
+        <CTLCTL>
+            <AlrInNCTCTL29>1</AlrInNCTCTL29>
+        </CTLCTL>
+        <SEAINFSF1>
+            <SeaNumSF12> 1 </SeaNumSF12>
+            <SEAIDSI1>
+                <SeaIdeSI11>seal_1</SeaIdeSI11>
+                <SeaIdeSI11LNG>EN</SeaIdeSI11LNG>
+            </SEAIDSI1>
+        </SEAINFSF1>
+        <TRASHP>
+            <NewTraMeaIdeSHP26>NewTestReg</NewTraMeaIdeSHP26>
+            <NewTraMeaIdeSHP26LNG>EN</NewTraMeaIdeSHP26LNG>
+            <NewTraMeaNatSHP54>IT</NewTraMeaNatSHP54>
+            <EndAutSHP61LNG> EN </EndAutSHP61LNG>
+            <EndPlaSHP63LNG> EN </EndPlaSHP63LNG>
+            <CONNR3>
+                <ConNumNR31>cont1</ConNumNR31>
+            </CONNR3>
+        </TRASHP>
+    </ENROUEVETEV>
+</CC007A>"
+
+## Example : Retrieve specific arrival ID for an arrival ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/arrivals/${ARRIVAL_ID}' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}'
+
+## Example : Retrieve all arrivals ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/arrivals' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}'
+
+## Example : Send an IE044 Arrival Unloading Permission Notification ##
+
+curl --location --request POST 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/arrivals/${ARRIVAL_ID}/messages' \
+--header 'Content-Type: application/xml' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}' \
+--data-raw '<CC044A>
+<SynIdeMES1>UNOC</SynIdeMES1>
+<SynVerNumMES2>3</SynVerNumMES2>
+<MesRecMES6>NTA.GB</MesRecMES6>
+<DatOfPreMES9>20210303</DatOfPreMES9>
+<TimOfPreMES10>1333</TimOfPreMES10>
+<IntConRefMES11>GR125LL1765965</IntConRefMES11>
+<AppRefMES14>NCTS</AppRefMES14>
+<MesIdeMES19>GR125LL1765965</MesIdeMES19>
+<MesTypMES20>GB044A</MesTypMES20>
+<HEAHEA>
+<DocNumHEA5>20GB00006010025496</DocNumHEA5>
+<IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>
+<IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>
+<NatOfMeaOfTraAtDHEA80>IT</NatOfMeaOfTraAtDHEA80>
+<TotNumOfIteHEA305>1</TotNumOfIteHEA305>
+<TotNumOfPacHEA306>10</TotNumOfPacHEA306>
+<TotGroMasHEA307>1000</TotGroMasHEA307>
+</HEAHEA>
+<TRADESTRD>
+<NamTRD7>NCTS TEST TRADER</NamTRD7>
+<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>
+<PosCodTRD23>SS2 6DX</PosCodTRD23>
+<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>
+<CouTRD25>GB</CouTRD25>
+<NADLNGRD>EN</NADLNGRD>
+<TINTRD59>GB954131533000</TINTRD59>
+</TRADESTRD>
+<CUSOFFPREOFFRES>
+<RefNumRES1>GB000060</RefNumRES1>
+</CUSOFFPREOFFRES>
+<UNLREMREM>
+<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>
+<ConREM65>1</ConREM65>
+<UnlComREM66>1</UnlComREM66>
+<UnlDatREM67>20201230</UnlDatREM67>
+</UNLREMREM>
+<SEAINFSLI>
+<SeaNumSLI2>1</SeaNumSLI2>
+<SEAIDSID>
+<SeaIdeSID1>NCTS001</SeaIdeSID1>
+</SEAIDSID>
+</SEAINFSLI>
+</CC044A>'
+
+
+## Example : Retrieve all messages for an arrival ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/arrivals/${ARRIVAL_ID}/messages' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}'
+ 
+ ## Example : Retrieve specific message for an arrival ##
+
+curl --location --request GET 'https://test-api.service.hmrc.gov.uk/customs/transits/movements/arrivals/${ARRIVAL_ID}/messages/${MESSAGE_ID}' \
+--header 'Accept: application/vnd.hmrc.1.0+json' \
+--header 'Authorization: Bearer ${ACCESS_TOKEN}'
