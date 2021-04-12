@@ -38,7 +38,7 @@ https://test-api.service.hmrc.gov.uk/oauth/token \
 -H 'accept: application/vnd.hmrc.1.0+json' \
 -H 'cache-control: no-cache' \
 -H 'content-type: application/x-www-form-urlencoded' \
--d "code=${AUTH_CODE}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=${AUTH_CODE}&redirect_uri=${REDIRECT_URI}"
+-d "code=${AUTH_CODE}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=authorization_code&redirect_uri=${REDIRECT_URI}"
 
 export ACCESS_TOKEN=XXX0ca049d8XXXX39814fb8a13a9eb
 export REFRESH_TOKEN=XXX53eeca8XXXXXb804095b02d160
