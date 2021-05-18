@@ -115,3 +115,4 @@ In order to run the Collections
 5. 05_E2E Testing Business Test  - CTC API tests for End to End Testing on Business Test.
 6. 06_E2E Testing Trader Test - Trader Test Pack Scenarios for External Test.
 7. 07_10K Guarantee Handling - 10K Guarantee Changes for GB on Business Test.
+8. 08_E2E Testing Business Test NCTS XI - E2E Testing for XI on Business Test.
