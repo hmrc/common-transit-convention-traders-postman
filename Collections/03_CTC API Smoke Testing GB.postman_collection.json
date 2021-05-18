@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2e8a6803-fa58-4f4f-b996-b34bcfe5e51c",
+		"_postman_id": "f66e6888-589a-4eb3-bfce-2bd05adb6a58",
 		"name": "03_CTC API Smoke Testing GB",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -361,7 +361,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals?updatedSince=2021-05-11T10%3A08%3A31%2B00%3A00",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -370,6 +370,12 @@
 								"transits",
 								"movements",
 								"arrivals"
+							],
+							"query": [
+								{
+									"key": "updatedSince",
+									"value": "2021-05-11T10%3A08%3A31%2B00%3A00"
+								}
 							]
 						}
 					},
@@ -469,7 +475,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages?receivedSince=2021-05-07T00%3A08%3A31%2B00%3A00",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -480,6 +486,12 @@
 								"arrivals",
 								"{{arrivalId}}",
 								"messages"
+							],
+							"query": [
+								{
+									"key": "receivedSince",
+									"value": "2021-05-07T00%3A08%3A31%2B00%3A00"
+								}
 							]
 						}
 					},
@@ -1027,7 +1039,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages?receivedSince=2021-05-07T00%3A08%3A31%2B00%3A00",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1038,6 +1050,12 @@
 								"departures",
 								"{{deptId}}",
 								"messages"
+							],
+							"query": [
+								{
+									"key": "receivedSince",
+									"value": "2021-05-07T00%3A08%3A31%2B00%3A00"
+								}
 							]
 						}
 					},
@@ -1154,7 +1172,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures",
+							"raw": "{{baseURL}}/customs/transits/movements/departures?updatedSince=2021-05-07T00%3A08%3A31%2B00%3A00",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1163,6 +1181,12 @@
 								"transits",
 								"movements",
 								"departures"
+							],
+							"query": [
+								{
+									"key": "updatedSince",
+									"value": "2021-05-07T00%3A08%3A31%2B00%3A00"
+								}
 							]
 						}
 					},
@@ -5513,11 +5537,11 @@
 	"variable": [
 		{
 			"key": "ArrNotDatHEA141",
-			"value": "20210512"
+			"value": "20210518"
 		},
 		{
 			"key": "DatOfPreMES9",
-			"value": "20210512"
+			"value": "20210518"
 		},
 		{
 			"key": "MRN",
@@ -5525,31 +5549,31 @@
 		},
 		{
 			"key": "TimOfPreMES10",
-			"value": "1719"
+			"value": "1623"
 		},
 		{
 			"key": "ArrTimTRACUS085",
-			"value": "202105141719"
+			"value": "202105201623"
 		},
 		{
 			"key": "DatLimERS69",
-			"value": "20210520"
+			"value": "20210526"
 		},
 		{
 			"key": "DecDatHEA383",
-			"value": "20210512"
+			"value": "20210518"
 		},
 		{
 			"key": "IntConRefMES11",
-			"value": 27951230354742
+			"value": 12746388250236
 		},
 		{
 			"key": "RefNumHEA4",
-			"value": "TRATESTDEC112105121719"
+			"value": "TRATESTDEC112105181623"
 		},
 		{
 			"key": "DatOfCanReqHEA147",
-			"value": "20210512"
+			"value": "20210518"
 		}
 	]
 }
