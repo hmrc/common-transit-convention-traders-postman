@@ -4870,72 +4870,6 @@
 									"response": []
 								},
 								{
-									"name": "POST IE917",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"POST IE917 must return response code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});",
-													"if (pm.response.code !== 200) {",
-													"    return;",
-													"}"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/xml",
-												"type": "text"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer {{bearer_token}}",
-												"type": "text"
-											},
-											{
-												"key": "X-Message-Recipient",
-												"value": "MDTP-DEP-00000000000000000000851-01",
-												"type": "text"
-											},
-											{
-												"key": "x-message-type",
-												"value": "IE917",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "<CC917A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesSenMES3>NCTS</MesSenMES3>\n    <MesRecMES6>MDTP-DEP-00000000000000000000851-01</MesRecMES6>\n    <DatOfPreMES9>20210119</DatOfPreMES9>\n    <TimOfPreMES10>0948</TimOfPreMES10>\n    <IntConRefMES11>EC210119094804</IntConRefMES11>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB917A</MesTypMES20>\n    <HEAHEA>\n        <OriMesIdeMES22>AF202101191</OriMesIdeMES22>\n        <DocNumHEA5>99IT9876AB88901209</DocNumHEA5>\n    </HEAHEA>\n    <FUNERRER1>\n        <ErrTypER11>12</ErrTypER11>\n        <ErrPoiER12>TRD[1].TIN</ErrPoiER12>\n        <ErrReaER13>UTF8 ENCODING</ErrReaER13>\n        <OriAttValER14>Test Data</OriAttValER14>\n    </FUNERRER1>\n</CC917A>",
-											"options": {
-												"raw": {
-													"language": "xml"
-												}
-											}
-										},
-										"url": {
-											"raw": "http://localhost:9486/transit-movements-trader-router/messages",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "9486",
-											"path": [
-												"transit-movements-trader-router",
-												"messages"
-											]
-										}
-									},
-									"response": []
-								},
-								{
 									"name": "POST IE009",
 									"event": [
 										{
@@ -5943,7 +5877,7 @@
 							"name": "14 - IE105 > IE917",
 							"item": [
 								{
-									"name": "POST IE015",
+									"name": "01 POST IE015",
 									"event": [
 										{
 											"listen": "test",
@@ -6033,7 +5967,60 @@
 									"response": []
 								},
 								{
-									"name": "POST IE917",
+									"name": "02- GET all departures messages",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const responseJson = pm.response.json();",
+													"var jsonObject = xml2Json(responseJson._embedded.messages[0].body);",
+													"    ",
+													"var mdtpId = jsonObject.CC015B.MesSenMES3",
+													"pm.collectionVariables.set(\"MDTP-DEP-ID\", mdtpId);",
+													"",
+													"pm.test(\"Status return response code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"if (pm.response.code !== 200) {",
+													"    return;",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.hmrc.1.0+json"
+											},
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{bearer_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseURL}}/movements/departures/{{deptId}}/messages",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"movements",
+												"departures",
+												"{{deptId}}",
+												"messages"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "03 POST IE917",
 									"event": [
 										{
 											"listen": "test",
@@ -6053,9 +6040,7 @@
 											"listen": "prerequest",
 											"script": {
 												"exec": [
-													"var DeptID = pm.environment.get(\"deptId\");",
-													"console.log(DeptID)",
-													"pm.collectionVariables.set(\"DeptID\", DeptID);"
+													""
 												],
 												"type": "text/javascript"
 											}
@@ -6066,28 +6051,28 @@
 										"header": [
 											{
 												"key": "Content-Type",
-												"value": "application/xml",
-												"type": "text"
+												"type": "text",
+												"value": "application/xml"
 											},
 											{
 												"key": "Authorization",
-												"value": "Bearer {{bearer_token}}",
-												"type": "text"
+												"type": "text",
+												"value": "Bearer {{bearer_token}}"
 											},
 											{
 												"key": "X-Message-Recipient",
-												"value": "MDTP-DEP-00000000000000000000{{deptId}}-01",
-												"type": "text"
+												"type": "text",
+												"value": "{{MDTP-DEP-ID}}"
 											},
 											{
 												"key": "x-message-type",
-												"value": "IE917",
-												"type": "text"
+												"type": "text",
+												"value": "IE917"
 											}
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<CC917A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesSenMES3>NCTS</MesSenMES3>\n    <MesRecMES6>MDTP-DEP-00000000000000000000{{DeptID}}-01</MesRecMES6>\n    <DatOfPreMES9>20210119</DatOfPreMES9>\n    <TimOfPreMES10>0948</TimOfPreMES10>\n    <IntConRefMES11>EC210119094804</IntConRefMES11>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB917A</MesTypMES20>\n    <HEAHEA>\n        <OriMesIdeMES22>AF202101191</OriMesIdeMES22>\n        <DocNumHEA5>99IT9876AB88901209</DocNumHEA5>\n    </HEAHEA>\n    <FUNERRER1>\n        <ErrTypER11>12</ErrTypER11>\n        <ErrPoiER12>TRD[1].TIN</ErrPoiER12>\n        <ErrReaER13>UTF8 ENCODING</ErrReaER13>\n        <OriAttValER14>Test Data</OriAttValER14>\n    </FUNERRER1>\n</CC917A>",
+											"raw": "<CC917A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesSenMES3>NCTS</MesSenMES3>\n    <MesRecMES6>{{MDTP-DEP-ID}}</MesRecMES6>\n    <DatOfPreMES9>20210119</DatOfPreMES9>\n    <TimOfPreMES10>0948</TimOfPreMES10>\n    <IntConRefMES11>EC210119094804</IntConRefMES11>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB917A</MesTypMES20>\n    <HEAHEA>\n        <OriMesIdeMES22>AF202101191</OriMesIdeMES22>\n        <DocNumHEA5>99IT9876AB88901209</DocNumHEA5>\n    </HEAHEA>\n    <FUNERRER1>\n        <ErrTypER11>12</ErrTypER11>\n        <ErrPoiER12>TRD[1].TIN</ErrPoiER12>\n        <ErrReaER13>UTF8 ENCODING</ErrReaER13>\n        <OriAttValER14>Test Data</OriAttValER14>\n    </FUNERRER1>\n</CC917A>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -6110,7 +6095,7 @@
 									"response": []
 								},
 								{
-									"name": "07- GET all departures",
+									"name": "04 GET departures messages",
 									"event": [
 										{
 											"listen": "test",
@@ -6182,7 +6167,7 @@
 							"name": "15 - IE014 > IE917",
 							"item": [
 								{
-									"name": "POST IE015",
+									"name": "01 POST IE015",
 									"event": [
 										{
 											"listen": "test",
@@ -6241,7 +6226,60 @@
 									"response": []
 								},
 								{
-									"name": "POST IE928",
+									"name": "02 Get messages",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const responseJson = pm.response.json();",
+													"var jsonObject = xml2Json(responseJson._embedded.messages[0].body);",
+													"    ",
+													"var mdtpId = jsonObject.CC015B.MesSenMES3",
+													"pm.collectionVariables.set(\"MDTP-DEP-ID\", mdtpId);",
+													"",
+													"pm.test(\"Status return response code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"if (pm.response.code !== 200) {",
+													"    return;",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.hmrc.1.0+json",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{bearer_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseURL}}/movements/departures/{{deptId}}/messages",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"movements",
+												"departures",
+												"{{deptId}}",
+												"messages"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "03 POST IE928",
 									"event": [
 										{
 											"listen": "test",
@@ -6299,7 +6337,7 @@
 									"response": []
 								},
 								{
-									"name": "POST IE028",
+									"name": "04 POST IE028",
 									"request": {
 										"method": "POST",
 										"header": [
@@ -6339,7 +6377,7 @@
 									"response": []
 								},
 								{
-									"name": "POST IE029",
+									"name": "05 POST IE029",
 									"request": {
 										"method": "POST",
 										"header": [
@@ -6379,7 +6417,7 @@
 									"response": []
 								},
 								{
-									"name": "POST IE014",
+									"name": "06 POST IE014",
 									"event": [
 										{
 											"listen": "test",
@@ -6439,7 +6477,7 @@
 									"response": []
 								},
 								{
-									"name": "POST IE917",
+									"name": "07 POST IE917",
 									"event": [
 										{
 											"listen": "test",
@@ -6459,9 +6497,7 @@
 											"listen": "prerequest",
 											"script": {
 												"exec": [
-													"var DeptID = pm.environment.get(\"deptId\");",
-													"console.log(DeptID)",
-													"pm.collectionVariables.set(\"DeptID\", DeptID);"
+													""
 												],
 												"type": "text/javascript"
 											}
@@ -6482,7 +6518,7 @@
 											},
 											{
 												"key": "X-Message-Recipient",
-												"value": "MDTP-DEP-00000000000000000000{{deptId}}-01",
+												"value": "{{MDTP-DEP-ID}}",
 												"type": "text"
 											},
 											{
@@ -6493,7 +6529,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<CC917A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesSenMES3>NCTS</MesSenMES3>\n    <MesRecMES6>MDTP-DEP-00000000000000000000{{DeptID}}-01</MesRecMES6>\n    <DatOfPreMES9>20210119</DatOfPreMES9>\n    <TimOfPreMES10>0948</TimOfPreMES10>\n    <IntConRefMES11>EC210119094804</IntConRefMES11>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB917A</MesTypMES20>\n    <HEAHEA>\n        <OriMesIdeMES22>AF202101191</OriMesIdeMES22>\n        <DocNumHEA5>99IT9876AB88901209</DocNumHEA5>\n    </HEAHEA>\n    <FUNERRER1>\n        <ErrTypER11>12</ErrTypER11>\n        <ErrPoiER12>TRD[1].TIN</ErrPoiER12>\n        <ErrReaER13>UTF8 ENCODING</ErrReaER13>\n        <OriAttValER14>Test Data</OriAttValER14>\n    </FUNERRER1>\n</CC917A>",
+											"raw": "<CC917A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesSenMES3>NCTS</MesSenMES3>\n    <MesRecMES6>{{MDTP-DEP-ID}}</MesRecMES6>\n    <DatOfPreMES9>20210119</DatOfPreMES9>\n    <TimOfPreMES10>0948</TimOfPreMES10>\n    <IntConRefMES11>EC210119094804</IntConRefMES11>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB917A</MesTypMES20>\n    <HEAHEA>\n        <OriMesIdeMES22>AF202101191</OriMesIdeMES22>\n        <DocNumHEA5>99IT9876AB88901209</DocNumHEA5>\n    </HEAHEA>\n    <FUNERRER1>\n        <ErrTypER11>12</ErrTypER11>\n        <ErrPoiER12>TRD[1].TIN</ErrPoiER12>\n        <ErrReaER13>UTF8 ENCODING</ErrReaER13>\n        <OriAttValER14>Test Data</OriAttValER14>\n    </FUNERRER1>\n</CC917A>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -6516,7 +6552,7 @@
 									"response": []
 								},
 								{
-									"name": "POST IE014",
+									"name": "08 POST IE014",
 									"event": [
 										{
 											"listen": "test",
@@ -6576,7 +6612,7 @@
 									"response": []
 								},
 								{
-									"name": "POST IE009",
+									"name": "09 POST IE009",
 									"event": [
 										{
 											"listen": "test",
@@ -6634,7 +6670,7 @@
 									"response": []
 								},
 								{
-									"name": "07- GET messages",
+									"name": "10 GET messages",
 									"event": [
 										{
 											"listen": "test",
@@ -6681,7 +6717,7 @@
 									"response": []
 								},
 								{
-									"name": "07- GET msgId",
+									"name": "11 GET msgId",
 									"event": [
 										{
 											"listen": "test",
@@ -6777,16 +6813,28 @@
 	],
 	"variable": [
 		{
+			"key": "ArrNotDatHEA141",
+			"value": "20210520"
+		},
+		{
 			"key": "DatOfPreMES9",
 			"value": "20210520"
 		},
 		{
+			"key": "IntConRefMES11",
+			"value": 40676691375611
+		},
+		{
 			"key": "TimOfPreMES10",
-			"value": "1340"
+			"value": "1608"
 		},
 		{
 			"key": "ArrTimTRACUS085",
-			"value": "202105221340"
+			"value": "202105221608"
+		},
+		{
+			"key": "DatLimERS69",
+			"value": "20210528"
 		},
 		{
 			"key": "DecDatHEA383",
@@ -6794,19 +6842,7 @@
 		},
 		{
 			"key": "RefNumHEA4",
-			"value": "EXAMPLE1210520134013"
-		},
-		{
-			"key": "IntConRefMES11",
-			"value": 12397768438928
-		},
-		{
-			"key": "DatLimERS69",
-			"value": "20210528"
-		},
-		{
-			"key": "ArrNotDatHEA141",
-			"value": "20210520"
+			"value": "EXAMPLE1210520160832"
 		},
 		{
 			"key": "DatOfCanReqHEA147",
@@ -6814,7 +6850,11 @@
 		},
 		{
 			"key": "DeptID",
-			"value": "946"
+			"value": "1007"
+		},
+		{
+			"key": "MDTP-DEP-ID",
+			"value": "MDTP-DEP-00000000000000000001071-01"
 		}
 	]
 }
