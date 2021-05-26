@@ -1,10 +1,183 @@
 {
 	"info": {
-		"_postman_id": "209a2aa5-f6bb-4c42-99c0-13566036448e",
+		"_postman_id": "d095d6c2-630c-4ba8-8c08-24bc0064ada3",
 		"name": "01_CTC API Testing Local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Prepare Client Setup",
+			"item": [
+				{
+					"name": "POST Create Client Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"const jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TEST APP\",\n    \"access\": {\n        \"accessType\": \"STANDARD\",\n        \"redirectUris\": [],\n        \"overrides\": []\n    },\n    \"environment\": \"SANDBOX\",\n    \"collaborators\": [\n        {\n            \"emailAddress\": \"test@test.com\",\n            \"role\": \"ADMINISTRATOR\",\n            \"userId\": \"{{$randomUUID}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{3rdPartyBaseUrl}}/application",
+							"host": [
+								"{{3rdPartyBaseUrl}}"
+							],
+							"path": [
+								"application"
+							]
+						},
+						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box For Arrivals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "transit-movements-trader-at-destination",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\":\"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box For Departures",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"type": "text",
+								"value": "transits-movements-trader-at-departure"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\":\"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Create Bearer Token",
 			"item": [
@@ -215,6 +388,11 @@
 									{
 										"key": "Authorization",
 										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Id",
+										"value": "{{clientId}}",
 										"type": "text"
 									}
 								],
@@ -888,6 +1066,11 @@
 									{
 										"key": "Authorization",
 										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Id",
+										"value": "{{clientId}}",
 										"type": "text"
 									}
 								],
@@ -6787,6 +6970,157 @@
 							]
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Verify Notifications",
+			"item": [
+				{
+					"name": "GET Notification Box Messages for Arrivals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"type": "text",
+								"value": "transit-movements-trader-at-destination"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.hmrc.1.0+json",
+								"type": "text"
+							},
+							{
+								"key": "X-Client-Id",
+								"value": "{{clientId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box/{{boxId}}/notifications",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box",
+								"{{boxId}}",
+								"notifications"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Notification Box Messages for Departures",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"type": "text",
+								"value": "transits-movements-trader-at-departure"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.hmrc.1.0+json"
+							},
+							{
+								"key": "X-Client-Id",
+								"type": "text",
+								"value": "{{clientId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box/{{boxId}}/notifications",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box",
+								"{{boxId}}",
+								"notifications"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
 				}
 			]
 		}
