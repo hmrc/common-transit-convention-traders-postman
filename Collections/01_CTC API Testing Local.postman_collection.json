@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "209a2aa5-f6bb-4c42-99c0-13566036448e",
+		"_postman_id": "858e05a2-32d1-4fe7-9812-9b87430656b3",
 		"name": "01_CTC API Testing Local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -151,11 +151,253 @@
 			]
 		},
 		{
+			"name": "Prepare Client Setup",
+			"item": [
+				{
+					"name": "POST Create Client Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TEST APP\",\n    \"access\": {\n        \"accessType\": \"STANDARD\",\n        \"redirectUris\": [],\n        \"overrides\": []\n    },\n    \"environment\": \"SANDBOX\",\n    \"collaborators\": [\n        {\n            \"emailAddress\": \"test@test.com\",\n            \"role\": \"ADMINISTRATOR\",\n            \"userId\": \"{{$randomUUID}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{3rdPartyBaseUrl}}/application",
+							"host": [
+								"{{3rdPartyBaseUrl}}"
+							],
+							"path": [
+								"application"
+							]
+						},
+						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "transit-movements-trader-at-destination",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\": \"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fieldDefinitions\": [\n        {\n            \"name\": \"notificationUrl\",\n            \"shortDescription\": \"Notification URL\",\n            \"description\": \"What is your notification web address for us to send push notifications to?\",\n            \"type\": \"PPNSField\",\n            \"hint\": \"You must only give us a web address that you own. Your application will use this address to listen to notifications from HMRC.\",\n            \"validation\": {\n                \"errorMessage\": \"notificationUrl must be a valid https URL\",\n                \"rules\": [\n                    {\n                        \"UrlValidationRule\": {}\n                    }\n                ]\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"definition",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Field Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fields\": {\n        \"notificationUrl\": \"http://localhost:10202/push-pull-notification-receiver-stub/notifications\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"field",
+								"application",
+								"{{clientId}}",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Smoke Tests",
 			"item": [
 				{
 					"name": "Arrivals",
 					"item": [
+						{
+							"name": "00 - DELETE Notifications",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{pushPullReceiverStubBaseUrl}}/push-pull-notification-receiver-stub/notifications",
+									"host": [
+										"{{pushPullReceiverStubBaseUrl}}"
+									],
+									"path": [
+										"push-pull-notification-receiver-stub",
+										"notifications"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "01- POST Arrival IE007",
 							"event": [
@@ -215,6 +457,11 @@
 									{
 										"key": "Authorization",
 										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Id",
+										"value": "{{clientId}}",
 										"type": "text"
 									}
 								],
@@ -792,6 +1039,45 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "10 - GET Notifications",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response data contains an array of notifications\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\");",
+											"    pm.expect(jsonData).not.to.be.empty;",
+											"    pm.expect(jsonData).to.have.lengthOf(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pushPullReceiverStubBaseUrl}}/push-pull-notification-receiver-stub/notifications/{{boxId}}",
+									"host": [
+										"{{pushPullReceiverStubBaseUrl}}"
+									],
+									"path": [
+										"push-pull-notification-receiver-stub",
+										"notifications",
+										"{{boxId}}"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"event": [
@@ -818,6 +1104,38 @@
 				{
 					"name": "Departures",
 					"item": [
+						{
+							"name": "00 - DELETE Notifications",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{pushPullReceiverStubBaseUrl}}/push-pull-notification-receiver-stub/notifications",
+									"host": [
+										"{{pushPullReceiverStubBaseUrl}}"
+									],
+									"path": [
+										"push-pull-notification-receiver-stub",
+										"notifications"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "01- POST IE015",
 							"event": [
@@ -888,6 +1206,11 @@
 									{
 										"key": "Authorization",
 										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Client-Id",
+										"value": "{{clientId}}",
 										"type": "text"
 									}
 								],
@@ -1871,6 +2194,45 @@
 									"path": [
 										"movements",
 										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "11 - GET Notifications",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response data contains an array of notifications\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\");",
+											"    pm.expect(jsonData).not.to.be.empty;",
+											"    pm.expect(jsonData).to.have.lengthOf(2);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pushPullReceiverStubBaseUrl}}/push-pull-notification-receiver-stub/notifications/{{boxId}}",
+									"host": [
+										"{{pushPullReceiverStubBaseUrl}}"
+									],
+									"path": [
+										"push-pull-notification-receiver-stub",
+										"notifications",
+										"{{boxId}}"
 									]
 								}
 							},
@@ -6787,6 +7149,157 @@
 							]
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Verify Notifications",
+			"item": [
+				{
+					"name": "GET Notification Box Messages for Arrivals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"type": "text",
+								"value": "transit-movements-trader-at-destination"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.hmrc.1.0+json",
+								"type": "text"
+							},
+							{
+								"key": "X-Client-Id",
+								"value": "{{clientId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box/{{boxId}}/notifications",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box",
+								"{{boxId}}",
+								"notifications"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Notification Box Messages for Departures",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"type": "text",
+								"value": "transits-movements-trader-at-departure"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.hmrc.1.0+json"
+							},
+							{
+								"key": "X-Client-Id",
+								"type": "text",
+								"value": "{{clientId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box/{{boxId}}/notifications",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box",
+								"{{boxId}}",
+								"notifications"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
 				}
 			]
 		}
