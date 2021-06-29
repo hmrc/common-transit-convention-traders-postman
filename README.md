@@ -57,7 +57,12 @@ You must note: Trader Test Postman Collection needs to be run manually.
   https://github.com/hmrc/service-manager
   https://github.com/hmrc/service-manager-config
   
-* Make sure you have mongo db and CTC_TRADERS_API service profile running.
+* Make sure you have mongo db and CTC_TRADERS_API service profile running with the following arguments:
+
+```
+sm --start CTC_TRADERS_API \
+  --appendArgs '{"PUSH_PULL_NOTIFICATIONS_API": ["-Dwhitelisted.useragents.0=api-subscription-fields", "-Dwhitelisted.useragents.1=transit-movements-trader-at-destination", "-Dwhitelisted.useragents.2=transits-movements-trader-at-departure"], "PUSH_PULL_NOTIFICATIONS_GATEWAY": ["-DvalidateHttpsCallbackUrl=false"]}'
+```
 
 ### To test APIs
 
