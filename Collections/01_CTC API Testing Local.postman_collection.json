@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "858e05a2-32d1-4fe7-9812-9b87430656b3",
+		"_postman_id": "db38be93-9b46-4f31-b6a4-2ff9c5a71559",
 		"name": "01_CTC API Testing Local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -415,7 +415,10 @@
 											"});",
 											"if (pm.response.code !== 202) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"const jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"requestId\", jsonData._embedded.notifications.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1056,6 +1059,18 @@
 											"    pm.expect(jsonData).to.be.an(\"array\");",
 											"    pm.expect(jsonData).not.to.be.empty;",
 											"    pm.expect(jsonData).to.have.lengthOf(1);",
+											"});",
+											"",
+											"pm.test(\"Response data contains the correct request id\", ()=>{",
+											"    const jsonData = pm.response.json();",
+											"    const requestId = pm.environment.get(\"requestId\");",
+											"    jsonData.forEach(",
+											"        element => {",
+											"            const messageData = JSON.parse(element.message)",
+											"            pm.expect(messageData.requestId).to.be.equal(requestId)",
+											"        }",
+											"    )",
+											"",
 											"});"
 										],
 										"type": "text/javascript"
@@ -1189,7 +1204,10 @@
 											"",
 											"if (pm.response.code !== 202) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"const jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"requestId\", jsonData._embedded.notifications.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -2215,6 +2233,19 @@
 											"    pm.expect(jsonData).to.be.an(\"array\");",
 											"    pm.expect(jsonData).not.to.be.empty;",
 											"    pm.expect(jsonData).to.have.lengthOf(2);",
+											"",
+											"});",
+											"",
+											"pm.test(\"Response data contains the correct request id\", ()=>{",
+											"    const jsonData = pm.response.json();",
+											"    const requestId = pm.environment.get(\"requestId\");",
+											"    jsonData.forEach(",
+											"        element => {",
+											"            const messageData = JSON.parse(element.message)",
+											"            pm.expect(messageData.requestId).to.be.equal(requestId)",
+											"        }",
+											"    )",
+											"",
 											"});"
 										],
 										"type": "text/javascript"
