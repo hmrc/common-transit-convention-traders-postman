@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "40e41881-7c27-492b-b329-2b7e5ba27fe7",
+		"_postman_id": "73e8e808-638d-467f-9d7f-51322784fc83",
 		"name": "02_Bearer Token CTC API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1717,10 +1717,6 @@
 									"var accessToken = JSON.parse(responseBody);",
 									"pm.environment.set(\"access_token\", accessToken.access_token);",
 									"",
-									"pm.environment.unset(\"auth_id\")",
-									"pm.environment.unset(\"csrfToken\")",
-									"pm.environment.unset(\"grant_scope\")",
-									"pm.environment.unset(\"code\")",
 									"",
 									"",
 									""
@@ -1749,12 +1745,12 @@
 								},
 								{
 									"key": "client_id",
-									"value": "4lGf7l7FoyFQSdmkwhBros2HYqKs",
+									"value": "{{client_Id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "0b412f77-e1b7-4ae0-9dca-2c9909999d7a",
+									"value": "{{client_secret}}",
 									"type": "text"
 								},
 								{
@@ -1890,30 +1886,6 @@
 									"key": "authorityId",
 									"value": "abcd",
 									"type": "text"
-								},
-								{
-									"key": "enrolment[0].name",
-									"value": "HMCE-NCTS-ORG",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "enrolment[0].taxIdentifier[0].name",
-									"value": "VATRegNoTURN",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999999911",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "enrolment[0].state",
-									"value": "Activated",
-									"type": "text",
-									"disabled": true
 								}
 							]
 						},
@@ -2115,12 +2087,12 @@
 								},
 								{
 									"key": "client_id",
-									"value": "4lGf7l7FoyFQSdmkwhBros2HYqKs",
+									"value": "{{client_Id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "0b412f77-e1b7-4ae0-9dca-2c9909999d7a",
+									"value": "{{client_secret}}",
 									"type": "text"
 								},
 								{
