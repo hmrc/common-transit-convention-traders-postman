@@ -5,7 +5,7 @@
 
 # Postman Collections for CTC Traders API
 
-### Pre-requisite 
+### Pre-requisite  
 * Install latest version of Postman
 * Download the latest Postman collection from https://github.com/hmrc/common-transit-convention-traders-postman
 
@@ -52,7 +52,7 @@ You must note: Trader Test Postman Collection needs to be run manually.
 
 ### If you want to test the CTC API Trader tests locally
 
-* Pull in the latest service manager and service-manager-config :
+* Pull in the latest service manager and service-manager-config:
 
   https://github.com/hmrc/service-manager
   https://github.com/hmrc/service-manager-config
