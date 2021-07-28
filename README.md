@@ -121,3 +121,5 @@ In order to run the Collections
 6. 06_E2E Testing Trader Test - Trader Test Pack Scenarios for External Test.
 7. 07_10K Guarantee Handling - 10K Guarantee Changes for GB on Business Test.
 8. 08_E2E Testing Business Test NCTS XI - E2E Testing for XI on Business Test.
+9. 09_CTC_API_Guarantee_Regression.postman_collection - 1GBP Guarantee Regression Pack.
+10. 10_CTC_TRADERS_API_TEST_PACK.postman_collection - Trader Test Pack Test scenarios.
