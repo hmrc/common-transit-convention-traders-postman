@@ -6,9 +6,10 @@
     "test": "Collections"
   },
   "scripts": {
-    "ctc-api-guarantee-tests": "newman run Collections/09_CTC_API_Guarantee_Regression.postman_collection.json -e EnvironmentVariables/CTC_Local.postman_environment.json --reporters cli,junit --reporter-junit-export newman.xml"
+    "ctc-api-smoke-tests": "newman run Collections/01_CTC\\ API\\ Testing\\ Local.postman_collection.json -e EnvironmentVariables/CTC_Local.postman_environment.json --reporters cli,junit --reporter-junit-export target/smoke-test-reports/junit.xml",
+    "ctc-api-guarantee-tests": "newman run Collections/09_CTC_API_Guarantee_Regression.postman_collection.json -e EnvironmentVariables/CTC_Local.postman_environment.json --reporters cli,junit --reporter-junit-export target/guarantee-test-reports/junit.xml"
   },
-  "dependencies": {
-    "newman": "5.1.0"
+  "devDependencies": {
+    "newman": "^5.3.0"
   }
 }
