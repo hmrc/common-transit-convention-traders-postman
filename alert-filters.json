@@ -1,0 +1,12 @@
+{
+    "add": [
+        {
+            "reason": "This warning is caused by the auth-login-stub service which is only used for local testing",
+            "contextId": 1,
+            "url": "http:\/\/localhost:9949\/auth-login-stub\/.*",
+            "ruleId": 90033,
+            "newLevel": -1,
+            "urlIsRegex": true
+        }
+    ]
+}
