@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b3f89d1b-0225-4bd9-a75f-577e6b1a5d29",
+		"_postman_id": "e17162f5-89e0-4383-abe1-bcd3c48ed3c9",
 		"name": "09_CTC_API_Guarantee_Regression",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -172,14 +172,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -356,7 +362,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -364,8 +374,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -540,7 +550,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -548,8 +562,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -725,7 +739,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -733,8 +751,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -908,6 +926,11 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -915,8 +938,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -1092,7 +1115,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -1100,8 +1127,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -1275,7 +1302,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -1283,8 +1314,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -1458,6 +1489,11 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -1465,8 +1501,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -1640,7 +1676,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -1648,8 +1688,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -1826,7 +1866,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -1834,8 +1878,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -2009,14 +2053,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -2190,6 +2240,11 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -2197,8 +2252,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -2372,14 +2427,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -2555,14 +2616,21 @@
 									"var charset = moment().format(\"YYMMDDHHmmss\");",
 									"",
 									"text += charset;",
+									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -2736,14 +2804,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -2920,6 +2994,11 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -2927,8 +3006,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -3105,14 +3184,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -3289,14 +3374,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -3473,14 +3564,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -3657,14 +3754,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -3849,14 +3952,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4041,7 +4150,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -4049,8 +4162,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4233,7 +4346,11 @@
 									"",
 									"text += charset;",
 									"",
-									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -4241,8 +4358,8 @@
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4430,6 +4547,11 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
 									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
@@ -4438,8 +4560,8 @@
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"ArrTimTRACUS0851\", now1.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4615,14 +4737,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4727,14 +4855,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4839,14 +4973,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
@@ -4951,14 +5091,20 @@
 									"",
 									"text += charset;",
 									"",
+									"// Use a Base36 number so that it's alphanumeric and less",
+									"// likely to trigger credit card disclosure scanners",
+									"var intConRef = _.random(0, 6140942214464815497215)",
+									"  .toString(36)",
+									"  .padStart(14, '0');",
+									"",
 									"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
 									"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
 									"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
 									"",
 									"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
 									"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
-									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
-									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+									"pm.collectionVariables.set(\"RefNumHEA4\", text);",
+									"pm.collectionVariables.set(\"IntConRefMES11\", intConRef);"
 								],
 								"type": "text/javascript"
 							}
