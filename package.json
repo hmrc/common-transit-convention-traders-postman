@@ -6,8 +6,8 @@
     "test": "Collections"
   },
   "scripts": {
-    "ctc-api-smoke-tests-legacy-enrolment": "newman run Collections/01_CTC\\ API\\ Testing\\ Local.postman_collection.json -e EnvironmentVariables/CTC_Local_Legacy_Enrolment.postman_environment.json --reporters cli,junit --reporter-junit-export target/smoke-test-reports/junit.xml",
-    "ctc-api-smoke-tests-new-enrolment": "newman run Collections/01_CTC\\ API\\ Testing\\ Local.postman_collection.json -e EnvironmentVariables/CTC_Local_New_Enrolment.postman_environment.json --reporters cli,junit --reporter-junit-export target/smoke-test-reports/junit.xml",
+    "ctc-api-smoke-tests-legacy-enrolment": "newman run Collections/01_CTC\\ API\\ Testing\\ Local.postman_collection.json -e EnvironmentVariables/CTC_Local_Legacy_Enrolment.postman_environment.json --reporters cli,junit --reporter-junit-export target/smoke-test-reports-legacy/junit.xml",
+    "ctc-api-smoke-tests-new-enrolment": "newman run Collections/01_CTC\\ API\\ Testing\\ Local.postman_collection.json -e EnvironmentVariables/CTC_Local_New_Enrolment.postman_environment.json --reporters cli,junit --reporter-junit-export target/smoke-test-reports-new/junit.xml",
     "ctc-api-guarantee-tests": "newman run Collections/09_CTC_API_Guarantee_Regression.postman_collection.json -e EnvironmentVariables/CTC_Local.postman_environment.json --reporters cli,junit --reporter-junit-export target/guarantee-test-reports/junit.xml"
   },
   "devDependencies": {
