@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b8d721aa-6012-41ff-8351-c37a04b9199e",
+		"_postman_id": "ac8d8d01-82b1-4934-ab00-abc8a88d9590",
 		"name": "01_CTC API Testing Local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -90,7 +90,7 @@
 								},
 								{
 									"key": "affinityGroup",
-									"value": "Individual",
+									"value": "{{affinityGroup}}",
 									"type": "text"
 								},
 								{
@@ -100,17 +100,17 @@
 								},
 								{
 									"key": "enrolment[0].name",
-									"value": "HMCE-NCTS-ORG",
+									"value": "{{enrolment_name}}",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].name",
-									"value": "VATRegNoTURN",
+									"value": "{{enrolment_taxIdentifier_name}}",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999999911",
+									"value": "{{enrolment_taxIdentifier_value}}",
 									"type": "text"
 								}
 							]
