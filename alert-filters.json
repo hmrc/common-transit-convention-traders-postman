@@ -7,6 +7,14 @@
             "ruleId": 90033,
             "newLevel": -1,
             "urlIsRegex": true
+        },
+        {
+            "reason": "This warning is caused by random numbers in the test data being mistakely recognised as credit card numbers",
+            "contextId": 1,
+            "url": "http:\/\/localhost:9487\/.*",
+            "ruleId": 10062,
+            "newLevel": -1,
+            "urlIsRegex": true
         }
     ]
 }
