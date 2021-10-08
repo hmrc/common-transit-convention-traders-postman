@@ -1,4 +1,5 @@
 
+
 # Curl Commands for CTC Traders API
 
 * Download the latest folder from https://github.com/hmrc/common-transit-convention-traders-postman .The folder "Curl commands" has curl commands for CTC Arrivals and Departures.
@@ -61,7 +62,7 @@ You must note: Trader Test Postman Collection needs to be run manually.
 
 ```
 sm --start CTC_TRADERS_API \
-  --appendArgs '{"PUSH_PULL_NOTIFICATIONS_API": ["-Dwhitelisted.useragents.0=api-subscription-fields", "-Dwhitelisted.useragents.1=transit-movements-trader-at-destination", "-Dwhitelisted.useragents.2=transits-movements-trader-at-departure"], "PUSH_PULL_NOTIFICATIONS_GATEWAY": ["-DvalidateHttpsCallbackUrl=false"]}'
+  --appendArgs '{"PUSH_PULL_NOTIFICATIONS_API": ["-Dwhitelisted.useragents.0=api-subscription-fields", "-Dwhitelisted.useragents.1=transit-movements-trader-at-destination", "-Dwhitelisted.useragents.2=transits-movements-trader-at-departure", "-Dwhitelisted.useragents.3=common-transit-convention-traders"], "PUSH_PULL_NOTIFICATIONS_GATEWAY": ["-DvalidateHttpsCallbackUrl=false"]}'
 ```
 
 ### To test APIs
