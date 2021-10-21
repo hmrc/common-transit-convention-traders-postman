@@ -52,7 +52,7 @@ You must note: Trader Test Postman Collection needs to be run manually.
 
 ### If you want to test the CTC API Trader tests locally
 
-**NOTE: Local running is for internal HMRC use and will not work for external suppliers.**
+**NOTE: Local testing is internal and won't work outside HMRC**
 
 * Pull in the latest service manager and service-manager-config :
 
