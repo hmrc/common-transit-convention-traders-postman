@@ -39,8 +39,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "b5f0f2ad-7d70-4ad1-8c90-2612491cb9cc"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -61,8 +60,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "3192ceed-07ef-4a76-845b-67c4044341db"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -110,7 +108,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98d111e8-e608-4d94-85c8-71086bf0bee3",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -151,7 +148,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15612/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -160,7 +157,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15612",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -176,8 +173,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "2bc35289-28e5-476d-97f1-ce6590c6d8f1"
+						]
 					}
 				},
 				{
@@ -186,12 +182,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "e8c14199-2beb-482c-9adf-04ac23c6760d"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 2: GB to IT – Simplified Departure - Authorised Consignor",
@@ -202,7 +196,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8ddd1b7d-9143-4507-a43a-4168868550ca",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -234,7 +227,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8e3592ef-8347-4a0a-b000-5f7ee2ec28bc",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -298,7 +290,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a708d8b3-ced3-49cd-88ff-2a67efd57bc7",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -339,7 +330,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15654/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -348,7 +339,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15654",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -361,7 +352,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "3e6ab747-f042-4e39-add6-a0395d447ad9",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -371,15 +361,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a9e28802-78ad-4a40-ae10-f6cd22fe23ea",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 3: GB to IT - Simplified Declaration with Guarantee Not Valid",
@@ -415,8 +403,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "ac5316ec-648d-4ad1-befe-8705fd07bbb1"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -426,7 +413,7 @@
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
 									"pm.environment.set(\"deptId\",depId);",
-									"console.log(\"department id is \"+depId)",
+									"console.log(\"Departure id is \"+depId)",
 									"pm.test(\"POST IE015 must return response code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
 									"});",
@@ -437,8 +424,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "547fa8cc-0eb8-4143-8c5d-1a8eb35d3ad4"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -486,11 +472,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "208cd0e7-da94-4b8a-9192-dab9363d579f",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ responseData._embedded.departure.movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -527,7 +518,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15759/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -536,7 +527,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15759",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -550,7 +541,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "04838bdd-6ee4-4df3-b0aa-aa293740ab17",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -583,7 +573,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1dcb9576-459f-4251-96ac-d2e35bd8abb8",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var msgId = loc.split(\"/\")[7];",
@@ -619,7 +608,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC014A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC014A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>21GB000060100DE771</DocNumHEA5>\n\t\t<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n\t\t<CanReaHEA250>Guarantee Does Not Exist</CanReaHEA250>\n\t</HEAHEA>\n\t<TRAPRIPC1>\n\t\t<NamPC17>NCTS UK TEST LAB HMCE</NamPC17>\n\t\t<StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>\n\t\t<PosCodPC123>SS99 1AA</PosCodPC123>\n\t\t<CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>\n\t\t<CouPC125>GB</CouPC125>\n\t\t<TINPC159>GB954131533000</TINPC159>\n\t</TRAPRIPC1>\n\t<CUSOFFDEPEPT>\n\t\t<RefNumEPT1>GB000060</RefNumEPT1>\n\t</CUSOFFDEPEPT>\n</CC014A>",
+							"raw": "<CC014A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC014A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>{{mrn}}</DocNumHEA5>\n\t\t<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n\t\t<CanReaHEA250>Guarantee Does Not Exist</CanReaHEA250>\n\t</HEAHEA>\n\t<TRAPRIPC1>\n\t\t<NamPC17>NCTS UK TEST LAB HMCE</NamPC17>\n\t\t<StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>\n\t\t<PosCodPC123>SS99 1AA</PosCodPC123>\n\t\t<CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>\n\t\t<CouPC125>GB</CouPC125>\n\t\t<TINPC159>GB954131533000</TINPC159>\n\t</TRAPRIPC1>\n\t<CUSOFFDEPEPT>\n\t\t<RefNumEPT1>GB000060</RefNumEPT1>\n\t</CUSOFFDEPEPT>\n</CC014A>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -649,7 +638,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b58f5d0c-4580-4ae3-a00f-2d0534b6883a",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -690,7 +678,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15759/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -699,7 +687,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15759",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -715,8 +703,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "59de2cac-e7e8-4f19-8657-5c0ebbacb563"
+						]
 					}
 				},
 				{
@@ -725,12 +712,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "7d570139-5b2a-4c84-af53-87f735c17841"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 4: GB to IT – Simplified Declaration unable to determine duty – no Guarantee Reference Amount",
@@ -766,8 +751,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "ac21e6fe-75ff-437e-a85b-704eb640950d"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -777,7 +761,7 @@
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
 									"pm.environment.set(\"deptId\",depId);",
-									"console.log(\"department id is \"+depId)",
+									"console.log(\"Departure id is \"+depId)",
 									"pm.test(\"POST IE015 must return response code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
 									"});",
@@ -788,8 +772,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "7bbc43a4-8529-49d7-be6e-c5bfd794e311"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -837,7 +820,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ea302a97-2b6f-449e-b408-a39b5e6eca80",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -878,7 +860,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15340/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -887,7 +869,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15340",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -903,8 +885,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "3f428d75-0b1f-4c68-bbce-e42904ad35d8"
+						]
 					}
 				},
 				{
@@ -913,12 +894,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "d4b2abf1-cf76-495a-9acb-186ad3b3c78e"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 5: GB to IT – Safety & Security Simplified Declaration at Departure",
@@ -929,7 +908,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3652db15-b267-43e6-97fd-d59c0c098ae5",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -961,7 +939,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9b127b1d-91c3-4285-a9f5-e9c6888d33ed",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -1025,7 +1002,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0e0c12b3-f916-4957-a9ae-f052186712bb",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1066,7 +1042,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15735/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1075,7 +1051,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15735",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -1089,7 +1065,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "7a5c4e04-2253-4a94-9561-ae0a29b12370",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1099,15 +1074,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b2752239-7104-4e8e-9054-96c1bac76bc9",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 6: GB to IT – Multiple Office of Transit / Good Items with Additional Information – Simplified Procedure",
@@ -1141,8 +1114,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "5fd185b8-1a74-46ad-90bc-3834fcb4995d"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -1163,8 +1135,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "f1892446-4e95-4d2c-8193-5f1eae0a3fe5"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1212,7 +1183,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "da641eed-3b6c-4673-ab48-d6621968b895",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1253,7 +1223,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15531/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1262,7 +1232,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15531",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -1279,8 +1249,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "88feb435-c2f4-4bbe-8d31-2e5276be12a5"
+						]
 					}
 				},
 				{
@@ -1289,12 +1258,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "28d88487-e8a0-48f5-b3da-7c50cf8faee8"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 7: Northern Ireland to GB – Safety and Security; Simplified Departure with Missing Place of Loading Code",
@@ -1305,7 +1272,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1701658f-65eb-480d-b00c-ed08c62882ec",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -1337,7 +1303,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "562c92ce-cb37-46ff-a69f-b98bd5e259b0",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -1401,7 +1366,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "073d44ff-341f-46ec-8a89-41211addabbb",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1442,7 +1406,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15532/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1451,7 +1415,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15532",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -1468,8 +1432,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "33e94714-1df5-4f8f-afa8-589bd31e66b1"
+						]
 					}
 				},
 				{
@@ -1478,12 +1441,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "5dee0c98-99f0-427f-a1d3-5daa561aa90a"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 8: Northern Ireland to GB – Simplified Departure – Authorised Consignor",
@@ -1519,8 +1480,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "08fe3146-e11d-4a5a-bb16-5737ffc8a7f0"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -1541,8 +1501,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "43b1d2ab-6b21-41a5-a7d4-8f9b334bcb2c"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1590,7 +1549,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "453e951e-8197-4bb9-a3cb-5b2c0ebb3f82",
 								"exec": [
 									"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1618,7 +1576,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15533/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1627,7 +1585,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15533",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -1644,8 +1602,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "0f159b73-827b-4174-ae73-98460a107e42"
+						]
 					}
 				},
 				{
@@ -1654,12 +1611,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "f39e639f-f511-4747-b28e-e1ec0891c068"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 9: Northern Ireland to GB - Simplified Declaration with Guarantee Not Valid Copy",
@@ -1695,8 +1650,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "5559e810-21a8-458d-82cb-b7a0adf2fa37"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -1717,8 +1671,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "f555ce8e-203a-4a26-b0f6-8688d68e6a5c"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1766,11 +1719,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "32e28248-4ab9-4f5f-a5cd-10513a2fe0a3",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ responseData._embedded.departure.movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -1807,7 +1765,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15761/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1816,7 +1774,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15761",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -1830,7 +1788,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "401c83cb-8cde-4bc1-84dc-1f7481a3cd56",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -1863,7 +1820,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9881049a-a3e2-4f3c-826f-e5e744f2ab3f",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var msgId = loc.split(\"/\")[7];",
@@ -1899,7 +1855,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC014A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC014A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>21XI000142100D55F3</DocNumHEA5>\n\t\t<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n\t\t<CanReaHEA250>Guarantee Does Not Exist</CanReaHEA250>\n\t</HEAHEA>\n\t<TRAPRIPC1>\n\t\t<NamPC17>NI CONSIGNOR LTD</NamPC17>\n\t\t<StrAndNumPC122>1 CONSIGNOR CLOSE</StrAndNumPC122>\n\t\t<PosCodPC123>BT1 1AA</PosCodPC123>\n\t\t<CitPC124>BELFAST</CitPC124>\n\t\t<CouPC125>XI</CouPC125>\n\t\t<NADLNGPC>EN</NADLNGPC>\n\t\t<TINPC159>XI195624547845</TINPC159>\n\t</TRAPRIPC1>\n\t<CUSOFFDEPEPT>\n\t\t<RefNumEPT1>XI000142</RefNumEPT1>\n\t</CUSOFFDEPEPT>\n</CC014A>",
+							"raw": "<CC014A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC014A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>{{mrn}}</DocNumHEA5>\n\t\t<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n\t\t<CanReaHEA250>Guarantee Does Not Exist</CanReaHEA250>\n\t</HEAHEA>\n\t<TRAPRIPC1>\n\t\t<NamPC17>NI CONSIGNOR LTD</NamPC17>\n\t\t<StrAndNumPC122>1 CONSIGNOR CLOSE</StrAndNumPC122>\n\t\t<PosCodPC123>BT1 1AA</PosCodPC123>\n\t\t<CitPC124>BELFAST</CitPC124>\n\t\t<CouPC125>XI</CouPC125>\n\t\t<NADLNGPC>EN</NADLNGPC>\n\t\t<TINPC159>XI195624547845</TINPC159>\n\t</TRAPRIPC1>\n\t<CUSOFFDEPEPT>\n\t\t<RefNumEPT1>XI000142</RefNumEPT1>\n\t</CUSOFFDEPEPT>\n</CC014A>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -1907,7 +1863,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15761/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1916,7 +1872,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15761",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -1929,7 +1885,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "34b2f170-dc8b-478a-a786-6b2d9463095b",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1970,7 +1925,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15761/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1979,7 +1934,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15761",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -1996,8 +1951,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "e8471b52-8ed3-4c70-b6ee-a63fea5ef8ba"
+						]
 					}
 				},
 				{
@@ -2006,12 +1960,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "69da695a-e133-4c47-8053-dc29d5965f46"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 10: Northern Ireland to GB – Simplified Declaration with No Guarantee Liability Amount",
@@ -2022,7 +1974,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ced3f431-137e-4d93-b221-fa56435b7b34",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -2054,7 +2005,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e5a21f3-cbb4-461a-9522-af496888d4b5",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -2118,7 +2068,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2cb487c2-95f8-4e62-8f00-0a3db17d7f55",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2159,7 +2108,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15535/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -2168,7 +2117,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15535",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -2185,8 +2134,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "040ab9a4-282e-4338-a0de-6f97bd30601b"
+						]
 					}
 				},
 				{
@@ -2195,12 +2143,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "69e33be5-e9e1-4d6e-983b-7c04c8e76542"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 11: Northern Ireland to GB – Safety & Security Simplified Declaration at Departure",
@@ -2236,8 +2182,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "20e18075-142f-4f24-be2f-f7336752459e"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -2258,8 +2203,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "71114b2a-74bc-4831-af57-33f121f7a1af"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2307,7 +2251,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e69ba812-5604-455e-a0f2-baf59776d9ee",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2348,7 +2291,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15542/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -2357,7 +2300,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15542",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -2374,8 +2317,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "297fa3c6-46b0-430f-8431-f5aa6fa0c6d1"
+						]
 					}
 				},
 				{
@@ -2384,12 +2326,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "7c38895c-9592-40c3-b489-8b257dc057f0"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 12: GB to IT – Normal Declaration with Cancellation Request",
@@ -2425,8 +2365,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "ad8b143b-1353-40aa-9e6c-cebfc71f778b"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -2447,8 +2386,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "e6a13a50-6ba8-4cc2-a49e-810d1f80b903"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2496,11 +2434,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa767baa-7a99-41a0-bd3f-22d1c093e775",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ responseData._embedded.departure.movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -2537,7 +2480,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15456/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -2546,7 +2489,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15456",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -2560,7 +2503,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e75023d2-0a79-4eae-9c30-5893fc819b4e",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -2593,7 +2535,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7ae796e9-ec0e-4250-a3c3-ccd9baf83771",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var msgId = loc.split(\"/\")[7];",
@@ -2629,7 +2570,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>CC014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>21GB000060100DEBB8</DocNumHEA5>\n<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n<CanReaHEA250>Duplicate Entry</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>NCTS UK TEST LAB HMCE</NamPC17>\n<StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>\n<PosCodPC123>SS99 1AA</PosCodPC123>\n<CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>\n<CouPC125>GB</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>GB954131533000</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>GB000060</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>",
+							"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>CC014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>{{mrn}}</DocNumHEA5>\n<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n<CanReaHEA250>Duplicate Entry</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>NCTS UK TEST LAB HMCE</NamPC17>\n<StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>\n<PosCodPC123>SS99 1AA</PosCodPC123>\n<CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>\n<CouPC125>GB</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>GB954131533000</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>GB000060</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -2637,7 +2578,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15456/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -2646,7 +2587,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15456",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -2659,7 +2600,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87c4f546-6ada-45e7-9798-d751d842f745",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2700,7 +2640,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15456/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -2709,7 +2649,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15456",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -2726,8 +2666,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "e48a0776-3b5c-45ce-96fe-251baaad920d"
+						]
 					}
 				},
 				{
@@ -2736,12 +2675,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "5a9b3c27-ce3a-4566-855f-56856eab9db9"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 13: GB to IT – Normal Declaration - Released for Transit",
@@ -2777,8 +2714,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "d727d4a1-a06f-429c-9480-8b0efdc67117"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -2799,8 +2735,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "a39d1fbc-d865-4203-89e0-5a0504acc223"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2848,7 +2783,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "68563466-20ec-43be-8abf-a2a40d9de4c8",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2889,7 +2823,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15440/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -2898,7 +2832,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15440",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -2915,8 +2849,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "bb3c715f-48e7-440e-8763-1a360df92d5f"
+						]
 					}
 				},
 				{
@@ -2925,12 +2858,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "b2ef4b98-4938-48bf-98ae-23a02c5e7b13"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 14: GB to IT – Normal Declaration with Customs Sub Place",
@@ -2966,8 +2897,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "bd3dbd46-b83c-423b-ad7a-6f07e2210ce9"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -2988,8 +2918,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "bfd22e2a-c635-49d9-9400-ca115d0c8ea8"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3037,7 +2966,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "83fdb5d6-caa8-4927-b5c6-3492b5b25f25",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -3078,7 +3006,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15746/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -3087,7 +3015,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15746",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -3104,8 +3032,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "56a0ee54-9ade-4500-afda-7799552d7274"
+						]
 					}
 				},
 				{
@@ -3114,12 +3041,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "2a93fbd4-f7a8-4145-ad9a-d2f39be0e16e"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 15: GB to IT – Safety & Security; Normal Declaration ",
@@ -3130,7 +3055,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c35aeb30-4a00-451c-a0d0-b3e0d6d50dca",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -3162,7 +3086,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "030bfe98-4540-49da-9cfb-34ea857e9dfd",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -3251,8 +3174,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "af06db20-6db7-413c-8475-aebf50d1d31c"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -3273,8 +3195,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "42cf3686-9b1c-4aa1-a3b3-af4c888c8720"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3322,7 +3243,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2a33cde0-7497-4e6d-99b6-c47b6fddf64a",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -3363,7 +3283,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15457/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -3372,7 +3292,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15457",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -3389,8 +3309,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "94fbb371-7456-48f2-8182-932941b54eda"
+						]
 					}
 				},
 				{
@@ -3399,12 +3318,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "0cc60e28-7c55-4784-94d3-888d579fe68a"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 16: GB to IT - Normal Procedure with Multiple Office of Transit / Good Items with Additional Information",
@@ -3438,8 +3355,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "6797981e-3c96-422a-834f-6e7f8a0796a4"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -3460,8 +3376,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "98a2de43-bb7f-4c48-b4ae-b7eaa8e35b11"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3509,7 +3424,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eed4b95e-a4d1-40e9-8741-b76a711b4784",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -3550,7 +3464,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15458/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -3559,7 +3473,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15458",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -3576,8 +3490,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "f0d4ad12-e1a3-4249-a87e-4e90fa9c9195"
+						]
 					}
 				},
 				{
@@ -3586,12 +3499,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "eb736c0a-0363-4301-a93d-339fd7e04a71"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 17: Northern Ireland to GB – Normal Declaration with Cancellation Request",
@@ -3627,8 +3538,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "3c95f25a-0fa6-4bf1-ae03-584bbae15874"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -3649,8 +3559,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "18952ec1-5e56-4fe9-9a68-d3c4b9e42355"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3698,11 +3607,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "83b4dc29-f59c-45f7-8e70-69403b559c38",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ responseData._embedded.departure.movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -3739,7 +3653,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15491/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -3748,7 +3662,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15491",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -3762,7 +3676,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6e15cf0b-525a-4f83-b8f2-e876b1257759",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -3795,7 +3708,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a24ec5e-db17-429a-a08c-db56d957717f",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var msgId = loc.split(\"/\")[7];",
@@ -3831,7 +3743,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>CC014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>21XI000142100D5727</DocNumHEA5>\n<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n<CanReaHEA250>Duplicate Entry</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>NI CONSIGNOR LTD</NamPC17>\n<StrAndNumPC122>1 CONSIGNOR CLOSE</StrAndNumPC122>\n<PosCodPC123>BT1 1AA</PosCodPC123>\n<CitPC124>BELFAST</CitPC124>\n<CouPC125>XI</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>XI195624547845</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>XI000142</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>",
+							"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n<IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>CC014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>{{mrn}}</DocNumHEA5>\n<DatOfCanReqHEA147>{{DatOfCanReqHEA147}}</DatOfCanReqHEA147>\n<CanReaHEA250>Duplicate Entry</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>NI CONSIGNOR LTD</NamPC17>\n<StrAndNumPC122>1 CONSIGNOR CLOSE</StrAndNumPC122>\n<PosCodPC123>BT1 1AA</PosCodPC123>\n<CitPC124>BELFAST</CitPC124>\n<CouPC125>XI</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>XI195624547845</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>XI000142</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -3839,7 +3751,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15491/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -3848,7 +3760,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15491",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -3861,7 +3773,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "81c2ac11-850b-4718-a399-010e2cdc635e",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -3902,7 +3813,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15491/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -3911,7 +3822,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15491",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -3925,7 +3836,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "fd9c73cf-e747-4f98-83a9-61a08b4f508e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -3935,15 +3845,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3fff1ff8-c331-4d7f-8fc0-17ec73e99e3a",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 18: Northern Ireland to GB – Released for Transit (Normal Declaration)",
@@ -3954,7 +3862,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "493affd2-a658-4b0d-93be-7b3dc6e7cd17",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -3986,7 +3893,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6a4d12aa-db10-4981-bd2b-5d1dfc436bf7",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -4050,7 +3956,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "08449e13-d4c3-403d-b704-484a4d418ea5",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -4091,7 +3996,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15499/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4100,7 +4005,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15499",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -4117,8 +4022,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "66af5d4e-f6b3-4b5c-8443-437d34a7190b"
+						]
 					}
 				},
 				{
@@ -4127,12 +4031,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "4ec64e1b-33cf-41d9-ab6f-0e011d421512"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 19: Northern Ireland to GB – Normal Declaration with Customs Sub Place",
@@ -4168,8 +4070,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "5bf99c86-51c0-45e3-833c-ab6e0626381a"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -4190,8 +4091,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "06cf5bd5-5b53-4555-8f9c-305d357753ce"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4239,7 +4139,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e0e8c135-e0a7-4a0e-80be-1ddbe4bf37ce",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -4280,7 +4179,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15748/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4289,7 +4188,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15748",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -4306,8 +4205,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "1b4ab2f7-f079-46ff-a148-4c2b88481fb6"
+						]
 					}
 				},
 				{
@@ -4316,12 +4214,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "e87d8d95-af90-43cd-b5cc-64f8d88436c6"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 20: Northern Ireland to GB – Safety & Security; Normal Declaration ",
@@ -4357,8 +4253,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "ccb22f26-5640-46db-a5de-86c6fc47426d"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -4379,8 +4274,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "738b1cc6-9cfa-48d8-98e0-5e967b1140e7"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4428,7 +4322,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f98d72dd-042e-4c01-ae12-895357e0469f",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -4469,7 +4362,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15504/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4478,7 +4371,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15504",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -4495,8 +4388,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "ba269a55-3ce9-499c-9352-47f24bea8ac5"
+						]
 					}
 				},
 				{
@@ -4505,12 +4397,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "15109f3b-3653-46b9-a7ea-1eca064e46ec"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 21: Northern Ireland to GB - Simplified Departure, Simplified Arrival",
@@ -4521,7 +4411,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "eaa75b8b-21a7-4aec-b310-79a7f07bcd48",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -4553,7 +4442,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ad33f761-340e-4204-8a05-d40d4d881a7e",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -4617,11 +4505,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6355f88d-f4ae-41b9-9920-33693ed5967c",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -4658,7 +4551,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15297/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4667,7 +4560,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15297",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -4681,7 +4574,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7b937e65-7826-4e41-810d-a1c0cc5b5f42",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -4697,7 +4589,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8e51289f-0473-4eab-a214-3f6e6223df08",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"",
@@ -4731,10 +4622,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC007A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>AF2128766572</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<!--<TesIndMES18>0</TesIndMES18>-->\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC007A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>21XI000142100D55C9</DocNumHEA5>\n\t\t<ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n\t\t<ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n\t\t<ArrAutLocOfGooHEA65>954133135-GB60DES</ArrAutLocOfGooHEA65>\n\t\t<SimProFlaHEA132>1</SimProFlaHEA132>\n\t\t<ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NCTS TEST TRADER</NamTRD7>\n\t\t<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n\t\t<PosCodTRD23>SS2 6DX</PosCodTRD23>\n\t\t<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n\t\t<CouTRD25>GB</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>GB954133135000</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>GB000060</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n</CC007A>",
-							"options": {
-								"raw": {}
-							}
+							"raw": "<CC007A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>AF2128766572</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<!--<TesIndMES18>0</TesIndMES18>-->\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC007A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>{{mrn}}</DocNumHEA5>\n\t\t<ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n\t\t<ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n\t\t<ArrAutLocOfGooHEA65>954133135-GB60DES</ArrAutLocOfGooHEA65>\n\t\t<SimProFlaHEA132>1</SimProFlaHEA132>\n\t\t<ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NCTS TEST TRADER</NamTRD7>\n\t\t<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n\t\t<PosCodTRD23>SS2 6DX</PosCodTRD23>\n\t\t<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n\t\t<CouTRD25>GB</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>GB954133135000</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>GB000060</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n</CC007A>"
 						},
 						"url": {
 							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
@@ -4757,7 +4645,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "089cf241-801b-4fbb-aa35-18fc434d12d4",
 								"exec": [
 									"pm.test(\"Get all arrival must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -4785,7 +4672,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1245/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4794,7 +4681,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1245",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -4808,7 +4695,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c781ebdb-8fab-4efd-8d9b-77a0da386672",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -4834,7 +4720,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "078b21ca-a9b2-429b-84b3-ed5f02bd5472",
 								"exec": [
 									"var moment = require('moment')",
 									"let yesterday = moment();",
@@ -4877,7 +4762,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <!--<TesIndMES18>0</TesIndMES18>-->\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>21XI000142100D55C9</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS TEST TRADER</NamTRD7>\n        <StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n        <PosCodTRD23>SS2 6DX</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954133135000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n</CC044A>",
+							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <!--<TesIndMES18>0</TesIndMES18>-->\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS TEST TRADER</NamTRD7>\n        <StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n        <PosCodTRD23>SS2 6DX</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954133135000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n</CC044A>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -4885,7 +4770,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1245/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4894,7 +4779,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1245",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -4907,7 +4792,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4e14df63-1363-4ee8-8871-680c40981286",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -4948,7 +4832,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1245/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4957,7 +4841,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1245",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -4971,7 +4855,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7ef147f3-f5ed-4d10-b8ff-bc0406e93e68",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -4997,7 +4880,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b974978c-7dc9-4ce4-896f-923a14382d9f",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -5039,7 +4921,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <!--<TesIndMES18>0</TesIndMES18>-->\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>21XI000142100D55C9</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>XI</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS TEST TRADER</NamTRD7>\n        <StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n        <PosCodTRD23>SS2 6DX</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954133135000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n</CC044A>",
+							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <!--<TesIndMES18>0</TesIndMES18>-->\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>XI</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS TEST TRADER</NamTRD7>\n        <StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n        <PosCodTRD23>SS2 6DX</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954133135000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n</CC044A>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -5047,7 +4929,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1245/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5056,7 +4938,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1245",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -5069,7 +4951,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5a61ca4f-ff38-4eca-8ddd-d20477cd0f6c",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -5110,7 +4991,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1245/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5119,7 +5000,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1245",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -5136,8 +5017,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "87651d9f-961e-49ff-adae-7767d5b9cd62"
+						]
 					}
 				},
 				{
@@ -5146,12 +5026,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "35b13e1f-a366-4565-8a6d-236c47801dcd"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 22: Northern Ireland to GB - Simplified Arrival, Non-Satisfactory Unloading Remarks ",
@@ -5187,8 +5065,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "92e21a05-6bfa-4e08-af88-d5b28638a408"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -5209,8 +5086,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "6e782c54-da9c-4b88-8583-703645d669d5"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5258,11 +5134,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4cbc48b0-4c34-4f90-bcd6-f570f7c2f424",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -5299,7 +5180,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15280/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5308,7 +5189,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15280",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -5322,7 +5203,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "14f5b0ac-6db0-4947-8121-e541e43b5c84",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -5337,7 +5217,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9a645e27-4493-4642-896f-4c8f974ece47",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"",
@@ -5371,10 +5250,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC007A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>AF2128766572</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC007A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>21XI000142100D55B0</DocNumHEA5>\n\t\t<ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n\t\t<ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n\t\t<ArrAutLocOfGooHEA65>954133135-GB60DES</ArrAutLocOfGooHEA65>\n\t\t<SimProFlaHEA132>1</SimProFlaHEA132>\n\t\t<ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NCTS TEST TRADER</NamTRD7>\n\t\t<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n\t\t<PosCodTRD23>SS2 6DX</PosCodTRD23>\n\t\t<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n\t\t<CouTRD25>GB</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>GB954133135000</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>GB000060</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n</CC007A>",
-							"options": {
-								"raw": {}
-							}
+							"raw": "<CC007A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>AF2128766572</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC007A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>{{mrn}}</DocNumHEA5>\n\t\t<ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n\t\t<ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n\t\t<ArrAutLocOfGooHEA65>954133135-GB60DES</ArrAutLocOfGooHEA65>\n\t\t<SimProFlaHEA132>1</SimProFlaHEA132>\n\t\t<ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NCTS TEST TRADER</NamTRD7>\n\t\t<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n\t\t<PosCodTRD23>SS2 6DX</PosCodTRD23>\n\t\t<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n\t\t<CouTRD25>GB</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>GB954133135000</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>GB000060</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n</CC007A>"
 						},
 						"url": {
 							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
@@ -5397,7 +5273,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1beaf4bd-2dd1-4962-8232-3ef58dbba672",
 								"exec": [
 									"pm.test(\"Get all arrival must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -5425,7 +5300,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1242/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5434,7 +5309,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1242",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -5448,7 +5323,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "89649c30-d088-4748-9804-6f24d9018713",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -5474,7 +5348,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0b3186ad-e87d-41e8-8ddf-2a31ee4046b0",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -5516,7 +5389,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n   <SynIdeMES1>UNOC</SynIdeMES1>\n   <SynVerNumMES2>3</SynVerNumMES2>\n   <MesRecMES6>NCTS</MesRecMES6>\n   <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n   <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n   <IntConRefMES11>WE201015102567</IntConRefMES11>\n   <AppRefMES14>NCTS</AppRefMES14>\n   <TesIndMES18>0</TesIndMES18>\n   <MesIdeMES19>1</MesIdeMES19>\n   <MesTypMES20>CC044A</MesTypMES20>\n   <HEAHEA>\n      <DocNumHEA5>21XI000142100D5470</DocNumHEA5>\n      <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n      <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n      <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n      <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n      <TotGroMasHEA307>1000</TotGroMasHEA307>\n   </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n   <CUSOFFPREOFFRES>\n      <RefNumRES1>XI000142</RefNumRES1>\n   </CUSOFFPREOFFRES>\n   <UNLREMREM>\n<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n<ConREM65>1</ConREM65>\n<UnlComREM66>1</UnlComREM66>\n<UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n</UNLREMREM>\n<SEAINFSLI>\n<SeaNumSLI2>1</SeaNumSLI2>\n<SEAIDSID>\n<SeaIdeSID1>NCTS001</SeaIdeSID1>\n</SEAIDSID>\n</SEAINFSLI>\n</CC044A>\n",
+							"raw": "<CC044A>\n   <SynIdeMES1>UNOC</SynIdeMES1>\n   <SynVerNumMES2>3</SynVerNumMES2>\n   <MesRecMES6>NCTS</MesRecMES6>\n   <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n   <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n   <IntConRefMES11>WE201015102567</IntConRefMES11>\n   <AppRefMES14>NCTS</AppRefMES14>\n   <TesIndMES18>0</TesIndMES18>\n   <MesIdeMES19>1</MesIdeMES19>\n   <MesTypMES20>CC044A</MesTypMES20>\n   <HEAHEA>\n      <DocNumHEA5>{{mrn}}</DocNumHEA5>\n      <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n      <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n      <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n      <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n      <TotGroMasHEA307>1000</TotGroMasHEA307>\n   </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n   <CUSOFFPREOFFRES>\n      <RefNumRES1>XI000142</RefNumRES1>\n   </CUSOFFPREOFFRES>\n   <UNLREMREM>\n<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n<ConREM65>1</ConREM65>\n<UnlComREM66>1</UnlComREM66>\n<UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n</UNLREMREM>\n<SEAINFSLI>\n<SeaNumSLI2>1</SeaNumSLI2>\n<SEAIDSID>\n<SeaIdeSID1>NCTS001</SeaIdeSID1>\n</SEAIDSID>\n</SEAINFSLI>\n</CC044A>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -5524,7 +5397,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1150/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5533,7 +5406,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1150",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -5546,7 +5419,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0ff27935-8d0e-47c2-b111-990575317274",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -5572,7 +5444,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1ec2b5c9-342d-4cba-92c9-81ffec952bbf",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -5614,7 +5485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>WE201665102567</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC044A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>21XI000142100D55B0</DocNumHEA5>\n\t\t<IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n\t\t<NatOfMeaOfTraAtDHEA80>XI</NatOfMeaOfTraAtDHEA80>\n\t\t<TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n\t\t<TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n\t\t<TotGroMasHEA307>1000</TotGroMasHEA307>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NCTS TEST TRADER</NamTRD7>\n\t\t<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n\t\t<PosCodTRD23>SS2 6DX</PosCodTRD23>\n\t\t<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n\t\t<CouTRD25>GB</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>GB954133135000</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>GB000060</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n\t<UNLREMREM>\n\t\t<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n\t\t<UnlRemREM53>Total Gross Mass is incorrect</UnlRemREM53>\n\t\t<UnlRemREM53LNG>EN</UnlRemREM53LNG>\n\t\t<ConREM65>0</ConREM65>\n\t\t<UnlComREM66>1</UnlComREM66>\n\t\t<UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n\t</UNLREMREM>\n\t<RESOFCON534>\n\t\t<ConInd424>DI</ConInd424>\n\t\t<PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n\t\t<CorValTOC4>1010</CorValTOC4>\n\t</RESOFCON534>\n\t<SEAINFSLI>\n\t\t<SeaNumSLI2>1</SeaNumSLI2>\n\t\t<SEAIDSID>\n\t\t\t<SeaIdeSID1>NCTS001</SeaIdeSID1>\n\t\t</SEAIDSID>\n\t</SEAINFSLI>\n</CC044A>\n",
+							"raw": "<CC044A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>WE201665102567</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC044A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>{{mrn}}</DocNumHEA5>\n\t\t<IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n\t\t<NatOfMeaOfTraAtDHEA80>XI</NatOfMeaOfTraAtDHEA80>\n\t\t<TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n\t\t<TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n\t\t<TotGroMasHEA307>1000</TotGroMasHEA307>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NCTS TEST TRADER</NamTRD7>\n\t\t<StrAndNumTRD22>CE HEATH HOUSE, VICTORIA AV</StrAndNumTRD22>\n\t\t<PosCodTRD23>SS2 6DX</PosCodTRD23>\n\t\t<CitTRD24>SOUTHEND-ON-SEA, ESSEX</CitTRD24>\n\t\t<CouTRD25>GB</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>GB954133135000</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>GB000060</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n\t<UNLREMREM>\n\t\t<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n\t\t<UnlRemREM53>Total Gross Mass is incorrect</UnlRemREM53>\n\t\t<UnlRemREM53LNG>EN</UnlRemREM53LNG>\n\t\t<ConREM65>0</ConREM65>\n\t\t<UnlComREM66>1</UnlComREM66>\n\t\t<UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n\t</UNLREMREM>\n\t<RESOFCON534>\n\t\t<ConInd424>DI</ConInd424>\n\t\t<PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n\t\t<CorValTOC4>1010</CorValTOC4>\n\t</RESOFCON534>\n\t<SEAINFSLI>\n\t\t<SeaNumSLI2>1</SeaNumSLI2>\n\t\t<SEAIDSID>\n\t\t\t<SeaIdeSID1>NCTS001</SeaIdeSID1>\n\t\t</SEAIDSID>\n\t</SEAINFSLI>\n</CC044A>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -5622,7 +5493,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1242/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5631,7 +5502,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1242",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -5644,7 +5515,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e056156b-5f8e-412e-bf00-562ff75b78e2",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -5685,7 +5555,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1242/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5694,7 +5564,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1242",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -5708,7 +5578,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "4f4a3d05-1995-4a12-93d8-2a910d69507c",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -5718,15 +5587,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "99afd0a3-903f-4598-ad16-116539b065a3",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": " DECLARATION 23: GB to Northern Ireland - Simplified Departure, Simplified Arrival",
@@ -5762,8 +5629,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "be07a75a-80ad-4060-8446-5f448760473f"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -5784,8 +5650,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "61211b63-b0a1-47b3-a7b7-212e8a583ebe"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5833,11 +5698,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "758539e0-97e2-4597-962e-7d336cf324d1",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -5874,7 +5744,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15431/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -5883,7 +5753,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15431",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -5897,7 +5767,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "412dbe8f-cbc6-4c87-9290-f3aac65c0b48",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -5913,7 +5782,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f6048aa2-4f68-42d2-9b7e-cb62dad14a57",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"",
@@ -5947,10 +5815,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>21GB000060100DEAE4</DocNumHEA5>\n        <ArrNotPlaHEA60>BELFAST</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAutLocOfGooHEA65>198654787-XI00DES</ArrAutLocOfGooHEA65>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>\n   ",
-							"options": {
-								"raw": {}
-							}
+							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <ArrNotPlaHEA60>BELFAST</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAutLocOfGooHEA65>198654787-XI00DES</ArrAutLocOfGooHEA65>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>\n   "
 						},
 						"url": {
 							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
@@ -5973,7 +5838,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fad43c73-53ea-4ac1-ae8e-fd3c32ba7131",
 								"exec": [
 									"pm.test(\"Get all arrival must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -6001,7 +5865,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1290/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6010,7 +5874,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1290",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -6024,7 +5888,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5c71818f-e305-447a-812f-33cdc6285ae3",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -6050,7 +5913,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "712cc284-3177-456d-95da-62a100e3a7b6",
 								"exec": [
 									"var moment = require('moment')",
 									"let yesterday = moment();",
@@ -6093,7 +5955,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>21GB000060100DEAE4</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n  \n</CC044A>\n",
+							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n  \n</CC044A>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -6101,7 +5963,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1290/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6110,7 +5972,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1290",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -6123,7 +5985,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5bd6886e-a154-4e53-a84b-11fa44e82dda",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -6164,7 +6025,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1290/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6173,7 +6034,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1290",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -6187,7 +6048,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c39be0bf-dc7e-4c1c-aa50-35b285e94785",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -6213,7 +6073,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a5e4cbc3-f801-4e78-86c2-899bc19ad09f",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -6255,7 +6114,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>21GB000060100DEAE4</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n</CC044A>\n",
+							"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>WE201015102567</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n        <ConREM65>1</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <SEAINFSLI>\n        <SeaNumSLI2>1</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\n        </SEAIDSID>\n    </SEAINFSLI>\n</CC044A>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -6263,7 +6122,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1290/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6272,7 +6131,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1290",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -6285,7 +6144,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "675e20f6-e1f1-4fde-bb25-c75b6094705e",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -6326,7 +6184,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1290/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6335,7 +6193,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1290",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -6352,8 +6210,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "748454e2-ccef-4cc8-bc4d-6133dc6d1aa6"
+						]
 					}
 				},
 				{
@@ -6362,12 +6219,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "0463f9cb-a460-45a9-99df-5b9f87de5f11"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 24: GB to Northern Ireland - Simplified Arrival, Non-Satisfactory Unloading Remarks ",
@@ -6403,8 +6258,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "397430b4-aee7-43e2-a3db-de812c3ae15b"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -6425,8 +6279,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "95b3a4aa-71f0-4482-98a1-ab15cca4bf7b"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6474,11 +6327,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aa8eb81c-5167-45c8-9645-39377ac30ed9",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -6515,7 +6373,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15401/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6524,7 +6382,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15401",
+								"{{deptId}}",
 								"messages"
 							]
 						},
@@ -6538,7 +6396,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4485f92c-b61c-417a-b192-2f0c848dd4ba",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -6553,7 +6410,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2f515863-1254-4c58-8f04-6fe356498ce5",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"",
@@ -6587,10 +6443,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>21GB000060100DE9E5</DocNumHEA5>\n        <ArrNotPlaHEA60>BELFAST</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAutLocOfGooHEA65>198654787-XI00DES</ArrAutLocOfGooHEA65>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>\n   ",
-							"options": {
-								"raw": {}
-							}
+							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <ArrNotPlaHEA60>BELFAST</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <ArrAutLocOfGooHEA65>198654787-XI00DES</ArrAutLocOfGooHEA65>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>\n   "
 						},
 						"url": {
 							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
@@ -6613,7 +6466,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98324ae5-ca39-450d-8272-acfcc9e84536",
 								"exec": [
 									"pm.test(\"Get all arrival must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -6641,7 +6493,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1280/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6650,7 +6502,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1280",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -6664,7 +6516,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "47d0a759-eb7c-4565-b53b-a9f89db3b4f8",
 								"exec": [
 									"pm.test(\"Status code is 202\", function () {",
 									"    pm.response.to.have.status(202);",
@@ -6690,7 +6541,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "47cc63bd-c50d-4aca-b5ab-e000bbe5fb6a",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -6732,7 +6582,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC044A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>WE201015102567</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC044A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>21GB000060100DE9E5</DocNumHEA5>\n\t\t<IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n\t\t<NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n\t\t<TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n\t\t<TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n\t\t<TotGroMasHEA307>1000</TotGroMasHEA307>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n\t\t<StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n\t\t<PosCodTRD23>BT2 2AA</PosCodTRD23>\n\t\t<CitTRD24>BELFAST</CitTRD24>\n\t\t<CouTRD25>XI</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>XI198654787835</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>XI000142</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n\t<UNLREMREM>\n\t\t<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n\t\t<UnlRemREM53>Total Gross Mass is incorrect</UnlRemREM53>\n\t\t<UnlRemREM53LNG>EN</UnlRemREM53LNG>\n\t\t<ConREM65>0</ConREM65>\n\t\t<UnlComREM66>1</UnlComREM66>\n\t\t<UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n\t</UNLREMREM>\n\t<RESOFCON534>\n\t\t<ConInd424>DI</ConInd424>\n\t\t<PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n\t\t<CorValTOC4>1010</CorValTOC4>\n\t</RESOFCON534>\n\t<SEAINFSLI>\n\t\t<SeaNumSLI2>1</SeaNumSLI2>\n\t\t<SEAIDSID>\n\t\t\t<SeaIdeSID1>NCTS001</SeaIdeSID1>\n\t\t</SEAIDSID>\n\t</SEAINFSLI>\n</CC044A>\n",
+							"raw": "<CC044A>\n\t<SynIdeMES1>UNOC</SynIdeMES1>\n\t<SynVerNumMES2>3</SynVerNumMES2>\n\t<MesRecMES6>NCTS</MesRecMES6>\n\t<DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n\t<TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n\t<IntConRefMES11>WE201015102567</IntConRefMES11>\n\t<AppRefMES14>NCTS</AppRefMES14>\n\t<TesIndMES18>0</TesIndMES18>\n\t<MesIdeMES19>1</MesIdeMES19>\n\t<MesTypMES20>CC044A</MesTypMES20>\n\t<HEAHEA>\n\t\t<DocNumHEA5>{{mrn}}</DocNumHEA5>\n\t\t<IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\n\t\t<NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\n\t\t<TotNumOfIteHEA305>1</TotNumOfIteHEA305>\n\t\t<TotNumOfPacHEA306>10</TotNumOfPacHEA306>\n\t\t<TotGroMasHEA307>1000</TotGroMasHEA307>\n\t</HEAHEA>\n\t<TRADESTRD>\n\t\t<NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n\t\t<StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n\t\t<PosCodTRD23>BT2 2AA</PosCodTRD23>\n\t\t<CitTRD24>BELFAST</CitTRD24>\n\t\t<CouTRD25>XI</CouTRD25>\n\t\t<NADLNGRD>EN</NADLNGRD>\n\t\t<TINTRD59>XI198654787835</TINTRD59>\n\t</TRADESTRD>\n\t<CUSOFFPREOFFRES>\n\t\t<RefNumRES1>XI000142</RefNumRES1>\n\t</CUSOFFPREOFFRES>\n\t<UNLREMREM>\n\t\t<StaOfTheSeaOKREM19>1</StaOfTheSeaOKREM19>\n\t\t<UnlRemREM53>Total Gross Mass is incorrect</UnlRemREM53>\n\t\t<UnlRemREM53LNG>EN</UnlRemREM53LNG>\n\t\t<ConREM65>0</ConREM65>\n\t\t<UnlComREM66>1</UnlComREM66>\n\t\t<UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n\t</UNLREMREM>\n\t<RESOFCON534>\n\t\t<ConInd424>DI</ConInd424>\n\t\t<PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n\t\t<CorValTOC4>1010</CorValTOC4>\n\t</RESOFCON534>\n\t<SEAINFSLI>\n\t\t<SeaNumSLI2>1</SeaNumSLI2>\n\t\t<SEAIDSID>\n\t\t\t<SeaIdeSID1>NCTS001</SeaIdeSID1>\n\t\t</SEAIDSID>\n\t</SEAINFSLI>\n</CC044A>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -6740,7 +6590,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1280/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6749,7 +6599,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1280",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -6762,7 +6612,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eca7a8f7-fd1c-4c31-becd-a400e15c1fb5",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -6803,7 +6652,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1280/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -6812,7 +6661,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1280",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -6829,8 +6678,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "8dbdaab7-823a-468b-aacd-56822c64a612"
+						]
 					}
 				},
 				{
@@ -6839,12 +6687,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "d91b5234-d7c2-4f57-9438-9eedeaa17e4e"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 25: Northern Ireland to GB - Simplified Departure, Normal Arrival with Rejection Notification ",
@@ -6880,8 +6726,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "459b340a-160d-4f52-a74b-99867805d6d8"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -6902,8 +6747,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "f3a85984-92a0-4e7a-8ecf-a2d6785536f1"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6951,11 +6795,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d3eabb50-8f02-4860-9144-37d667cad611",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -6992,7 +6841,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15399/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -7001,7 +6850,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15399",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -7014,7 +6863,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7adf2fa4-7773-47f9-bf14-38efc0c18653",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -7029,7 +6877,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6c15d473-f8e7-4fb4-bec3-7fd6740fbeb2",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"",
@@ -7063,10 +6910,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>21XI000142100D5687</DocNumHEA5>\n        <CusSubPlaHEA66>INVALID PLACE</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <SimProFlaHEA132>0</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS UK TEST LAB HMCE</NamTRD7>\n        <StrAndNumTRD22>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumTRD22>\n        <PosCodTRD23>SS99 1AA</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA, ESSEXT</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954131533000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>\n   ",
-							"options": {
-								"raw": {}
-							}
+							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <CusSubPlaHEA66>INVALID PLACE</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>DOVER</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <SimProFlaHEA132>0</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS UK TEST LAB HMCE</NamTRD7>\n        <StrAndNumTRD22>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumTRD22>\n        <PosCodTRD23>SS99 1AA</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA, ESSEXT</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954131533000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n</CC007A>\n   "
 						},
 						"url": {
 							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
@@ -7089,7 +6933,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d1b12f87-ed30-42f0-98d4-20386587b513",
 								"exec": [
 									"pm.test(\"Get all arrival must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -7117,7 +6960,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1277/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -7126,7 +6969,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1277",
+								"{{arrivalId}}",
 								"messages"
 							]
 						},
@@ -7140,7 +6983,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "77e614ce-57d2-475d-ae8d-f4557b407c07",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -7150,15 +6992,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "20683b2c-8451-408c-838b-329998a42610",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 26: GB to Northern Ireland - Simplified Departure, Normal Arrival with Rejection Notification",
@@ -7194,8 +7034,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "e97d8865-cea4-46be-9f74-611dcc8c9f82"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -7216,8 +7055,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "fba23667-98a5-428e-9343-8fcc621d8755"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7265,11 +7103,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bfbe5d84-52b5-42ea-a233-9058aa5a0282",
 								"exec": [
 									"pm.test(\"Get all messages must return status code 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let responseData = pm.response.json();",
+									"let movementReferenceNumber = responseData._embedded.departure.movementReferenceNumber;",
+									"console.log(\"MRN =====> \"+ movementReferenceNumber);",
+									"pm.environment.set(\"mrn\", movementReferenceNumber);",
+									"",
 									"if (pm.response.code !== 200) {",
 									"    return;",
 									"}"
@@ -7306,7 +7149,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15379/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -7315,7 +7158,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15379",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -7328,7 +7171,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4501fe9c-243e-464c-a2ea-e03f7aae0b01",
 								"exec": [
 									"var moment = require('moment')",
 									"",
@@ -7344,7 +7186,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f5793b73-a138-4db8-ba72-d9b496c51ef3",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"",
@@ -7378,10 +7219,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>21GB000060100DE8D8</DocNumHEA5>\n        <CusSubPlaHEA66>Invalid Place</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>BELFAST</ArrNotPlaHEA60>\n        <SimProFlaHEA132>0</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES> \n</CC007A>\n   ",
-							"options": {
-								"raw": {}
-							}
+							"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>AF2127776572</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>CC007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>{{mrn}}</DocNumHEA5>\n        <CusSubPlaHEA66>Invalid Place</CusSubPlaHEA66>\n        <ArrNotPlaHEA60>BELFAST</ArrNotPlaHEA60>\n        <SimProFlaHEA132>0</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NI CONSIGNEE LTD</NamTRD7>\n        <StrAndNumTRD22>1 CONSIGNEE CLOSE</StrAndNumTRD22>\n        <PosCodTRD23>BT2 2AA</PosCodTRD23>\n        <CitTRD24>BELFAST</CitTRD24>\n        <CouTRD25>XI</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>XI198654787835</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>XI000142</RefNumRES1>\n    </CUSOFFPREOFFRES> \n</CC007A>\n   "
 						},
 						"url": {
 							"raw": "{{baseURL}}/customs/transits/movements/arrivals",
@@ -7404,7 +7242,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "94c505dc-713e-4bad-bc28-c2430ab44a76",
 								"exec": [
 									"pm.test(\"Get all arrival must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -7432,7 +7269,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/arrivals/1265/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/arrivals/{{arrivalId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -7441,7 +7278,7 @@
 								"transits",
 								"movements",
 								"arrivals",
-								"1265",
+								"{{arrivalId}}",
 								"messages"
 							]
 						}
@@ -7457,8 +7294,7 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "7316b106-4e0c-4072-ad3d-db7102d9d03e"
+						]
 					}
 				},
 				{
@@ -7467,12 +7303,10 @@
 						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"id": "69b696a1-5313-46fa-a808-f10224c74146"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 27: Northern Ireland to IT – TIR Declaration",
@@ -7483,7 +7317,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "aab74b7a-2ce4-4309-89be-3cd4f7a4582a",
 								"exec": [
 									"const moment = require('moment');",
 									"let now = moment();",
@@ -7515,7 +7348,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "155ac73b-f146-4951-b3d1-acca02411769",
 								"exec": [
 									"var loc = postman.getResponseHeader(\"Location\").toString();",
 									"var depId = loc.split(\"/\")[5];",
@@ -7579,7 +7411,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "de268505-e49a-4ac1-9d91-d3b65fd691f7",
 								"exec": [
 									"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -7607,7 +7438,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15344/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -7616,7 +7447,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15344",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -7629,7 +7460,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "a1eacdcd-94e9-40a0-b4fb-5772903470fe",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -7639,15 +7469,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "786303f0-0041-4aee-880c-8e76ac0ff582",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DECLARATION 28: Northern Ireland to IT – Invalid TIR Declaration with rejection due to missing TIR Holder ID",
@@ -7683,8 +7511,7 @@
 									"pm.collectionVariables.set(\"RefNumHEA4\",text)",
 									"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
 								],
-								"type": "text/javascript",
-								"id": "7742e71a-9617-4a14-9fb0-172a6c1e4637"
+								"type": "text/javascript"
 							}
 						},
 						{
@@ -7705,8 +7532,7 @@
 									"    return;",
 									"}"
 								],
-								"type": "text/javascript",
-								"id": "5f211276-9a60-4ed7-be01-90d6c0109272"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7749,12 +7575,11 @@
 					"response": []
 				},
 				{
-					"name": "02- GET IE015 dept Id",
+					"name": "02- GET IE015 dept Id > IE016 Declaration Rejected",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "6cc54b83-dd2b-4b6f-9e0e-881b58326ac5",
 								"exec": [
 									"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -7782,7 +7607,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}/customs/transits/movements/departures/15342/messages",
+							"raw": "{{baseURL}}/customs/transits/movements/departures/{{deptId}}/messages",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -7791,7 +7616,7 @@
 								"transits",
 								"movements",
 								"departures",
-								"15342",
+								"{{deptId}}",
 								"messages"
 							]
 						}
@@ -7804,7 +7629,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "78cecb5e-dfd9-4d70-be6e-8df9c459444d",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -7814,84 +7638,59 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "27393f78-1633-4b3b-be94-2f594916ecf6",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"variable": [
 		{
-			"id": "860c88d1-c48b-4d11-bf77-1d45c6b18185",
 			"key": "ArrTimTRACUS085",
-			"value": "202107290957",
-			"type": "string"
+			"value": "202107290957"
 		},
 		{
-			"id": "6effa514-b2b1-4234-b352-e4f8d9510291",
 			"key": "DatLimERS69",
-			"value": "20210804",
-			"type": "string"
+			"value": "20210804"
 		},
 		{
-			"id": "53cdd62e-e2ed-40ab-850b-033c040a547d",
 			"key": "DatOfPreMES9",
-			"value": "20210727",
-			"type": "string"
+			"value": "20210727"
 		},
 		{
-			"id": "0a58aaf8-3497-49b5-8664-1cf6750b5212",
 			"key": "DecDatHEA383",
-			"value": "20210727",
-			"type": "string"
+			"value": "20210727"
 		},
 		{
-			"id": "a3f34f27-ca30-4e26-9d80-26ddc9e8a178",
 			"key": "IntConRefMES11",
-			"value": 19603986074597,
-			"type": "number"
+			"value": 19603986074597
 		},
 		{
-			"id": "21d87061-b4eb-42f7-8e5f-523ede684439",
 			"key": "RefNumHEA4",
-			"value": "TRATESTDEC192107270957",
-			"type": "string"
+			"value": "TRATESTDEC192107270957"
 		},
 		{
-			"id": "3ebaaaaf-e437-4641-a36c-0de36bbfabf6",
 			"key": "TimOfPreMES10",
-			"value": "1034",
-			"type": "string"
+			"value": "1034"
 		},
 		{
-			"id": "c62eb653-2a25-4622-8e8c-708694eebf00",
 			"key": "DatOfCanReqHEA147",
-			"value": "20210727",
-			"type": "string"
+			"value": "20210727"
 		},
 		{
-			"id": "a08470a0-5318-4656-a315-c7d51e5f375a",
 			"key": "ArrNotDatHEA141",
-			"value": "20210727",
-			"type": "string"
+			"value": "20210727"
 		},
 		{
-			"id": "5b5cf0e4-91d1-4a9c-a0e8-a005c3727a38",
 			"key": "UnlDatREM67",
-			"value": "20210726",
-			"type": "string"
+			"value": "20210726"
 		},
 		{
-			"id": "985bb84a-371b-408b-8f2e-49937631939a",
 			"key": "MRN",
-			"value": "08IT02110010000FF0",
-			"type": "string"
+			"value": "08IT02110010000FF0"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
