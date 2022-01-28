@@ -1,10 +1,650 @@
 {
 	"info": {
-		"_postman_id": "73e8e808-638d-467f-9d7f-51322784fc83",
+		"_postman_id": "ed43ae8b-b089-4206-9093-6dcbc1863b76",
 		"name": "02_Bearer Token CTC API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Auth_Local_With_Enrolment",
+			"item": [
+				{
+					"name": "POST Auth Bearer Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"console.log(bearerToken)",
+									"",
+									"if(bearerToken == undefined)",
+									"{",
+									" var bearerToken = responseBody('td[data-session-id=\"authToken\"]').text().replace(\"Bearer\", \"\").replace(/\\s/g, \"\");",
+									"}",
+									"",
+									"pm.environment.set(\"access_token\", bearerToken);",
+									"pm.test(\"Successful Bearer Token\", function () {",
+									"    pm.expect(bearerToken).not.equal(null);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, [200]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "authorityId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "redirectionUrl",
+									"value": "{{auth_base_url}}/auth-login-stub/session",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "weak",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "{{affinityGroup}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "{{enrolment_name}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "{{enrolment_taxIdentifier_name}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base_url}}/auth-login-stub/gg-sign-in",
+							"host": [
+								"{{auth_base_url}}"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Client Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TEST APP\",\n    \"access\": {\n        \"accessType\": \"STANDARD\",\n        \"redirectUris\": [],\n        \"overrides\": []\n    },\n    \"environment\": \"SANDBOX\",\n    \"collaborators\": [\n        {\n            \"emailAddress\": \"test@test.com\",\n            \"role\": \"ADMINISTRATOR\",\n            \"userId\": \"{{$randomUUID}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{3rdPartyBaseUrl}}/application",
+							"host": [
+								"{{3rdPartyBaseUrl}}"
+							],
+							"path": [
+								"application"
+							]
+						},
+						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "transit-movements-trader-at-destination",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\": \"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fieldDefinitions\": [\n        {\n            \"name\": \"notificationUrl\",\n            \"shortDescription\": \"Notification URL\",\n            \"description\": \"What is your notification web address for us to send push notifications to?\",\n            \"type\": \"PPNSField\",\n            \"hint\": \"You must only give us a web address that you own. Your application will use this address to listen to notifications from HMRC.\",\n            \"validation\": {\n                \"errorMessage\": \"notificationUrl must be a valid https URL\",\n                \"rules\": [\n                    {\n                        \"UrlValidationRule\": {}\n                    }\n                ]\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"definition",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Field Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fields\": {\n        \"notificationUrl\": \"http://localhost:10202/push-pull-notification-receiver-stub/notifications\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"field",
+								"application",
+								"{{clientId}}",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth_Local_W/o_Enrolment",
+			"item": [
+				{
+					"name": "POST Auth Bearer Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"console.log(bearerToken)",
+									"",
+									"if(bearerToken == undefined)",
+									"{",
+									" var bearerToken = responseBody('td[data-session-id=\"authToken\"]').text().replace(\"Bearer\", \"\").replace(/\\s/g, \"\");",
+									"}",
+									"",
+									"pm.environment.set(\"access_token1\", bearerToken);",
+									"pm.test(\"Successful Bearer Token\", function () {",
+									"    pm.expect(bearerToken).not.equal(null);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, [200]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "authorityId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "redirectionUrl",
+									"value": "{{auth_base_url}}/auth-login-stub/session",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "weak",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "{{affinityGroup}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base_url}}/auth-login-stub/gg-sign-in",
+							"host": [
+								"{{auth_base_url}}"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Client Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TEST APP\",\n    \"access\": {\n        \"accessType\": \"STANDARD\",\n        \"redirectUris\": [],\n        \"overrides\": []\n    },\n    \"environment\": \"SANDBOX\",\n    \"collaborators\": [\n        {\n            \"emailAddress\": \"test@test.com\",\n            \"role\": \"ADMINISTRATOR\",\n            \"userId\": \"{{$randomUUID}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{3rdPartyBaseUrl}}/application",
+							"host": [
+								"{{3rdPartyBaseUrl}}"
+							],
+							"path": [
+								"application"
+							]
+						},
+						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "transit-movements-trader-at-destination",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\": \"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fieldDefinitions\": [\n        {\n            \"name\": \"notificationUrl\",\n            \"shortDescription\": \"Notification URL\",\n            \"description\": \"What is your notification web address for us to send push notifications to?\",\n            \"type\": \"PPNSField\",\n            \"hint\": \"You must only give us a web address that you own. Your application will use this address to listen to notifications from HMRC.\",\n            \"validation\": {\n                \"errorMessage\": \"notificationUrl must be a valid https URL\",\n                \"rules\": [\n                    {\n                        \"UrlValidationRule\": {}\n                    }\n                ]\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"definition",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Field Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fields\": {\n        \"notificationUrl\": \"http://localhost:10202/push-pull-notification-receiver-stub/notifications\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"field",
+								"application",
+								"{{clientId}}",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Auth_Dev_With_Enrolment",
 			"item": [
