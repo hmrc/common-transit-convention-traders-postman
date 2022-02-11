@@ -17,10 +17,10 @@ const newman = require("newman");
 const newmanHtmlExtra = require("newman-reporter-htmlextra");
 
 (async function() {
-    const authCollectionFile = "../Collections/02_Bearer Token CTC API.postman_collection.json";
-    const regressionCollectionFile = "../Collections/04_CTC Traders API Regression Pack.postman_collection.json";
-    const environmentFile = "../EnvironmentVariables/CTC_Development.postman_environment.json";
-    const modifiedEnvironmentFile = "./env_modified.postman_environment.json";
+    const authCollectionFile = `${__dirname}/../Collections/02_Bearer Token CTC API.postman_collection.json`;
+    const regressionCollectionFile = `${__dirname}/../Collections/04_CTC Traders API Regression Pack.postman_collection.json`;
+    const environmentFile = `${__dirname}/../EnvironmentVariables/CTC_Development.postman_environment.json`;
+    const modifiedEnvironmentFile = `${__dirname}/env_modified.postman_environment.json`;
 
     const clientId = process.env.POSTMAN_CLIENT_ID || "";
     const clientSecret = process.env.POSTMAN_CLIENT_SECRET || "";
@@ -54,7 +54,7 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
                 if (count < 3) {
                     setTimeout(() => getBearerToken(success, failiure, count + 1), 200);
                 } else {
-                    failiure(`Unable to retrieve bearer token after three attempts ${JSON.stringify(error || summary.error || summary.run.failures)}`);
+                    failiure(`Unable to retrieve bearer token after three attempts: ${JSON.stringify(error || summary.error || summary.run.failures)}`);
                 }
             } else {
                 console.log("Completed tests");
