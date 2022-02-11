@@ -54,7 +54,7 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
                 if (count < 3) {
                     setTimeout(() => getBearerToken(success, failiure, count + 1), 200);
                 } else {
-                    failiure(`Unable to retrieve bearer token after three attempts ${error || summary.error || summary.run.failures}`);
+                    failiure(`Unable to retrieve bearer token after three attempts ${JSON.stringify(error || summary.error || summary.run.failures)}`);
                 }
             } else {
                 console.log("Completed tests");
@@ -72,7 +72,11 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
                 reporters: [ "cli", "htmlextra" ]
             }, (error, runStatus) => {
                 if (error || runStatus.error || (runStatus.run.failures || []).length > 0) {
-                    failiureCallback(error || runStatus.error || (runStatus.run.failures));
+                    if ((runStatus.run.failures || []).length > 0) {
+                        failiureCallback("There were test failiures. See html output for details.");
+                    } else {
+                        failiureCallback(JSON.stringify(error || runStatus.error));
+                    }
                 }
                 successCallback("All tests passed.");
             });
@@ -82,7 +86,7 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
     return await new Promise(getBearerToken)
         .then(_ => runTests())
         .catch(error => {
-            console.error(`Something went wrong: ${JSON.stringify(error)}`);
+            console.error(`Something went wrong: ${error}`);
             process.exit(-1);
         });
 
