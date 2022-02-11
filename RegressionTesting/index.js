@@ -57,7 +57,7 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
                     failiure(`Unable to retrieve bearer token after three attempts: ${JSON.stringify(error || summary.error || summary.run.failures)}`);
                 }
             } else {
-                console.log("Completed tests");
+                console.log("Retrieved bearer tokens successfully.");
                 success(0);
             }
         });
