@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ed16e674-f3ad-4ba8-98a6-9f9141312e84",
+		"_postman_id": "3979970c-8c3b-492a-a00f-1fdb2f5c5aa3",
 		"name": "01_CTC API Testing Local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -6554,10 +6554,10 @@
 					]
 				},
 				{
-					"name": "15 - Get Box",
+					"name": "Get Box",
 					"item": [
 						{
-							"name": "10 - GET box",
+							"name": "GET box",
 							"event": [
 								{
 									"listen": "test",
@@ -6569,21 +6569,9 @@
 											"",
 											"pm.test(\"Response data contains an array of notifications\", function () {",
 											"    const jsonData = pm.response.json();",
-											"    pm.expect(jsonData).to.be.an(\"array\");",
 											"    pm.expect(jsonData).not.to.be.empty;",
-											"    pm.expect(jsonData).to.have.lengthOf(1);",
-											"});",
-											"",
-											"pm.test(\"Response data contains the correct request id\", ()=>{",
-											"    const jsonData = pm.response.json();",
-											"    const requestId = pm.environment.get(\"requestId\");",
-											"    jsonData.forEach(",
-											"        element => {",
-											"            const messageData = JSON.parse(element.message)",
-											"            pm.expect(messageData.requestId).to.be.equal(requestId)",
-											"        }",
-											"    )",
-											"",
+											"    pm.expect(jsonData).to.be.an(\"object\");",
+											"    pm.expect(jsonData).to.have.property(\"boxId\");",
 											"});"
 										],
 										"type": "text/javascript"
