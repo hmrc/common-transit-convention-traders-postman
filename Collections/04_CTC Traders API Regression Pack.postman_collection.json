@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "93a888cf-a5e2-443a-9f80-dacd86360040",
+		"_postman_id": "17603c5d-e0d8-48a9-a8f8-b6bcdaf16b93",
 		"name": "04_CTC Traders API Regression Pack",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -7933,7 +7933,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrlContext}}/movements/departures/messages?",
+									"raw": "{{baseUrlContext}}/movements/departures/messages?=",
 									"host": [
 										"{{baseUrlContext}}"
 									],
@@ -43189,6 +43189,140 @@
 							]
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "04-Get box Endpoint",
+			"item": [
+				{
+					"name": "Auth_Application_Restricted_Endpoint",
+					"item": [
+						{
+							"name": "Application Restricted Auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response_body = JSON.parse(responseBody);",
+											"pm.environment.set(\"application_access_token\", \"Bearer \" + response_body.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_Id}}",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "common-transit-convention-traders",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+									"protocol": "https",
+									"host": [
+										"api",
+										"{{env}}",
+										"tax",
+										"service",
+										"gov",
+										"uk"
+									],
+									"path": [
+										"oauth",
+										"token"
+									]
+								},
+								"description": "Post that return a bearer token needed for application restricted end-points"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get box",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get request must return status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response data contains an array of notifications\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).not.to.be.empty;",
+									"    pm.expect(jsonData).to.be.an(\"object\");",
+									"    pm.expect(jsonData).to.have.property(\"boxId\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{application_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Client-Id",
+								"value": "{{client_Id}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customs/transits/movements/push-pull-notifications/box",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customs",
+								"transits",
+								"movements",
+								"push-pull-notifications",
+								"box"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
