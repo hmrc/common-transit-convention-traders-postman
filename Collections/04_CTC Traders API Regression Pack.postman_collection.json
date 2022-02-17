@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "93a888cf-a5e2-443a-9f80-dacd86360040",
+		"_postman_id": "27614e41-49f6-4978-8a57-d17403194358",
 		"name": "04_CTC Traders API Regression Pack",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -82,6 +82,89 @@
 								"body": {
 									"mode": "raw",
 									"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>GB007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>{{MRN}}</DocNumHEA5>\n        <ArrNotPlaHEA60>953574106-GB60DEP</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS TEST TRADER</NamTRD7>\n        <StrAndNumTRD22>C E HEATH HOUSE, VICTORIA</StrAndNumTRD22>\n        <PosCodTRD23>SS2 6DX</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954133135000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <ENROUEVETEV>        \n        <PlaTEV10>Rome</PlaTEV10>\n        <PlaTEV10LNG>EN</PlaTEV10LNG>\n        <CouTEV13>IT</CouTEV13>\n        <CTLCTL>\n            <AlrInNCTCTL29>1</AlrInNCTCTL29>\n        </CTLCTL>\n        <SEAINFSF1>            \n            <SeaNumSF12> 1 </SeaNumSF12>\n            <SEAIDSI1>        \n                <SeaIdeSI11>seal_1</SeaIdeSI11>\n                <SeaIdeSI11LNG>EN</SeaIdeSI11LNG>\n            </SEAIDSI1>\n        </SEAINFSF1>\n        <TRASHP>   \n            <NewTraMeaIdeSHP26>NewTestReg</NewTraMeaIdeSHP26>\n            <NewTraMeaIdeSHP26LNG>EN</NewTraMeaIdeSHP26LNG>\n            <NewTraMeaNatSHP54>IT</NewTraMeaNatSHP54>\n            <EndAutSHP61LNG> EN </EndAutSHP61LNG>\n            <EndPlaSHP63LNG> EN </EndPlaSHP63LNG>\n            <CONNR3>        \n                <ConNumNR31>cont1</ConNumNR31>\n            </CONNR3>\n        </TRASHP>\n    </ENROUEVETEV>\n</CC007A>\n   ",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrlContext}}/movements/arrivals",
+									"host": [
+										"{{baseUrlContext}}"
+									],
+									"path": [
+										"movements",
+										"arrivals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.1 Arrival of Goods IE007-Invalid MesTypMES20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"POST IE007 must return status code 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"pm.test(\"POST IE007 must return a text message\", function () {",
+											"    const responseText = pm.response.text();",
+											"    pm.expect(responseText).to.string(\"The request has failed schema validation\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment')",
+											"",
+											"",
+											"pm.collectionVariables.set(\"MRN\",\"20GB00006010024812\")",
+											"",
+											"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
+											"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
+											"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))",
+											"pm.collectionVariables.set(\"ArrNotDatHEA141\", moment().format(\"YYYYMMDD\"))",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true,
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC007A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>gb007A</MesTypMES20>\n    <HEAHEA>       \n        <DocNumHEA5>{{MRN}}</DocNumHEA5>\n        <ArrNotPlaHEA60>953574106-GB60DEP</ArrNotPlaHEA60>\n        <ArrNotPlaHEA60LNG>EN</ArrNotPlaHEA60LNG>\n        <SimProFlaHEA132>1</SimProFlaHEA132>\n        <ArrNotDatHEA141>{{ArrNotDatHEA141}}</ArrNotDatHEA141>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>NCTS TEST TRADER</NamTRD7>\n        <StrAndNumTRD22>C E HEATH HOUSE, VICTORIA</StrAndNumTRD22>\n        <PosCodTRD23>SS2 6DX</PosCodTRD23>\n        <CitTRD24>SOUTHEND-ON-SEA</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB954133135000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>    \n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <ENROUEVETEV>        \n        <PlaTEV10>Rome</PlaTEV10>\n        <PlaTEV10LNG>EN</PlaTEV10LNG>\n        <CouTEV13>IT</CouTEV13>\n        <CTLCTL>\n            <AlrInNCTCTL29>1</AlrInNCTCTL29>\n        </CTLCTL>\n        <SEAINFSF1>            \n            <SeaNumSF12> 1 </SeaNumSF12>\n            <SEAIDSI1>        \n                <SeaIdeSI11>seal_1</SeaIdeSI11>\n                <SeaIdeSI11LNG>EN</SeaIdeSI11LNG>\n            </SEAIDSI1>\n        </SEAINFSF1>\n        <TRASHP>   \n            <NewTraMeaIdeSHP26>NewTestReg</NewTraMeaIdeSHP26>\n            <NewTraMeaIdeSHP26LNG>EN</NewTraMeaIdeSHP26LNG>\n            <NewTraMeaNatSHP54>IT</NewTraMeaNatSHP54>\n            <EndAutSHP61LNG> EN </EndAutSHP61LNG>\n            <EndPlaSHP63LNG> EN </EndPlaSHP63LNG>\n            <CONNR3>        \n                <ConNumNR31>cont1</ConNumNR31>\n            </CONNR3>\n        </TRASHP>\n    </ENROUEVETEV>\n</CC007A>\n   ",
 									"options": {
 										"raw": {
 											"language": "xml"
@@ -3647,6 +3730,94 @@
 							"response": []
 						},
 						{
+							"name": "3.1 Unloading Remark - IE044 - Invalid MesTypMES20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"POST IE044 must return status code 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"pm.test(\"POST IE044 must return a text message\", function () {",
+											"    const responseText = pm.response.text();",
+											"    pm.expect(responseText).to.string(\"The request has failed schema validation\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment')",
+											"let undate = moment();",
+											"undate.add(3, 'days');",
+											"",
+											"",
+											"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
+											"pm.collectionVariables.set(\"MRN\", \"20GB00006010024812\");",
+											"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
+											"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))",
+											"pm.collectionVariables.set(\"ArrNotDatHEA141\", moment().format(\"YYYYMMDD\"))",
+											"pm.collectionVariables.set(\"UnlDatREM67\", undate.format(\"YYYYMMDD\"))",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true,
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC044A>\n    <SynIdeMES1>UNOC</SynIdeMES1>\n    <SynVerNumMES2>3</SynVerNumMES2>\n\n    <MesRecMES6>NCTS</MesRecMES6>\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\n    <IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\n    <AppRefMES14>NCTS</AppRefMES14>\n    <TesIndMES18>0</TesIndMES18>\n    <MesIdeMES19>1</MesIdeMES19>\n    <MesTypMES20>xx044A</MesTypMES20>\n    <HEAHEA>\n        <DocNumHEA5>{{MRN}}</DocNumHEA5>\n        <IdeOfMeaOfTraAtDHEA78>Websols Analysis</IdeOfMeaOfTraAtDHEA78>\n        <IdeOfMeaOfTraAtDHEA78LNG>EN</IdeOfMeaOfTraAtDHEA78LNG>\n        <NatOfMeaOfTraAtDHEA80>IT</NatOfMeaOfTraAtDHEA80>\n        <TotNumOfIteHEA305>3</TotNumOfIteHEA305>\n        <TotNumOfPacHEA306>6</TotNumOfPacHEA306>\n        <TotGroMasHEA307>6000</TotGroMasHEA307>\n    </HEAHEA>\n    <TRADESTRD>\n        <NamTRD7>The Luggage Carriers</NamTRD7>\n        <StrAndNumTRD22>225 Suedopolish Yard,</StrAndNumTRD22>\n        <CitTRD24>,</CitTRD24>\n        <CouTRD25>GB</CouTRD25>\n        <NADLNGRD>EN</NADLNGRD>\n        <TINTRD59>GB163910077000</TINTRD59>\n    </TRADESTRD>\n    <CUSOFFPREOFFRES>\n        <RefNumRES1>GB000060</RefNumRES1>\n    </CUSOFFPREOFFRES>\n    <UNLREMREM>\n        <StaOfTheSeaOKREM19>0</StaOfTheSeaOKREM19>\n        <UnlRemREM53>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6\n            to 8, Identities of seals updated each and added 2 new seals.\n        </UnlRemREM53>\n        <UnlRemREM53LNG>EN</UnlRemREM53LNG>\n        <ConREM65>0</ConREM65>\n        <UnlComREM66>1</UnlComREM66>\n        <UnlDatREM67>{{UnlDatREM67}}</UnlDatREM67>\n    </UNLREMREM>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>6</PoiToTheAttTOC5>\n        <CorValTOC4>8</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>DI</ConInd424>\n        <PoiToTheAttTOC5>35</PoiToTheAttTOC5>\n        <CorValTOC4>12000</CorValTOC4>\n    </RESOFCON534>\n    <RESOFCON534>\n        <DesTOC2>HEADER PAGE Other things to report. Updated Total number of packages 6 to 8, Total gross mass kg 6 to\n            8, Identities of seals updated each an\n        </DesTOC2>\n        <DesTOC2LNG>EN</DesTOC2LNG>\n        <ConInd424>OT</ConInd424>\n    </RESOFCON534>\n    <SEAINFSLI>\n        <SeaNumSLI2>8</SeaNumSLI2>\n        <SEAIDSID>\n            <SeaIdeSID1>S1.Websols#01.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S2.Websols#02.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S3.Websols#02.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S4.Websols#03.01-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S5.Websols#03.02-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>S6.Websols#03.03-new</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #1 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n        <SEAIDSID>\n            <SeaIdeSID1>New seal #2 header</SeaIdeSID1>\n            <SeaIdeSID1LNG>EN</SeaIdeSID1LNG>\n        </SEAIDSID>\n    </SEAINFSLI>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <GooDesGDS23>Windsurfing equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>1000</GroMasGDS46>\n        <NetMasGDS48>999</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C1.Websols#01.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 1 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>1</IteNumGDS7>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>2</IteNumGDS7>\n        <GooDesGDS23>Kitesurfing Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>4000</GroMasGDS46>\n        <NetMasGDS48>3996</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <PRODOCDC2>\n            <DocTypDC21>ZZZ</DocTypDC21>\n            <DocRefDC23>NEW Doc</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report, updated Gross mass, Net mass, added new package, updated Container\n                numbers &amp; added 2 new, added new doc.\n            </DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C2.Websols#02.01N</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR01</ConNumNR21>\n        </CONNR2>\n        <CONNR2>\n            <ConNumNR21>Item2 NEW CNTNR02</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 2 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Pack found for item 3</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>2</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>3000</GroMasGDS46>\n        <NetMasGDS48>2997</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>OR</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>3</IteNumGDS7>\n        <GooDesGDS23>SUP Equipment</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>6000</GroMasGDS46>\n        <NetMasGDS48>5994</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>DI</ConIndROC1>\n        </RESOFCONROC>\n        <RESOFCONROC>\n            <DesROC2>Item 2 Other things to report. updated Gross mass (kg) and Net mass (kg)</DesROC2>\n            <DesROC2LNG>EN</DesROC2LNG>\n            <ConIndROC1>OT</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>C3.Websols#03.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 1 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 2 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n        <PACGS2>\n            <MarNumOfPacGS21>Item 3 Pack 3 - Windsurfing equp</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n    <GOOITEGDS>\n        <IteNumGDS7>4</IteNumGDS7>\n        <GooDesGDS23>Foils - Wind/Kite/SUP</GooDesGDS23>\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\n        <GroMasGDS46>2000</GroMasGDS46>\n        <NetMasGDS48>1998</NetMasGDS48>\n        <PRODOCDC2>\n            <DocTypDC21>235</DocTypDC21>\n            <DocRefDC23>Websols#001</DocRefDC23>\n            <DocRefDCLNG>EN</DocRefDCLNG>\n        </PRODOCDC2>\n        <RESOFCONROC>\n            <ConIndROC1>NE</ConIndROC1>\n        </RESOFCONROC>\n        <CONNR2>\n            <ConNumNR21>NC4.Websols#04.01</ConNumNR21>\n        </CONNR2>\n        <PACGS2>\n            <MarNumOfPacGS21>NEW Item 4 - Foils</MarNumOfPacGS21>\n            <MarNumOfPacGS21LNG>EN</MarNumOfPacGS21LNG>\n            <KinOfPacGS23>BX</KinOfPacGS23>\n            <NumOfPacGS24>1</NumOfPacGS24>\n        </PACGS2>\n    </GOOITEGDS>\n</CC044A>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/messages",
+									"host": [
+										"{{baseUrlContext}}"
+									],
+									"path": [
+										"movements",
+										"arrivals",
+										"{{arrivalId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "3.2 Unloading Remark - IE044  with MesSenMES3",
 							"event": [
 								{
@@ -6981,6 +7152,87 @@
 							"response": []
 						},
 						{
+							"name": "POST IE015 - Invalid MesTypMES20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"POST IE015 must return status code 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"pm.test(\"POST IE015 must return a text message\", function () {",
+											"    const responseText = pm.response.text();",
+											"    pm.expect(responseText).to.string(\"The request has failed schema validation\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const moment = require('moment');",
+											"let now = moment();",
+											"now.add('2', 'days');",
+											"",
+											"",
+											"let date1 = moment();",
+											"date1.add('8', 'days');",
+											"",
+											"var text=\"GUATEST2\";",
+											"var charset = moment().format(\"YYMMDDHHmmss\");",
+											"",
+											"text += charset;",
+											"console.log (\"Text value is \"+text)",
+											"",
+											"",
+											"pm.collectionVariables.set(\"DatOfPreMES9\", moment().format(\"YYYYMMDD\"));",
+											"pm.collectionVariables.set(\"TimOfPreMES10\", moment().format(\"HHmm\"));",
+											"pm.collectionVariables.set(\"DecDatHEA383\", moment().format(\"YYYYMMDD\"));",
+											"",
+											"pm.collectionVariables.set(\"ArrTimTRACUS085\", now.format(\"YYYYMMDDHHmm\"));",
+											"pm.collectionVariables.set(\"DatLimERS69\", date1.format(\"YYYYMMDD\"));",
+											"pm.collectionVariables.set(\"RefNumHEA4\",text)",
+											"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC015B>\r\n    <SynIdeMES1>UNOC</SynIdeMES1>\r\n    <SynVerNumMES2>3</SynVerNumMES2>\r\n    <MesRecMES6>NCTS</MesRecMES6>\r\n    <DatOfPreMES9>{{DatOfPreMES9}}</DatOfPreMES9>\r\n    <TimOfPreMES10>{{TimOfPreMES10}}</TimOfPreMES10>\r\n    <IntConRefMES11>{{IntConRefMES11}}</IntConRefMES11>\r\n    <AppRefMES14>NCTS</AppRefMES14>\r\n    <MesIdeMES19>1</MesIdeMES19>\r\n    <MesTypMES20>GB015c</MesTypMES20>\r\n    <HEAHEA>\r\n        <RefNumHEA4>{{RefNumHEA4}}</RefNumHEA4>\r\n        <TypOfDecHEA24>T1</TypOfDecHEA24>\r\n        <CouOfDesCodHEA30>IT</CouOfDesCodHEA30>\r\n        <AutLocOfGooCodHEA41>954131533-GB60DEP</AutLocOfGooCodHEA41>\r\n        <CouOfDisCodHEA55>GB</CouOfDisCodHEA55>\r\n        <IdeOfMeaOfTraAtDHEA78>NC15 REG</IdeOfMeaOfTraAtDHEA78>\r\n        <NatOfMeaOfTraAtDHEA80>GB</NatOfMeaOfTraAtDHEA80>\r\n      \r\n        <ConIndHEA96>0</ConIndHEA96>\r\n        <NCTSAccDocHEA601LNG>EN</NCTSAccDocHEA601LNG>\r\n        <TotNumOfIteHEA305>1</TotNumOfIteHEA305>\r\n        <TotNumOfPacHEA306>10</TotNumOfPacHEA306>\r\n        <TotGroMasHEA307>1000</TotGroMasHEA307>\r\n        <DecDatHEA383>{{DecDatHEA383}}</DecDatHEA383>\r\n        <DecPlaHEA394>Dover</DecPlaHEA394>\r\n    </HEAHEA>\r\n    <TRAPRIPC1>\r\n        <NamPC17>NCTS UK TEST LAB HMCE</NamPC17>\r\n        <StrAndNumPC122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumPC122>\r\n        <PosCodPC123>SS99 1AA</PosCodPC123>\r\n        <CitPC124>SOUTHEND-ON-SEA, ESSEX</CitPC124>\r\n        <CouPC125>GB</CouPC125>\r\n        <TINPC159>GB954131533000</TINPC159>\r\n    </TRAPRIPC1>\r\n    <TRACONCO1>\r\n        <NamCO17>NCTS UK TEST LAB HMCE</NamCO17>\r\n        <StrAndNumCO122>11TH FLOOR, ALEX HOUSE, VICTORIA AV</StrAndNumCO122>\r\n        <PosCodCO123>SS99 1AA</PosCodCO123>\r\n        <CitCO124>SOUTHEND-ON-SEA, ESSEX</CitCO124>\r\n        <CouCO125>GB</CouCO125>\r\n        <TINCO159>GB954131533000</TINCO159>\r\n    </TRACONCO1>\r\n    <TRACONCE1>\r\n        <NamCE17>NCTS UK TEST LAB HMCE</NamCE17>\r\n        <StrAndNumCE122>ITALIAN OFFICE</StrAndNumCE122>\r\n        <PosCodCE123>IT99 1IT</PosCodCE123>\r\n        <CitCE124>MILAN</CitCE124>\r\n        <CouCE125>IT</CouCE125>\r\n        <TINCE159>IT11ITALIANC11</TINCE159>\r\n    </TRACONCE1>\r\n    <CUSOFFDEPEPT>\r\n        <RefNumEPT1>GB000060</RefNumEPT1>\r\n    </CUSOFFDEPEPT>\r\n    <CUSOFFTRARNS>\r\n        <RefNumRNS1>FR001260</RefNumRNS1>\r\n        <ArrTimTRACUS085>{{ArrTimTRACUS085}}</ArrTimTRACUS085>\r\n    </CUSOFFTRARNS>\r\n    <CUSOFFDESEST>\r\n        <RefNumEST1>IT018100</RefNumEST1>\r\n    </CUSOFFDESEST>\r\n    <CONRESERS>\r\n         <ConResCodERS16>A3</ConResCodERS16>\r\n         <DatLimERS69>{{DatLimERS69}}</DatLimERS69>\r\n    </CONRESERS>\r\n     <SEAINFSLI>\r\n        <SeaNumSLI2>1</SeaNumSLI2>\r\n        <SEAIDSID>\r\n            <SeaIdeSID1>NCTS001</SeaIdeSID1>\r\n        </SEAIDSID>\r\n    </SEAINFSLI>\r\n\r\n    <GUAGUA>\r\n        <GuaTypGUA1>1</GuaTypGUA1>\r\n        <GUAREFREF>\r\n            <GuaRefNumGRNREF1>20GB0000010000GX1</GuaRefNumGRNREF1>\r\n            <AccCodREF6>AC01</AccCodREF6>\r\n        </GUAREFREF>\r\n    </GUAGUA>\r\n        <GUAGUA>\r\n        <GuaTypGUA1>3</GuaTypGUA1>\r\n        <GUAREFREF>\r\n            <OthGuaRefREF4>Cash</OthGuaRefREF4>\r\n        </GUAREFREF>\r\n    </GUAGUA>\r\n    <GOOITEGDS>\r\n        <IteNumGDS7>1</IteNumGDS7>\r\n        <GooDesGDS23>Daffodils</GooDesGDS23>\r\n        <GooDesGDS23LNG>EN</GooDesGDS23LNG>\r\n        <GroMasGDS46>1000</GroMasGDS46>\r\n        <NetMasGDS48>950</NetMasGDS48>\r\n        <SPEMENMT2>\r\n        <AddInfMT21>20GB0000010000GX1</AddInfMT21>\r\n        <AddInfCodMT23>CAL</AddInfCodMT23>\r\n        </SPEMENMT2>\r\n        <PACGS2>\r\n            <MarNumOfPacGS21>AB234</MarNumOfPacGS21>\r\n            <KinOfPacGS23>BX</KinOfPacGS23>\r\n            <NumOfPacGS24>10</NumOfPacGS24>\r\n        </PACGS2>\r\n    </GOOITEGDS>\r\n</CC015B>"
+								},
+								"url": {
+									"raw": "{{baseUrlContext}}/movements/departures",
+									"host": [
+										"{{baseUrlContext}}"
+									],
+									"path": [
+										"movements",
+										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "POST IE015 with MesSenMES3",
 							"event": [
 								{
@@ -7933,7 +8185,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrlContext}}/movements/departures/messages?",
+									"raw": "{{baseUrlContext}}/movements/departures/messages?=",
 									"host": [
 										"{{baseUrlContext}}"
 									],
@@ -9043,6 +9295,58 @@
 								"body": {
 									"mode": "raw",
 									"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>20190912</DatOfPreMES9>\n<TimOfPreMES10>1550</TimOfPreMES10>\n<IntConRefMES11>WE190912102539</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<TesIndMES18>0</TesIndMES18>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>GB014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>19GB00006010021477</DocNumHEA5>\n<DatOfCanReqHEA147>20190912</DatOfCanReqHEA147>\n<CanReaHEA250>Steve asked me to.....</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>CITY WATCH SHIPPING</NamPC17>\n<StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n<PosCodPC123>SS99 1AA</PosCodPC123>\n<CitPC124>Ank-Morpork</CitPC124>\n<CouPC125>GB</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>GB652420267000</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>GB000060</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>"
+								},
+								"url": {
+									"raw": "{{baseUrlContext}}/movements/departures/{{deptId}}/messages",
+									"host": [
+										"{{baseUrlContext}}"
+									],
+									"path": [
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 POST IE014-Invalid MesTypMES20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"POST IE014 must return status code 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"pm.test(\"POST IE014 must return a text message\", function () {",
+											"    const responseText = pm.response.text();",
+											"    pm.expect(responseText).to.string(\"The request has failed schema validation\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/xml"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<CC014A>\n<SynIdeMES1>UNOC</SynIdeMES1>\n<SynVerNumMES2>3</SynVerNumMES2>\n<MesRecMES6>NCTS</MesRecMES6>\n<DatOfPreMES9>20190912</DatOfPreMES9>\n<TimOfPreMES10>1550</TimOfPreMES10>\n<IntConRefMES11>WE190912102539</IntConRefMES11>\n<AppRefMES14>NCTS</AppRefMES14>\n<TesIndMES18>0</TesIndMES18>\n<MesIdeMES19>1</MesIdeMES19>\n<MesTypMES20>GB0014A</MesTypMES20>\n<HEAHEA>\n<DocNumHEA5>19GB00006010021477</DocNumHEA5>\n<DatOfCanReqHEA147>20190912</DatOfCanReqHEA147>\n<CanReaHEA250>Steve asked me to.....</CanReaHEA250>\n</HEAHEA>\n<TRAPRIPC1>\n<NamPC17>CITY WATCH SHIPPING</NamPC17>\n<StrAndNumPC122>125 Psuedopolis Yard</StrAndNumPC122>\n<PosCodPC123>SS99 1AA</PosCodPC123>\n<CitPC124>Ank-Morpork</CitPC124>\n<CouPC125>GB</CouPC125>\n<NADLNGPC>EN</NADLNGPC>\n<TINPC159>GB652420267000</TINPC159>\n</TRAPRIPC1>\n<CUSOFFDEPEPT>\n<RefNumEPT1>GB000060</RefNumEPT1>\n</CUSOFFDEPEPT>\n</CC014A>"
 								},
 								"url": {
 									"raw": "{{baseUrlContext}}/movements/departures/{{deptId}}/messages",
