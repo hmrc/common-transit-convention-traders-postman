@@ -43413,6 +43413,21 @@
 									"name": "05 POST IE045",
 									"event": [
 										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"var env = pm.environment.get(\"env\");",
+													"if(env == \"local\"){",
+													"    postman.setNextRequest(null);",
+													"}else",
+													"{",
+													"    postman.setNextRequest(\"Application Restricted Auth\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
 											"listen": "test",
 											"script": {
 												"exec": [
