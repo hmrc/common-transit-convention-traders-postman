@@ -19,7 +19,7 @@
 									"script": {
 										"exec": [
 											"pm.test(\"POST IE007 must return status code 202\", function () {",
-											"    pm.response.to.have.status(202);",
+											"    pm.response.to.have.status(400); // revert back to 202",
 											"});",
 											"pm.test(\"Validate location \", function () {",
 											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
