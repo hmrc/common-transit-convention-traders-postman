@@ -22,8 +22,8 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
     const environmentFile = `${__dirname}/../EnvironmentVariables/CTC_Development.postman_environment.json`;
     const modifiedEnvironmentFile = `${__dirname}/env_modified.postman_environment.json`;
 
-    const clientId = process.env.POSTMAN_CLIENT_ID || "";
-    const clientSecret = process.env.POSTMAN_CLIENT_SECRET || "";
+    const clientId = process.env.OAUTH_CLIENT_ID || "";
+    const clientSecret = process.env.OAUTH_CLIENT_SECRET || "";
 
     const getBearerToken = function(success, failiure, count = 1) {
         console.log("Retreiving bearer token...")
