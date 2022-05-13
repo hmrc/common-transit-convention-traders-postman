@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sm --verbose --start CTC_TRADERS_API -r --wait 1200 --noprogress  --appendArgs '{"PUSH_PULL_NOTIFICATIONS_API": ["-Dallowlisted.useragents.0=api-subscription-fields", "-Dallowlisted.useragents.1=transit-movements-trader-at-destination", "-Dallowlisted.useragents.2=transits-movements-trader-at-departure", "-Dallowlisted.useragents.3=common-transit-convention-traders"], "PUSH_PULL_NOTIFICATIONS_GATEWAY": ["-DvalidateHttpsCallbackUrl=false"]}'
