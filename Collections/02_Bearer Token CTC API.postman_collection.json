@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ed43ae8b-b089-4206-9093-6dcbc1863b76",
+		"_postman_id": "5933aa60-ca73-4acd-92cb-2028573a5c46",
 		"name": "02_Bearer Token CTC API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18186974"
 	},
 	"item": [
 		{
@@ -662,16 +663,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)",
 									""
 								],
 								"type": "text/javascript"
@@ -1017,17 +1012,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
@@ -1368,17 +1356,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
@@ -1734,17 +1715,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
@@ -2104,17 +2078,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
@@ -2462,17 +2429,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
@@ -2866,17 +2826,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
@@ -3369,17 +3322,10 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
-									"links = $('a'); //jquery get all hyperlinks",
-									"  $(links).each(function(i, link){",
-									"    if(i==5)",
-									"    {",
-									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
-									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
-									"    }",
-									"  })",
-									""
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
 								"type": "text/javascript"
 							}
