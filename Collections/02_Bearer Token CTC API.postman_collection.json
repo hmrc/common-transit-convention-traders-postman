@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ed43ae8b-b089-4206-9093-6dcbc1863b76",
+		"_postman_id": "5933aa60-ca73-4acd-92cb-2028573a5c46",
 		"name": "02_Bearer Token CTC API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18186974"
 	},
 	"item": [
 		{
@@ -662,14 +663,18 @@
 									"const $ = cheerio.load(responseBody);",
 									"var path;",
 									"",
+									"const $hrefpath = console.log($(\"div a[data-module='govuk-button']\").attr('href'));",
+									"console.log('hrefpath is',hrefpath)",
+									"",
 									"links = $('a'); //jquery get all hyperlinks",
 									"  $(links).each(function(i, link){",
-									"    if(i==5)",
+									"    if(i==7)",
 									"    {",
 									"      path = $(link).attr('href');",
-									"      var auth_id = path.split(\"=\")[1];",
+									"      console.log('the path is', path)",
+									"      var auth_id = path.split(\"=\")[2];",
 									"      pm.environment.set(\"auth_id\",auth_id)",
-									"   ",
+									"      //console.log(auth_id)  ",
 									"    }",
 									"  })",
 									""
