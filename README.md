@@ -55,17 +55,19 @@ You must note: Trader Test Postman Collection needs to be run manually.
 
 **NOTE: Local testing is internal and won't work outside HMRC**
 
-* Pull in the latest service manager and service-manager-config :
+* Pull in the latest service manager (sm2) and service-manager-config :
 
-  https://github.com/hmrc/service-manager
+  https://github.com/hmrc/sm2
   https://github.com/hmrc/service-manager-config
   
 * Make sure you have mongo db and CTC_TRADERS_API service profile running with the following arguments:
 
 ```
-sm --start CTC_TRADERS_API \
-  --appendArgs '{"PUSH_PULL_NOTIFICATIONS_API": ["-Dallowlisted.useragents.0=api-subscription-fields", "-Dallowlisted.useragents.1=transit-movements-trader-at-destination", "-Dallowlisted.useragents.2=transits-movements-trader-at-departure", "-Dallowlisted.useragents.3=common-transit-convention-traders"], "PUSH_PULL_NOTIFICATIONS_GATEWAY": ["-DvalidateHttpsCallbackUrl=false"]}'
+sm2 --start CTC_TRADERS_API \
+  --appendArgs '{"PUSH_PULL_NOTIFICATIONS_API": ["-Dallowlisted.useragents.0=api-subscription-fields", "-Dallowlisted.useragents.1=transit-movements-trader-at-destination", "-Dallowlisted.useragents.2=transits-movements-trader-at-departure", "-Dallowlisted.useragents.3=common-transit-convention-traders", "-Dallowlisted.useragents.4=transit-movements-push-notifications"], "PUSH_PULL_NOTIFICATIONS_GATEWAY": ["-DvalidateHttpsCallbackUrl=false"]}'
 ```
+
+If you are using the legacy python based service manager, replace `sm2` with `sm`.
 
 ### To test APIs
 
