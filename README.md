@@ -128,5 +128,7 @@ In order to run the Collections
 8. 08_E2E Testing Business Test NCTS XI - E2E Testing for XI on Business Test.
 9. 09_CTC_API_Guarantee_Regression.postman_collection - 1GBP Guarantee Regression Pack.
 10. 10_CTC_TRADERS_API_TEST_PACK.postman_collection - Trader Test Pack Test scenarios.
-11. 11_P5 Small Messages E2E Testing GB.postman_collection - E2E P5 Business Threads for GB on Business Test/SIT environment.
-12. 12_P5 Small Messages E2E Testing XI.postman_collection - E2E P5 Business Threads for XI on Business Test/SIT environment.
+11. 11_P5 (SIT) E2E Testing GB Small Messages.postman_collection - E2E P5 Business Threads for GB on Business Test/SIT environment.
+12. 11A_P5 (TT) E2E Testing GB Small Messages.postman_collection - E2E P5 Business Threads for GB on Trader Test environment.
+13. 12_P5 (SIT) Small Messages E2E Testing XI.postman_collection - E2E P5 Business Threads for XI on Business Test/SIT environment.
+14. 12A_P5 (TT) Small Messages E2E Testing XI.postman_collection - E2E P5 Business Threads for XI on Trader Test environment.
