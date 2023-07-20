@@ -11,6 +11,17 @@
     "ctc-api-guarantee-tests": "newman run Collections/09_CTC_API_Guarantee_Regression.postman_collection.json -e EnvironmentVariables/CTC_Local_Legacy_Enrolment.postman_environment.json --reporters cli,junit --reporter-junit-export target/guarantee-test-reports/junit.xml"
   },
   "devDependencies": {
-    "newman": "^5.3.0"
-  }
+    "newman": "^5.1.2"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmrc/common-transit-convention-traders-postman.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hmrc/common-transit-convention-traders-postman/issues"
+  },
+  "homepage": "https://github.com/hmrc/common-transit-convention-traders-postman#readme"
 }
