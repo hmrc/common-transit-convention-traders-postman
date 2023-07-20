@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5933aa60-ca73-4acd-92cb-2028573a5c46",
+		"_postman_id": "a9087b90-06d3-4540-9f00-94de4f8137eb",
 		"name": "02_Bearer Token CTC API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18186974"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23355585"
 	},
 	"item": [
 		{
@@ -21,18 +21,31 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"console.log(bearerToken)",
 									"",
-									"if(bearerToken == undefined)",
-									"{",
-									" var bearerToken = responseBody('td[data-session-id=\"authToken\"]').text().replace(\"Bearer\", \"\").replace(/\\s/g, \"\");",
+									"const bearerExtractionRegex = /((.+),)?Bearer ([^,\\s]+)(,.+)?$/g;",
+									"",
+									"const token = responseBody('td[data-session-id=\"authToken\"]').text().trim();",
+									"",
+									"// There should only be one match, so we just get it out by exploding the iterator and getting the first (and only) result.",
+									"const matches = [...token.matchAll(bearerExtractionRegex)][0];",
+									"",
+									"// Match 3 is the bearer token",
+									"let bearerToken = matches[3];",
+									"if (matches[4]) {",
+									"    // Match 4 is if GNAP appears after the bearer token",
+									"    bearerToken += matches[4];",
 									"}",
 									"",
-									"pm.environment.set(\"access_token\", bearerToken);",
+									"if (matches[2]) {",
+									"    // Match 2 is if GNAP appears before the bearer token",
+									"    bearerToken += \",\" + matches[2];",
+									"}",
+									"",
+									"// bearerToken will now contain the bearer token (without Bearer) and the GNAP token.",
+									"pm.environment.set(\"bearer_token\", bearerToken);",
 									"pm.test(\"Successful Bearer Token\", function () {",
 									"    pm.expect(bearerToken).not.equal(null);",
-									"});",
-									""
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -116,16 +129,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{auth_base_url}}/auth-login-stub/gg-sign-in",
-							"host": [
-								"{{auth_base_url}}"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "{{auth_base_url}}/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -150,13 +154,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{access_token}}"
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -169,15 +169,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{3rdPartyBaseUrl}}/application",
-							"host": [
-								"{{3rdPartyBaseUrl}}"
-							],
-							"path": [
-								"application"
-							]
-						},
+						"url": "{{3rdPartyBaseUrl}}/application",
 						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
 					},
 					"response": []
@@ -207,13 +199,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{access_token}}"
+							}
 						},
 						"method": "PUT",
 						"header": [
@@ -232,15 +220,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{basePushPullUrl}}/box",
-							"host": [
-								"{{basePushPullUrl}}"
-							],
-							"path": [
-								"box"
-							]
-						},
+						"url": "{{basePushPullUrl}}/box",
 						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
 					},
 					"response": []
@@ -272,19 +252,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
-							"host": [
-								"{{apiSubscriptionFieldsBaseUrl}}"
-							],
-							"path": [
-								"definition",
-								"context",
-								"customs%2Ftransits",
-								"version",
-								"1.0"
-							]
-						}
+						"url": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0"
 					},
 					"response": []
 				},
@@ -316,21 +284,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
-							"host": [
-								"{{apiSubscriptionFieldsBaseUrl}}"
-							],
-							"path": [
-								"field",
-								"application",
-								"{{clientId}}",
-								"context",
-								"customs%2Ftransits",
-								"version",
-								"1.0"
-							]
-						}
+						"url": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0"
 					},
 					"response": []
 				}
@@ -351,18 +305,31 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"console.log(bearerToken)",
 									"",
-									"if(bearerToken == undefined)",
-									"{",
-									" var bearerToken = responseBody('td[data-session-id=\"authToken\"]').text().replace(\"Bearer\", \"\").replace(/\\s/g, \"\");",
+									"const bearerExtractionRegex = /((.+),)?Bearer ([^,\\s]+)(,.+)?$/g;",
+									"",
+									"const token = responseBody('td[data-session-id=\"authToken\"]').text().trim();",
+									"",
+									"// There should only be one match, so we just get it out by exploding the iterator and getting the first (and only) result.",
+									"const matches = [...token.matchAll(bearerExtractionRegex)][0];",
+									"",
+									"// Match 3 is the bearer token",
+									"let bearerToken = matches[3];",
+									"if (matches[4]) {",
+									"    // Match 4 is if GNAP appears after the bearer token",
+									"    bearerToken += matches[4];",
 									"}",
 									"",
+									"if (matches[2]) {",
+									"    // Match 2 is if GNAP appears before the bearer token",
+									"    bearerToken += \",\" + matches[2];",
+									"}",
+									"",
+									"// bearerToken will now contain the bearer token (without Bearer) and the GNAP token.",
 									"pm.environment.set(\"access_token1\", bearerToken);",
 									"pm.test(\"Successful Bearer Token\", function () {",
 									"    pm.expect(bearerToken).not.equal(null);",
-									"});",
-									""
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -426,16 +393,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{auth_base_url}}/auth-login-stub/gg-sign-in",
-							"host": [
-								"{{auth_base_url}}"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "{{auth_base_url}}/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -460,13 +418,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{bearer_token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{bearer_token}}"
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -479,15 +433,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{3rdPartyBaseUrl}}/application",
-							"host": [
-								"{{3rdPartyBaseUrl}}"
-							],
-							"path": [
-								"application"
-							]
-						},
+						"url": "{{3rdPartyBaseUrl}}/application",
 						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
 					},
 					"response": []
@@ -517,13 +463,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{bearer_token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{bearer_token}}"
+							}
 						},
 						"method": "PUT",
 						"header": [
@@ -542,15 +484,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{basePushPullUrl}}/box",
-							"host": [
-								"{{basePushPullUrl}}"
-							],
-							"path": [
-								"box"
-							]
-						},
+						"url": "{{basePushPullUrl}}/box",
 						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
 					},
 					"response": []
@@ -582,19 +516,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
-							"host": [
-								"{{apiSubscriptionFieldsBaseUrl}}"
-							],
-							"path": [
-								"definition",
-								"context",
-								"customs%2Ftransits",
-								"version",
-								"1.0"
-							]
-						}
+						"url": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0"
 					},
 					"response": []
 				},
@@ -626,21 +548,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
-							"host": [
-								"{{apiSubscriptionFieldsBaseUrl}}"
-							],
-							"path": [
-								"field",
-								"application",
-								"{{clientId}}",
-								"context",
-								"customs%2Ftransits",
-								"version",
-								"1.0"
-							]
-						}
+						"url": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0"
 					},
 					"response": []
 				}
@@ -753,22 +661,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -889,22 +782,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -974,22 +852,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"api",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://api.{{env}}.tax.service.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -1096,22 +959,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -1233,22 +1081,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -1318,22 +1151,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"api",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://api.{{env}}.tax.service.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -1436,22 +1254,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -1572,22 +1375,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -1657,22 +1445,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"api",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://api.{{env}}.tax.service.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -1799,22 +1572,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -1935,22 +1693,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -2020,22 +1763,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"api",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://api.{{env}}.tax.service.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -2158,21 +1886,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"{{env}}-www",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -2292,21 +2006,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"{{env}}-www",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -2372,21 +2072,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"{{env}}-api",
-								"service",
-								"hmrc",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -2489,21 +2175,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"{{env}}-www",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -2623,21 +2295,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"{{env}}-www",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -2707,21 +2365,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"{{env}}-api",
-								"service",
-								"hmrc",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -2793,22 +2437,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -2906,22 +2535,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -3139,22 +2753,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -3222,22 +2821,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"api",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://api.{{env}}.tax.service.gov.uk/oauth/token"
 					},
 					"response": []
 				}
@@ -3289,22 +2873,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -3406,22 +2975,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"auth-login-stub",
-								"gg-sign-in"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in"
 					},
 					"response": []
 				},
@@ -3639,22 +3193,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
-							"protocol": "https",
-							"host": [
-								"www",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"grantscope"
-							]
-						}
+						"url": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope"
 					},
 					"response": []
 				},
@@ -3722,22 +3261,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
-							"protocol": "https",
-							"host": [
-								"api",
-								"{{env}}",
-								"tax",
-								"service",
-								"gov",
-								"uk"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
+						"url": "https://api.{{env}}.tax.service.gov.uk/oauth/token"
 					},
 					"response": []
 				}
