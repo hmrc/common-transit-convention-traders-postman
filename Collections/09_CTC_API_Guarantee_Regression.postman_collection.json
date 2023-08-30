@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e17162f5-89e0-4383-abe1-bcd3c48ed3c9",
+		"_postman_id": "d022d48f-a777-4d7f-a2ba-32fd34504818",
 		"name": "09_CTC_API_Guarantee_Regression",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18636490"
 	},
 	"item": [
 		{
@@ -21,11 +22,26 @@
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
 									"",
-									"if(bearerToken == undefined)",
-									"{",
-									" var bearerToken = responseBody('td[data-session-id=\"authToken\"]').text().replace(\"Bearer\", \"\").replace(/\\s/g, \"\");",
+									"const bearerExtractionRegex = /((.+),)?Bearer ([^,\\s]+)(,.+)?$/g;",
+									"",
+									"const token = responseBody('td[data-session-id=\"authToken\"]').text().trim();",
+									"",
+									"// There should only be one match, so we just get it out by exploding the iterator and getting the first (and only) result.",
+									"const matches = [...token.matchAll(bearerExtractionRegex)][0];",
+									"",
+									"// Match 3 is the bearer token",
+									"let bearerToken = matches[3];",
+									"if (matches[4]) {",
+									"    // Match 4 is if GNAP appears after the bearer token",
+									"    bearerToken += matches[4];",
 									"}",
-									"console.log(bearerToken)",
+									"",
+									"if (matches[2]) {",
+									"    // Match 2 is if GNAP appears before the bearer token",
+									"    bearerToken += \",\" + matches[2];",
+									"}",
+									"",
+									"// bearerToken will now contain the bearer token (without Bearer) and the GNAP token.",
 									"pm.environment.set(\"bearer_token\", bearerToken);",
 									"pm.test(\"Successful Bearer Token\", function () {",
 									"    pm.expect(bearerToken).not.equal(null);",
