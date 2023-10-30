@@ -3,7 +3,8 @@
 		"_postman_id": "5a7f3608-c799-40aa-bb01-86ff5517ad7f",
 		"name": "12B_P5 (TT) Small Messages E2E XI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26102216"
+		"_exporter_id": "29542792",
+		"_collection_link": "https://ctctradersapi.postman.co/workspace/End-to-End-Testing~47c6e04a-4da9-425d-845c-9579557f9e63/collection/26102216-5a7f3608-c799-40aa-bb01-86ff5517ad7f?action=share&source=collection_link&creator=29542792"
 	},
 	"item": [
 		{
@@ -5567,7 +5568,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246MGV2UDJ0</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246MGV2UDJ0</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -6213,7 +6214,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB0002466BDOY1J1</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB0002466BDOY1J1</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -6707,7 +6708,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246Q9N0K6J0</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246Q9N0K6J0</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -7188,7 +7189,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246BQH0VQJ3</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246BQH0VQJ3</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
