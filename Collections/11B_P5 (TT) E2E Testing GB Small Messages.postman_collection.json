@@ -155,6 +155,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -314,6 +335,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -525,7 +567,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC014C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC014C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246ZPABRDJ3</MRN>\n    </TransitOperation>\n    <Invalidation>\n        <requestDateAndTime>{{requestDateAndTime}}</requestDateAndTime>\n        <initiatedByCustoms>0</initiatedByCustoms>\n        <justification>Container broken</justification>\n    </Invalidation>\n    <CustomsOfficeOfDeparture>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDeparture>\n    <HolderOfTheTransitProcedure>\n        <identificationNumber>GB953574106000</identificationNumber>\n    </HolderOfTheTransitProcedure>\n</ncts:CC014C>",
+											"raw": "<ncts:CC014C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC014C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246D5HN5IJ1</MRN>\n    </TransitOperation>\n    <Invalidation>\n        <requestDateAndTime>{{requestDateAndTime}}</requestDateAndTime>\n        <initiatedByCustoms>0</initiatedByCustoms>\n        <justification>Container broken</justification>\n    </Invalidation>\n    <CustomsOfficeOfDeparture>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDeparture>\n    <HolderOfTheTransitProcedure>\n        <identificationNumber>GB953574106000</identificationNumber>\n    </HolderOfTheTransitProcedure>\n</ncts:CC014C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -533,14 +575,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseURL}}/movements/departures/64c908c698b5e804/messages",
+											"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages",
 											"host": [
 												"{{baseURL}}"
 											],
 											"path": [
 												"movements",
 												"departures",
-												"64c908c698b5e804",
+												"{{departureId}}",
 												"messages"
 											]
 										}
@@ -607,6 +649,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -911,6 +974,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -1054,6 +1138,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -1199,6 +1304,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -1342,6 +1468,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -1502,6 +1649,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -1814,6 +1982,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						}
 					]
@@ -1979,6 +2168,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -2138,6 +2348,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -2433,6 +2664,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -2739,6 +2991,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -2885,6 +3158,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -3030,6 +3324,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -3237,6 +3552,27 @@
 									},
 									"response": []
 								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
 							]
 						},
 						{
@@ -3396,6 +3732,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						},
@@ -3722,6 +4079,27 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"description": "IE015 > IE016",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							]
 						}
@@ -5109,7 +5487,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23XI000081GESREDJ6</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>GB953574106000</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23XI000081GESREDJ6</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>GB953574106000</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -5547,7 +5925,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000060NV5YRTJ2</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>GB953574106000</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000060NV5YRTJ2</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>GB953574106000</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"

@@ -6708,7 +6708,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246Q9N0K6J0</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246Q9N0K6J0</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -7189,7 +7189,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246BQH0VQJ3</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>1</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
+											"raw": "<ncts:CC044C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n   <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246BQH0VQJ3</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
 											"options": {
 												"raw": {
 													"language": "xml"
@@ -7985,7 +7985,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "<ncts:CC007C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC007C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246617ZHJJ0</MRN>\n        <arrivalNotificationDateAndTime>{{arrivalNotificationDateAndTime}}</arrivalNotificationDateAndTime>\n        <simplifiedProcedure>0</simplifiedProcedure>\n        <incidentFlag>0</incidentFlag>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <Consignment>\n        <LocationOfGoods>\n            <typeOfLocation>C</typeOfLocation>\n            <qualifierOfIdentification>U</qualifierOfIdentification>\n            <UNLocode>GBBEL</UNLocode>\n        </LocationOfGoods>\n    </Consignment>\n</ncts:CC007C>"
+											"raw": "<ncts:CC007C PhaseID=\"NCTS5.1\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.XI</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC007C</messageType>\n    <TransitOperation>\n        <MRN>23GB0002460KDZ43J8</MRN>\n        <arrivalNotificationDateAndTime>{{arrivalNotificationDateAndTime}}</arrivalNotificationDateAndTime>\n        <simplifiedProcedure>0</simplifiedProcedure>\n        <incidentFlag>0</incidentFlag>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>XI175521246821</identificationNumber>\n    </TraderAtDestination>\n    <Consignment>\n        <LocationOfGoods>\n            <typeOfLocation>C</typeOfLocation>\n            <qualifierOfIdentification>U</qualifierOfIdentification>\n            <UNLocode>GBBEL</UNLocode>\n        </LocationOfGoods>\n    </Consignment>\n</ncts:CC007C>"
 										},
 										"url": {
 											"raw": "{{baseUrlContext}}/movements/arrivals",
@@ -11857,6 +11857,10 @@
 		},
 		{
 			"key": "unloadingDate",
+			"value": ""
+		},
+		{
+			"key": "arrivalNotificationDateAndTime",
 			"value": ""
 		}
 	]
