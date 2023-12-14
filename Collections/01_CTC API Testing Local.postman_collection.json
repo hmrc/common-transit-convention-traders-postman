@@ -94,7 +94,7 @@
 								},
 								{
 									"key": "credentialStrength",
-									"value": "weak",
+									"value": "strong",
 									"type": "text"
 								},
 								{
