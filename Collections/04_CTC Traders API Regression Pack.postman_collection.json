@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "132568c3-33e2-498d-8141-199f7e8cdd65",
+		"_postman_id": "5750f89f-42dc-4bcc-be23-12cbb4b1a8ae",
 		"name": "04_CTC Traders API Regression Pack",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26102216"
 	},
 	"item": [
 		{
@@ -21,9 +22,17 @@
 											"pm.test(\"POST IE007 must return status code 202\", function () {",
 											"    pm.response.to.have.status(202);",
 											"});",
-											"pm.test(\"Validate location \", function () {",
-											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   pm.response.to.have.header(\"Location\");",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
 											"});",
+											"",
 											"var loc = postman.getResponseHeader(\"Location\").toString();",
 											"tests[loc] = loc;",
 											"var arrivalId = loc.split(\"/\")[5];",
@@ -853,8 +862,15 @@
 											"pm.test(\"PUT IE007 message must return status code 202\", function () {",
 											"    pm.response.to.have.status(202);",
 											"});",
-											"pm.test(\"Validate location for PUT IE007 \", function () {",
-											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   pm.response.to.have.header(\"Location\");",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
 											"});",
 											"",
 											"if (pm.response.code !== 202) {",
@@ -1727,8 +1743,17 @@
 													"    pm.response.to.have.status(202);",
 													"});",
 													"",
-													"var loc = postman.getResponseHeader(\"Location\").toString();",
+													"var enrolment_name = pm.environment.get(\"enrolment_name\");",
 													"",
+													"pm.test(\"Check whether header is correct\", function () {",
+													"   pm.response.to.have.header(\"Location\");",
+													"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+													"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+													"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+													"   }",
+													"});",
+													"",
+													"var loc = postman.getResponseHeader(\"Location\").toString();",
 													"var messageId = loc.split(\"/\")[7];",
 													"pm.environment.set(\"messageId\",messageId);",
 													"console.log(\"message id is \"+messageId)"
@@ -3642,9 +3667,16 @@
 											"    pm.response.to.have.status(202);",
 											"});",
 											"",
-											"pm.test(\"Validate location\", function () {",
-											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   pm.response.to.have.header(\"Location\");",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
 											"});",
+											"",
 											"",
 											"var loc = postman.getResponseHeader(\"Location\").toString();",
 											"tests[loc] = loc;",
@@ -4552,7 +4584,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -4892,7 +4933,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -5225,7 +5275,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -5984,7 +6043,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7077,9 +7145,17 @@
 											"    pm.response.to.have.status(202);",
 											"});",
 											"",
-											"pm.test(\"Validate location \", function () {",
-											"    var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   pm.response.to.have.header(\"Location\");",
+											"   var dept_location = postman.getResponseHeader(\"Location\").toString();",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
 											"});",
+											"",
 											"",
 											"if (pm.response.code !== 202) {",
 											"    return;",
@@ -7767,7 +7843,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8119,7 +8204,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8147,6 +8241,66 @@
 									"path": [
 										"movements",
 										"departures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET dept Id details updatedSince filter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"if (pm.response.code !== 200) {",
+											"    return;",
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.hmrc.1.0+json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrlContext}}/movements/departures?updatedSince=2023-06-21T09:00:00Z",
+									"host": [
+										"{{baseUrlContext}}"
+									],
+									"path": [
+										"movements",
+										"departures"
+									],
+									"query": [
+										{
+											"key": "updatedSince",
+											"value": "2023-06-21T09:00:00Z"
+										}
 									]
 								}
 							},
@@ -8490,7 +8644,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8533,6 +8696,68 @@
 										"departures",
 										"{{deptId}}",
 										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET dept Id details receivedSince filter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"if (pm.response.code !== 200) {",
+											"    return;",
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.hmrc.1.0+json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrlContext}}/movements/departures/{{deptId}}/messages?receivedSince=2023-06-21T09:00:00Z",
+									"host": [
+										"{{baseUrlContext}}"
+									],
+									"path": [
+										"movements",
+										"departures",
+										"{{deptId}}",
+										"messages"
+									],
+									"query": [
+										{
+											"key": "receivedSince",
+											"value": "2023-06-21T09:00:00Z"
+										}
 									]
 								}
 							},
@@ -9261,9 +9486,16 @@
 											"    pm.response.to.have.status(202);",
 											"});",
 											"",
-											"pm.test(\"Validate location\", function () {",
-											"    var arr_location = postman.getResponseHeader(\"Location\").toString();",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   pm.response.to.have.header(\"Location\");",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
 											"});",
+											"",
 											"",
 											"var loc = postman.getResponseHeader(\"Location\").toString();",
 											"tests[loc] = loc;",
@@ -9426,7 +9658,16 @@
 											"});",
 											"if (pm.response.code !== 200) {",
 											"    return;",
-											"}"
+											"}",
+											"",
+											"var enrolment_name = pm.environment.get(\"enrolment_name\");",
+											"",
+											"pm.test(\"Check whether header is correct\", function () {",
+											"   if(enrolment_name == 'HMCE-NCTS-ORG'){",
+											"   pm.response.to.have.header(\"X-Missing-ECC-Enrolment\");",
+											"   pm.response.to.be.header(\"X-Missing-ECC-Enrolment\", \"User does not have the ECC enrolment, and will be unable to submit phase 5 declarations. See https://www.gov.uk/guidance/how-to-subscribe-to-the-new-computerised-transit-system\");",
+											"   }",
+											"});"
 										],
 										"type": "text/javascript"
 									}
