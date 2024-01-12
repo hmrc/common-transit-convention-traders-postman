@@ -1,0 +1,3793 @@
+{
+	"info": {
+		"_postman_id": "435e0729-f526-42db-b426-4f1eaab02233",
+		"name": "02_Bearer Token CTC API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26102216"
+	},
+	"item": [
+		{
+			"name": "Auth_Local_With_Enrolment",
+			"item": [
+				{
+					"name": "POST Auth Bearer Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"",
+									"const bearerExtractionRegex = /((.+),)?Bearer ([^,\\s]+)(,.+)?$/g;",
+									"",
+									"const token = responseBody('td[data-session-id=\"authToken\"]').text().trim();",
+									"",
+									"// There should only be one match, so we just get it out by exploding the iterator and getting the first (and only) result.",
+									"const matches = [...token.matchAll(bearerExtractionRegex)][0];",
+									"",
+									"// Match 3 is the bearer token",
+									"let bearerToken = matches[3];",
+									"if (matches[4]) {",
+									"    // Match 4 is if GNAP appears after the bearer token",
+									"    bearerToken += matches[4];",
+									"}",
+									"",
+									"if (matches[2]) {",
+									"    // Match 2 is if GNAP appears before the bearer token",
+									"    bearerToken += \",\" + matches[2];",
+									"}",
+									"",
+									"// bearerToken will now contain the bearer token (without Bearer) and the GNAP token.",
+									"pm.environment.set(\"access_token\", bearerToken);",
+									"pm.test(\"Successful Bearer Token\", function () {",
+									"    pm.expect(bearerToken).not.equal(null);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, [200]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "authorityId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "redirectionUrl",
+									"value": "{{auth_base_url}}/auth-login-stub/session",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "{{affinityGroup}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "{{enrolment_name}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "{{enrolment_taxIdentifier_name}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base_url}}/auth-login-stub/gg-sign-in",
+							"host": [
+								"{{auth_base_url}}"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Client Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TEST APP\",\n    \"access\": {\n        \"accessType\": \"STANDARD\",\n        \"redirectUris\": [],\n        \"overrides\": []\n    },\n    \"environment\": \"SANDBOX\",\n    \"collaborators\": [\n        {\n            \"emailAddress\": \"test@test.com\",\n            \"role\": \"ADMINISTRATOR\",\n            \"userId\": \"{{$randomUUID}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{3rdPartyBaseUrl}}/application",
+							"host": [
+								"{{3rdPartyBaseUrl}}"
+							],
+							"path": [
+								"application"
+							]
+						},
+						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "transit-movements-trader-at-destination",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\": \"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fieldDefinitions\": [\n        {\n            \"name\": \"notificationUrl\",\n            \"shortDescription\": \"Notification URL\",\n            \"description\": \"What is your notification web address for us to send push notifications to?\",\n            \"type\": \"PPNSField\",\n            \"hint\": \"You must only give us a web address that you own. Your application will use this address to listen to notifications from HMRC.\",\n            \"validation\": {\n                \"errorMessage\": \"notificationUrl must be a valid https URL\",\n                \"rules\": [\n                    {\n                        \"UrlValidationRule\": {}\n                    }\n                ]\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"definition",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Field Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fields\": {\n        \"notificationUrl\": \"http://localhost:10202/push-pull-notification-receiver-stub/notifications\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"field",
+								"application",
+								"{{clientId}}",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth_Local_W/o_Enrolment",
+			"item": [
+				{
+					"name": "POST Auth Bearer Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"",
+									"const bearerExtractionRegex = /((.+),)?Bearer ([^,\\s]+)(,.+)?$/g;",
+									"",
+									"const token = responseBody('td[data-session-id=\"authToken\"]').text().trim();",
+									"",
+									"// There should only be one match, so we just get it out by exploding the iterator and getting the first (and only) result.",
+									"const matches = [...token.matchAll(bearerExtractionRegex)][0];",
+									"",
+									"// Match 3 is the bearer token",
+									"let bearerToken = matches[3];",
+									"if (matches[4]) {",
+									"    // Match 4 is if GNAP appears after the bearer token",
+									"    bearerToken += matches[4];",
+									"}",
+									"",
+									"if (matches[2]) {",
+									"    // Match 2 is if GNAP appears before the bearer token",
+									"    bearerToken += \",\" + matches[2];",
+									"}",
+									"",
+									"// bearerToken will now contain the bearer token (without Bearer) and the GNAP token.",
+									"pm.environment.set(\"access_token1\", bearerToken);",
+									"pm.test(\"Successful Bearer Token\", function () {",
+									"    pm.expect(bearerToken).not.equal(null);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, [200]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "authorityId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "redirectionUrl",
+									"value": "{{auth_base_url}}/auth-login-stub/session",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "{{affinityGroup}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base_url}}/auth-login-stub/gg-sign-in",
+							"host": [
+								"{{auth_base_url}}"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Client Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"clientId\", jsonData.clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TEST APP\",\n    \"access\": {\n        \"accessType\": \"STANDARD\",\n        \"redirectUris\": [],\n        \"overrides\": []\n    },\n    \"environment\": \"SANDBOX\",\n    \"collaborators\": [\n        {\n            \"emailAddress\": \"test@test.com\",\n            \"role\": \"ADMINISTRATOR\",\n            \"userId\": \"{{$randomUUID}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{3rdPartyBaseUrl}}/application",
+							"host": [
+								"{{3rdPartyBaseUrl}}"
+							],
+							"path": [
+								"application"
+							]
+						},
+						"description": "Creates a client application in the third party application api to ensure we have a valid clientId"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Notification Box",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"boxId\", jsonData.boxId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "transit-movements-trader-at-destination",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"boxName\": \"customs/transits##1.0##notificationUrl\",\n    \"clientId\": \"{{clientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePushPullUrl}}/box",
+							"host": [
+								"{{basePushPullUrl}}"
+							],
+							"path": [
+								"box"
+							]
+						},
+						"description": "Prelude request that sets up a notification box in the push-pull-notification api for our notifications to be pushed to"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fieldDefinitions\": [\n        {\n            \"name\": \"notificationUrl\",\n            \"shortDescription\": \"Notification URL\",\n            \"description\": \"What is your notification web address for us to send push notifications to?\",\n            \"type\": \"PPNSField\",\n            \"hint\": \"You must only give us a web address that you own. Your application will use this address to listen to notifications from HMRC.\",\n            \"validation\": {\n                \"errorMessage\": \"notificationUrl must be a valid https URL\",\n                \"rules\": [\n                    {\n                        \"UrlValidationRule\": {}\n                    }\n                ]\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/definition/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"definition",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT API Subscription Field Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fields\": {\n        \"notificationUrl\": \"http://localhost:10202/push-pull-notification-receiver-stub/notifications\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiSubscriptionFieldsBaseUrl}}/field/application/{{clientId}}/context/customs%2Ftransits/version/1.0",
+							"host": [
+								"{{apiSubscriptionFieldsBaseUrl}}"
+							],
+							"path": [
+								"field",
+								"application",
+								"{{clientId}}",
+								"context",
+								"customs%2Ftransits",
+								"version",
+								"1.0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth_Dev_With_Enrolment",
+			"item": [
+				{
+					"name": "01-POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.development.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth_Dev_W/o_Enrolment",
+			"item": [
+				{
+					"name": "01- POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.development.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "9999999901",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token1\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth_QA_With_Enrolment",
+			"item": [
+				{
+					"name": "01- POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.qa.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMRC-CTC-ORG",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "EORINumber",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"setTimeout(function(){}, [200]);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth_QA_W/o_Enrolment",
+			"item": [
+				{
+					"name": "01- POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.qa.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "9999999911",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token1\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"setTimeout(function(){}, [200]);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth_With_Enrolment_ET",
+			"item": [
+				{
+					"name": "01-POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://test-www.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMRC-CTC-ORG",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "EORINumber",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token\", accessToken.access_token);",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"{{env}}-api",
+								"service",
+								"hmrc",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth_W/0_Enrolment_ET",
+			"item": [
+				{
+					"name": "01- POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://test-www.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- GET Grant Auth 303",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"pm.environment.set(\"csrfToken\",csrfToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-www.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"{{env}}-www",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token1\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{env}}-api.service.hmrc.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"{{env}}-api",
+								"service",
+								"hmrc",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth_Staging_With_Enrolment",
+			"item": [
+				{
+					"name": "01-GET Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.staging.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "{{eori}}",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- GET Grant Authority 2nd Redirect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/gg/sign-in?continue=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"gg",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "continue",
+									"value": "%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}"
+								},
+								{
+									"key": "origin",
+									"value": "oauth-frontend"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- GET Grant Authority Redirect2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/bas-gateway/sign-in?continue_url=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"bas-gateway",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "continue_url",
+									"value": "%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}"
+								},
+								{
+									"key": "origin",
+									"value": "oauth-frontend"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05- GET Grant Auth 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"",
+									"pm.environment.set(\"csrfToken\",csrfToken);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth_Staging_W/o_Enrolment",
+			"item": [
+				{
+					"name": "01- GET Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02- POST Auth Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const $ = cheerio.load(responseBody);",
+									"var path;",
+									"",
+									"const $hrefpath = $(\"div a[data-module='govuk-button']\").attr('href');",
+									"pm.variables.get(\"$hrefpath\");",
+									"var hrefpath = $hrefpath.split(\"=\")[1];",
+									"pm.environment.set(\"auth_id\",hrefpath)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirectionUrl",
+									"value": "https://www.staging.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"type": "text"
+								},
+								{
+									"key": "credentialStrength",
+									"value": "strong",
+									"type": "text"
+								},
+								{
+									"key": "confidenceLevel",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "nino",
+									"value": "AA000000A",
+									"type": "text"
+								},
+								{
+									"key": "affinityGroup",
+									"value": "Individual",
+									"type": "text"
+								},
+								{
+									"key": "authorityId",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "enrolment[0].name",
+									"value": "HMCE-NCTS-ORG",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].name",
+									"value": "VATRegNoTURN",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].taxIdentifier[0].value",
+									"value": "9999999901",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "enrolment[0].state",
+									"value": "Activated",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/auth-login-stub/gg-sign-in",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"auth-login-stub",
+								"gg-sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03- GET Grant Authority 2nd Redirect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/gg/sign-in?continue=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"gg",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "continue",
+									"value": "%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}"
+								},
+								{
+									"key": "origin",
+									"value": "oauth-frontend"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04- GET Grant Authority Redirect2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/bas-gateway/sign-in?continue_url=%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}&origin=oauth-frontend",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"bas-gateway",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "continue_url",
+									"value": "%2Foauth%2Fgrantscope%3Fauth_id%3D{{auth_id}}"
+								},
+								{
+									"key": "origin",
+									"value": "oauth-frontend"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05- GET Grant Auth 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var csrfToken = responseBody('[name=\"csrfToken\"]').val();",
+									"",
+									"pm.environment.set(\"csrfToken\",csrfToken);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope?auth_id={{auth_id}}",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							],
+							"query": [
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06- POST Submit Grant Authority",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseBody = cheerio.load(pm.response.text());",
+									"var code = (responseBody('title').text()).split(\"=\")[1]",
+									"",
+									"pm.environment.set(\"code\",code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "csrfToken",
+									"value": "{{csrfToken}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_id",
+									"value": "{{auth_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.{{env}}.tax.service.gov.uk/oauth/grantscope",
+							"protocol": "https",
+							"host": [
+								"www",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"grantscope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07- Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var accessToken = JSON.parse(responseBody);",
+									"pm.environment.set(\"access_token1\", accessToken.access_token);",
+									"",
+									"pm.environment.unset(\"auth_id\")",
+									"pm.environment.unset(\"csrfToken\")",
+									"pm.environment.unset(\"grant_scope\")",
+									"pm.environment.unset(\"code\")",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{code}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_Id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "urn:ietf:wg:oauth:2.0:oob",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.{{env}}.tax.service.gov.uk/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{env}}",
+								"tax",
+								"service",
+								"gov",
+								"uk"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"setTimeout(function(){}, [200]);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
