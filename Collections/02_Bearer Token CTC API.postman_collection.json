@@ -760,17 +760,17 @@
 								},
 								{
 									"key": "enrolment[0].name",
-									"value": "HMCE-NCTS-ORG",
+									"value": "HMRC-CTC-ORG",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].name",
-									"value": "VATRegNoTURN",
+									"value": "EORINumber",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "{{eori}}",
+									"value": "9999912345",
 									"type": "text"
 								},
 								{

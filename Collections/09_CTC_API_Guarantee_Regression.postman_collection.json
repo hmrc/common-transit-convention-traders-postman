@@ -115,17 +115,17 @@
 								},
 								{
 									"key": "enrolment[0].name",
-									"value": "HMCE-NCTS-ORG",
+									"value": "{{enrolment_name}}",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].name",
-									"value": "VATRegNoTURN",
+									"value": "{{enrolment_taxIdentifier_name}}",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999999911",
+									"value": "{{eori}}",
 									"type": "text"
 								}
 							]
