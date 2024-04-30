@@ -43,7 +43,8 @@ const newmanHtmlExtra = require("newman-reporter-htmlextra");
               }
             ],
             folder: [
-                "Auth_Dev_With_Enrolment"
+                "Auth_Dev_With_Enrolment",
+                "Auth_Dev_W/o_Enrolment"
             ],
             exportEnvironment: modifiedEnvironmentFile,
             reporters: [ "cli" ]
