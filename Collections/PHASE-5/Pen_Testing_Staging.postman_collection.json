@@ -50,7 +50,10 @@
 										"exec": [
 											"var jsonData = pm.response.json();",
 											"var departureId =  jsonData._links.self.href.split(\"/\")[5]",
+											"var messageId =  jsonData.messageId",
+											"",
 											"pm.environment.set(\"departureId\",departureId);",
+											"pm.environment.set(\"messageId\",messageId);",
 											"",
 											"pm.test(\"POST IE015 must return response code is 202\", function () {",
 											"    pm.response.to.have.status(202);",
@@ -95,9 +98,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/movements/departures",
+									"raw": "{{baseUrlContext}}/movements/departures",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -141,9 +144,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/",
+									"raw": "{{baseUrlContext}}/movements/departures/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -188,79 +191,32 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"departures",
-										"{{departureId}}",
-										""
+										"{{departureId}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "04- POST IE013",
+							"name": "04- GET Departure_Messages",
 							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const moment = require('moment');",
-											"let now = moment();",
-											"now.add('14', 'days');",
-											"",
-											"let limitDate = now.format(\"YYYY-MM-DD\")",
-											"",
-											"let arrivalTime = moment();",
-											"arrivalTime.add('14', 'days');",
-											"",
-											"var LRN=\"TRATEST7\";",
-											"var charset = moment().format(\"YYMMDDHHmm\");",
-											"",
-											"LRN += charset;",
-											"console.log (\"Text value is \"+LRN)",
-											"console.log (\"limitDate is \"+limitDate)",
-											"",
-											"pm.collectionVariables.set(\"LRN\", LRN);",
-											"pm.collectionVariables.set(\"limitDate\", limitDate);",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"const moment = require('moment');",
-											"let now = moment();",
-											"now.add('14', 'days');",
-											"",
-											"let limitDate = now.format(\"YYYY-MM-DD\")",
-											"",
-											"let arrivalTime = moment();",
-											"arrivalTime.add('3', 'days');",
-											"",
-											"var LRN=\"TRATEST7\";",
-											"var charset = moment().format(\"YYMMDDHHmm\");",
-											"",
-											"LRN += charset;",
-											"console.log (\"Text value is \"+LRN)",
-											"console.log (\"limitDate is \"+limitDate)",
-											"",
-											"pm.collectionVariables.set(\"LRN\", LRN);",
-											"pm.collectionVariables.set(\"now\", moment().format(\"YYYY-MM-DD\"));",
-											"pm.collectionVariables.set(\"limitDate\", limitDate);",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYYMMDDHHmmss\"));",
-											"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DD\"));",
-											"pm.collectionVariables.set(\"IntConRefMES11\",_.random(11190913102542,55190913102542))"
+											"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"if (pm.response.code !== 200) {",
+											"    return;",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -268,37 +224,23 @@
 								}
 							],
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/xml",
-										"type": "text"
-									},
 									{
 										"key": "Accept",
 										"value": "application/vnd.hmrc.2.0+json",
 										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "<ncts:CC013C PhaseID=\"NCTS5.0\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC013C</messageType>\n    <TransitOperation>\n        <MRN>23GB000246XEUYORJ4</MRN>\n        <declarationType>T1</declarationType>\n        <additionalDeclarationType>A</additionalDeclarationType>\n        <security>0</security>\n        <reducedDatasetIndicator>0</reducedDatasetIndicator>\n        <bindingItinerary>0</bindingItinerary>\n        <amendmentTypeFlag>0</amendmentTypeFlag>\n        <limitDate>{{limitDate}}</limitDate>\n    </TransitOperation>\n    <Authorisation>\n        <sequenceNumber>1</sequenceNumber>\n        <type>C521</type>\n        <referenceNumber>GBDEPAUTH001</referenceNumber>\n    </Authorisation>\n    <CustomsOfficeOfDeparture>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDeparture>\n    <CustomsOfficeOfDestinationDeclared>\n        <referenceNumber>XI000081</referenceNumber>\n    </CustomsOfficeOfDestinationDeclared>\n    <CustomsOfficeOfTransitDeclared>\n        <sequenceNumber>1</sequenceNumber>\n        <referenceNumber>XI000142</referenceNumber>\n        <arrivalDateAndTimeEstimated>{{arrivalTime}}</arrivalDateAndTimeEstimated>\n    </CustomsOfficeOfTransitDeclared>\n    <HolderOfTheTransitProcedure>\n        <identificationNumber>GB201909015000</identificationNumber>\n    </HolderOfTheTransitProcedure>\n    <Guarantee>\n        <sequenceNumber>1</sequenceNumber>\n        <guaranteeType>1</guaranteeType>\n        <GuaranteeReference>\n            <sequenceNumber>1</sequenceNumber>\n            <GRN>24GB0000010000295</GRN>\n            <accessCode>AC01</accessCode>\n            <amountToBeCovered>100.00</amountToBeCovered>\n            <currency>GBP</currency>\n        </GuaranteeReference>\n    </Guarantee>\n    <Consignment>\n        <countryOfDestination>XI</countryOfDestination>\n        <containerIndicator>1</containerIndicator>\n        <grossMass>1000.00</grossMass>\n        <referenceNumberUCR>AB1234</referenceNumberUCR>\n        <Consignor>\n            <identificationNumber>GB201909015000</identificationNumber>\n        </Consignor>\n        <Consignee>\n            <identificationNumber>XI985524247819</identificationNumber>\n        </Consignee>\n        <TransportEquipment>\n            <sequenceNumber>1</sequenceNumber>\n            <containerIdentificationNumber>WGPCGR</containerIdentificationNumber>\n            <numberOfSeals>1</numberOfSeals>\n            <Seal>\n                <sequenceNumber>1</sequenceNumber>\n                <identifier>1234</identifier>\n            </Seal>\n        </TransportEquipment>\n        <LocationOfGoods>\n            <typeOfLocation>B</typeOfLocation>\n            <qualifierOfIdentification>Y</qualifierOfIdentification>\n            <authorisationNumber>GB DEP E20 1HZ</authorisationNumber>\n        </LocationOfGoods>\n        <DepartureTransportMeans>\n            <sequenceNumber>1</sequenceNumber>\n            <typeOfIdentification>30</typeOfIdentification>\n            <identificationNumber>NC16REG</identificationNumber>\n            <nationality>GB</nationality>\n        </DepartureTransportMeans>\n        <!-- <PlaceOfLoading>\n            <country>GB</country>\n            <location>Dover</location>\n        </PlaceOfLoading> -->\n        <HouseConsignment>\n            <sequenceNumber>1</sequenceNumber>\n            <grossMass>1000.00</grossMass>\n            <ConsignmentItem>\n                <goodsItemNumber>1</goodsItemNumber>\n                <declarationGoodsItemNumber>1</declarationGoodsItemNumber>\n                <Commodity>\n                    <descriptionOfGoods>test goods</descriptionOfGoods>\n                    <CommodityCode>\n                        <harmonizedSystemSubHeadingCode>392690</harmonizedSystemSubHeadingCode>\n                    </CommodityCode>\n                    <GoodsMeasure>\n                        <grossMass>1000.00</grossMass>\n                        <netMass>950.00</netMass>\n                    </GoodsMeasure>\n                </Commodity>\n                <Packaging>\n                    <sequenceNumber>1</sequenceNumber>\n                    <typeOfPackages>BX</typeOfPackages>\n                    <numberOfPackages>10</numberOfPackages>\n                    <shippingMarks>Boxes of goods to be shipped</shippingMarks>\n                </Packaging>\n            </ConsignmentItem>\n        </HouseConsignment>\n    </Consignment>\n</ncts:CC013C>",
-									"options": {
-										"raw": {
-											"language": "xml"
-										}
-									}
-								},
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}/messages",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -311,7 +253,7 @@
 							"response": []
 						},
 						{
-							"name": "05- GET Departure_Messages",
+							"name": "05- GET Departure_Message_By_Message_Id",
 							"event": [
 								{
 									"listen": "test",
@@ -344,23 +286,23 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages/",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}/messages/{{messageId}}",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"departures",
 										"{{departureId}}",
 										"messages",
-										""
+										"{{messageId}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "06- GET Departure_Message_By_Message_Id",
+							"name": "06- GET Departure_Message_Body",
 							"event": [
 								{
 									"listen": "test",
@@ -393,65 +335,16 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages/66950b95be3accea",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}/messages/{{messageId}}/body",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"departures",
 										"{{departureId}}",
 										"messages",
-										"66950b95be3accea"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "07- GET Departure_Message_Body",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"if (pm.response.code !== 200) {",
-											"    return;",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages/66950b95be3accea/body",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"movements",
-										"departures",
-										"{{departureId}}",
-										"messages",
-										"66950b95be3accea",
+										"{{messageId}}",
 										"body"
 									]
 								}
@@ -490,7 +383,10 @@
 											"",
 											"var jsonData = pm.response.json();",
 											"var arrivalId = jsonData._links.self.href.split(\"/\")[5]",
-											"pm.environment.set(\"arrivalId\", arrivalId);"
+											"pm.environment.set(\"arrivalId\", arrivalId);",
+											"",
+											"var messageId = jsonData.messageId",
+											"pm.environment.set(\"messageId\", messageId);"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -521,9 +417,9 @@
 									"raw": "<ncts:CC007C PhaseID=\"NCTS5.0\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>{{messageIdentification}}</messageIdentification>\n    <messageType>CC007C</messageType>\n    <TransitOperation>\n        <MRN>24XI000081E0CZHGJ3</MRN>\n        <arrivalNotificationDateAndTime>{{arrivalNotificationDateAndTime}}</arrivalNotificationDateAndTime>\n        <simplifiedProcedure>1</simplifiedProcedure>\n        <incidentFlag>0</incidentFlag>\n    </TransitOperation>\n    <Authorisation>\n        <sequenceNumber>1</sequenceNumber>\n        <type>C522</type>\n        <referenceNumber>GBDESAUTH001</referenceNumber>\n    </Authorisation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>GB201909015000</identificationNumber>\n    </TraderAtDestination>\n    <Consignment>\n        <LocationOfGoods>\n            <typeOfLocation>B</typeOfLocation>\n            <qualifierOfIdentification>Y</qualifierOfIdentification>\n            <authorisationNumber>GB DES E20 1HZ</authorisationNumber>\n        </LocationOfGoods>\n    </Consignment>\n</ncts:CC007C>"
 								},
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals",
+									"raw": "{{baseUrlContext}}/movements/arrivals",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -567,9 +463,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/",
+									"raw": "{{baseUrlContext}}/movements/arrivals/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -614,9 +510,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -629,79 +525,42 @@
 							"response": []
 						},
 						{
-							"name": "04- POST IE044 (Unloading Remarks)",
+							"name": "04- GET Arrival_Messages",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 202\", function () {",
-											"    pm.response.to.have.status(202);",
+											"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
 											"});",
-											"",
-											"if (pm.response.code !== 202) {",
+											"if (pm.response.code !== 200) {",
 											"    return;",
 											"}"
 										],
 										"type": "text/javascript",
 										"packages": {}
 									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"let moment = require('moment')",
-											"let today = moment();",
-											"",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))",
-											"",
-											"pm.collectionVariables.set(\"unloadingDate\", today.format(\"YYYY-MM-DD\"))"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disabledSystemHeaders": {
-									"content-type": true,
-									"accept": true
-								}
-							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
-										"key": "Content-Type",
-										"value": "application/xml",
+										"key": "Accept",
+										"value": "application/vnd.hmrc.2.0+json",
 										"type": "text"
 									},
 									{
 										"key": "Authorization",
 										"value": "Bearer {{access_token}}",
 										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "<ncts:CC044C PhaseID=\"NCTS5.0\" xmlns:ncts=\"http://ncts.dgtaxud.ec\">\n    <messageSender>9999912345</messageSender>\n    <messageRecipient>NTA.GB</messageRecipient>\n    <preparationDateAndTime>{{preparationDateAndTime}}</preparationDateAndTime>\n    <messageIdentification>1</messageIdentification>\n    <messageType>CC044C</messageType>\n    <TransitOperation>\n        <MRN>24XI000081E0CZHGJ3</MRN>\n    </TransitOperation>\n    <CustomsOfficeOfDestinationActual>\n        <referenceNumber>GB000246</referenceNumber>\n    </CustomsOfficeOfDestinationActual>\n    <TraderAtDestination>\n        <identificationNumber>GB201909015000</identificationNumber>\n    </TraderAtDestination>\n    <UnloadingRemark>\n        <conform>1</conform>\n        <unloadingCompletion>1</unloadingCompletion>\n        <unloadingDate>{{unloadingDate}}</unloadingDate>\n        <stateOfSeals>0</stateOfSeals>\n    </UnloadingRemark>\n</ncts:CC044C>",
-									"options": {
-										"raw": {
-											"language": "xml"
-										}
-									}
-								},
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/messages",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -714,7 +573,7 @@
 							"response": []
 						},
 						{
-							"name": "05- GET Arrival_Messages",
+							"name": "05- GET Arrival_Message_By_Message_Id",
 							"event": [
 								{
 									"listen": "test",
@@ -747,71 +606,23 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/messages/{{messageId}}",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"movements",
-										"arrivals",
-										"{{arrivalId}}",
-										"messages"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "06- GET Arrival_Message_By_Message_Id",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Get requested departure Id must return status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"if (pm.response.code !== 200) {",
-											"    return;",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages/66950c353ce1744b",
-									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"arrivals",
 										"{{arrivalId}}",
 										"messages",
-										"66950c353ce1744b"
+										"{{messageId}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "07- GET Arrival_Message_Body",
+							"name": "06- GET Arrival_Message_Body",
 							"event": [
 								{
 									"listen": "test",
@@ -844,16 +655,16 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages/66950c353ce1744b/body",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/messages/{{messageId}}/body",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"arrivals",
 										"{{arrivalId}}",
 										"messages",
-										"66950c353ce1744b",
+										"{{messageId}}",
 										"body"
 									]
 								}
@@ -909,6 +720,14 @@
 											"    pm.response.to.have.status(202);",
 											"});",
 											"",
+											"var jsonData = pm.response.json();",
+											"var departureId =  jsonData.departureId",
+											"pm.environment.set(\"departureId\",departureId);",
+											"",
+											"var jsonData = pm.response.json();",
+											"var messageId =  jsonData.messageId",
+											"pm.environment.set(\"messageId\",messageId);",
+											"",
 											"pm.test(\"Response body is JSON\", function() {",
 											"    pm.expect(pm.response.to.have.jsonBody());",
 											"});",
@@ -954,9 +773,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures",
+									"raw": "{{baseUrlContext}}/movements/departures",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1161,9 +980,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/",
+									"raw": "{{baseUrlContext}}/movements/departures/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1208,9 +1027,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1223,266 +1042,7 @@
 							"response": []
 						},
 						{
-							"name": "05- POST IE013 Simplified",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const moment = require('moment');",
-											"let now = moment();",
-											"now.add('14', 'days');",
-											"",
-											"let limitDate = now.format(\"YYYY-MM-DD\")",
-											"",
-											"let arrivalTime = moment();",
-											"arrivalTime.add('14', 'days');",
-											"",
-											"let LRN=\"TRATESTXI1\";",
-											"let charset = moment().format(\"YYMMDDHHmm\");",
-											"",
-											"LRN += charset;",
-											"",
-											"pm.collectionVariables.set(\"LRN\", LRN);",
-											"pm.collectionVariables.set(\"limitDate\", limitDate);",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 202 Accepted\", function () {",
-											"    pm.response.to.have.status(202);",
-											"});",
-											"",
-											"pm.test(\"Response body is JSON\", function() {",
-											"    pm.expect(pm.response.to.have.jsonBody());",
-											"});",
-											"",
-											"pm.test(\"Response body\", function () {",
-											"    let responseJson = pm.response.json();",
-											"    pm.environment.set(\"upscan_url\",responseJson.uploadRequest.href)",
-											"  ",
-											"    pm.collectionVariables.set(\"x-amz-credential\", responseJson.uploadRequest.fields[\"x-amz-credential\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-upscan-initiate-response\", responseJson.uploadRequest.fields[\"x-amz-meta-upscan-initiate-response\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-original-filename\", responseJson.uploadRequest.fields[\"x-amz-meta-original-filename\"]);",
-											"    pm.collectionVariables.set(\"x-amz-algorithm\", responseJson.uploadRequest.fields[\"x-amz-algorithm\"]);",
-											"    pm.collectionVariables.set(\"x-amz-signature\", responseJson.uploadRequest.fields[\"x-amz-signature\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-session-id\", responseJson.uploadRequest.fields[\"x-amz-meta-session-id\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-callback-url\", responseJson.uploadRequest.fields[\"x-amz-meta-callback-url\"]);",
-											"    pm.collectionVariables.set(\"x-amz-date\", responseJson.uploadRequest.fields[\"x-amz-date\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-upscan-initiate-received\", responseJson.uploadRequest.fields[\"x-amz-meta-upscan-initiate-received\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-request-id\", responseJson.uploadRequest.fields[\"x-amz-meta-request-id\"]);",
-											"    pm.collectionVariables.set(\"key\", responseJson.uploadRequest.fields[\"key\"]);",
-											"    pm.collectionVariables.set(\"acl\", responseJson.uploadRequest.fields[\"acl\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-consuming-service\", responseJson.uploadRequest.fields[\"x-amz-meta-consuming-service\"]);",
-											"    pm.collectionVariables.set(\"policy\", responseJson.uploadRequest.fields[\"policy\"]);",
-											"",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"movements",
-										"departures",
-										"{{departureId}}",
-										"messages"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "06- POST Upload_IE013 Simplified Via Upscan",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const moment = require('moment');",
-											"let now = moment();",
-											"now.add('14', 'days');",
-											"",
-											"let limitDate = now.format(\"YYYY-MM-DD\")",
-											"",
-											"let arrivalTime = moment();",
-											"arrivalTime.add('14', 'days');",
-											"",
-											"let LRN=\"TRATESTXI1\";",
-											"let charset = moment().format(\"YYMMDDHHmm\");",
-											"",
-											"LRN += charset;",
-											"",
-											"pm.collectionVariables.set(\"LRN\", LRN);",
-											"pm.collectionVariables.set(\"limitDate\", limitDate);",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"var departureId =  jsonData._links.self.href.split(\"/\")[5]",
-											"pm.environment.set(\"departureId\",departureId);",
-											"",
-											"pm.test(\"POST IE015 must return response code is 202\", function () {",
-											"    pm.response.to.have.status(202);",
-											"});",
-											"",
-											"if (pm.response.code !== 202) {",
-											"    return;",
-											"}",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/xml",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "x-amz-credential",
-											"value": "{{x-amz-credential}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-upscan-initiate-response",
-											"value": "{{x-amz-meta-upscan-initiate-response}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-original-filename",
-											"value": "{{x-amz-meta-original-filename}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-algorithm",
-											"value": "{{x-amz-algorithm}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-signature",
-											"value": "{{x-amz-signature}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-session-id",
-											"value": "{{x-amz-meta-session-id}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-callback-url",
-											"value": "{{x-amz-meta-callback-url}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-date",
-											"value": "{{x-amz-date}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-upscan-initiate-received",
-											"value": "{{x-amz-meta-upscan-initiate-received}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-request-id",
-											"value": "{{x-amz-meta-request-id}}",
-											"type": "text"
-										},
-										{
-											"key": "key",
-											"value": "{{key}}",
-											"type": "text"
-										},
-										{
-											"key": "acl",
-											"value": "{{acl}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-consuming-service",
-											"value": "{{x-amz-meta-consuming-service}}",
-											"type": "text"
-										},
-										{
-											"key": "policy",
-											"value": "{{policy}}",
-											"type": "text"
-										},
-										{
-											"key": "file",
-											"type": "file",
-											"src": "/Users/sandeepsinghverma/PHASE-5/ctc-traders-api-tests/src/test/resources/LargeMessage/largemessagesdepartures/CC013C_Less_Than_20MB.xml"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{upscan_url}}",
-									"host": [
-										"{{upscan_url}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "07- GET Departure_Messages",
+							"name": "05- GET Departure_Messages",
 							"event": [
 								{
 									"listen": "test",
@@ -1515,9 +1075,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}/messages",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1530,7 +1090,7 @@
 							"response": []
 						},
 						{
-							"name": "08- GET Departure_Message_Body",
+							"name": "06- GET Departure_Message_Body",
 							"event": [
 								{
 									"listen": "test",
@@ -1563,16 +1123,16 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/departures/{{departureId}}/messages/66950e40b8d76117/body",
+									"raw": "{{baseUrlContext}}/movements/departures/{{departureId}}/messages/{{messageId}}/body",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"departures",
 										"{{departureId}}",
 										"messages",
-										"66950e40b8d76117",
+										"{{messageId}}",
 										"body"
 									]
 								}
@@ -1623,6 +1183,14 @@
 											"    pm.response.to.have.status(202);",
 											"});",
 											"",
+											"var jsonData = pm.response.json();",
+											"var arrivalId =  jsonData.arrivalId",
+											"pm.environment.set(\"arrivalId\",arrivalId);",
+											"",
+											"var jsonData = pm.response.json();",
+											"var messageId =  jsonData.messageId",
+											"pm.environment.set(\"messageId\",messageId);",
+											"",
 											"pm.test(\"Response body is JSON\", function() {",
 											"    pm.expect(pm.response.to.have.jsonBody());",
 											"});",
@@ -1668,9 +1236,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals",
+									"raw": "{{baseUrlContext}}/movements/arrivals",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1875,9 +1443,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/",
+									"raw": "{{baseUrlContext}}/movements/arrivals/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1922,9 +1490,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -1937,266 +1505,7 @@
 							"response": []
 						},
 						{
-							"name": "05- POST IE044 Simplified",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const moment = require('moment');",
-											"let now = moment();",
-											"now.add('14', 'days');",
-											"",
-											"let limitDate = now.format(\"YYYY-MM-DD\")",
-											"",
-											"let arrivalTime = moment();",
-											"arrivalTime.add('14', 'days');",
-											"",
-											"let LRN=\"TRATESTXI1\";",
-											"let charset = moment().format(\"YYMMDDHHmm\");",
-											"",
-											"LRN += charset;",
-											"",
-											"pm.collectionVariables.set(\"LRN\", LRN);",
-											"pm.collectionVariables.set(\"limitDate\", limitDate);",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 202 Accepted\", function () {",
-											"    pm.response.to.have.status(202);",
-											"});",
-											"",
-											"pm.test(\"Response body is JSON\", function() {",
-											"    pm.expect(pm.response.to.have.jsonBody());",
-											"});",
-											"",
-											"pm.test(\"Response body\", function () {",
-											"    let responseJson = pm.response.json();",
-											"    pm.environment.set(\"upscan_url\",responseJson.uploadRequest.href)",
-											"  ",
-											"    pm.collectionVariables.set(\"x-amz-credential\", responseJson.uploadRequest.fields[\"x-amz-credential\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-upscan-initiate-response\", responseJson.uploadRequest.fields[\"x-amz-meta-upscan-initiate-response\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-original-filename\", responseJson.uploadRequest.fields[\"x-amz-meta-original-filename\"]);",
-											"    pm.collectionVariables.set(\"x-amz-algorithm\", responseJson.uploadRequest.fields[\"x-amz-algorithm\"]);",
-											"    pm.collectionVariables.set(\"x-amz-signature\", responseJson.uploadRequest.fields[\"x-amz-signature\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-session-id\", responseJson.uploadRequest.fields[\"x-amz-meta-session-id\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-callback-url\", responseJson.uploadRequest.fields[\"x-amz-meta-callback-url\"]);",
-											"    pm.collectionVariables.set(\"x-amz-date\", responseJson.uploadRequest.fields[\"x-amz-date\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-upscan-initiate-received\", responseJson.uploadRequest.fields[\"x-amz-meta-upscan-initiate-received\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-request-id\", responseJson.uploadRequest.fields[\"x-amz-meta-request-id\"]);",
-											"    pm.collectionVariables.set(\"key\", responseJson.uploadRequest.fields[\"key\"]);",
-											"    pm.collectionVariables.set(\"acl\", responseJson.uploadRequest.fields[\"acl\"]);",
-											"    pm.collectionVariables.set(\"x-amz-meta-consuming-service\", responseJson.uploadRequest.fields[\"x-amz-meta-consuming-service\"]);",
-											"    pm.collectionVariables.set(\"policy\", responseJson.uploadRequest.fields[\"policy\"]);",
-											"",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"movements",
-										"arrivals",
-										"{{arrivalId}}",
-										"messages"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "06- POST Upload_IE044 Simplified Via Upscan",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const moment = require('moment');",
-											"let now = moment();",
-											"now.add('14', 'days');",
-											"",
-											"let limitDate = now.format(\"YYYY-MM-DD\")",
-											"",
-											"let arrivalTime = moment();",
-											"arrivalTime.add('14', 'days');",
-											"",
-											"let LRN=\"TRATESTXI1\";",
-											"let charset = moment().format(\"YYMMDDHHmm\");",
-											"",
-											"LRN += charset;",
-											"",
-											"pm.collectionVariables.set(\"LRN\", LRN);",
-											"pm.collectionVariables.set(\"limitDate\", limitDate);",
-											"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DDThh:mm:ss\"));",
-											"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"var departureId =  jsonData._links.self.href.split(\"/\")[5]",
-											"pm.environment.set(\"departureId\",departureId);",
-											"",
-											"pm.test(\"POST IE015 must return response code is 202\", function () {",
-											"    pm.response.to.have.status(202);",
-											"});",
-											"",
-											"if (pm.response.code !== 202) {",
-											"    return;",
-											"}",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/xml",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/vnd.hmrc.2.0+json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "x-amz-credential",
-											"value": "{{x-amz-credential}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-upscan-initiate-response",
-											"value": "{{x-amz-meta-upscan-initiate-response}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-original-filename",
-											"value": "{{x-amz-meta-original-filename}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-algorithm",
-											"value": "{{x-amz-algorithm}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-signature",
-											"value": "{{x-amz-signature}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-session-id",
-											"value": "{{x-amz-meta-session-id}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-callback-url",
-											"value": "{{x-amz-meta-callback-url}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-date",
-											"value": "{{x-amz-date}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-upscan-initiate-received",
-											"value": "{{x-amz-meta-upscan-initiate-received}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-request-id",
-											"value": "{{x-amz-meta-request-id}}",
-											"type": "text"
-										},
-										{
-											"key": "key",
-											"value": "{{key}}",
-											"type": "text"
-										},
-										{
-											"key": "acl",
-											"value": "{{acl}}",
-											"type": "text"
-										},
-										{
-											"key": "x-amz-meta-consuming-service",
-											"value": "{{x-amz-meta-consuming-service}}",
-											"type": "text"
-										},
-										{
-											"key": "policy",
-											"value": "{{policy}}",
-											"type": "text"
-										},
-										{
-											"key": "file",
-											"type": "file",
-											"src": "/Users/sandeepsinghverma/PHASE-5/ctc-traders-api-tests/src/test/resources/LargeMessage/largemessagearrivals/CC044C_Less_Than_20MB_XI.xml"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{upscan_url}}",
-									"host": [
-										"{{upscan_url}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "07- GET Arrival_Messages",
+							"name": "05- GET Arrival_Messages",
 							"event": [
 								{
 									"listen": "test",
@@ -2229,9 +1538,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/messages",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
@@ -2244,7 +1553,7 @@
 							"response": []
 						},
 						{
-							"name": "08- GET Arrival_Message_Body",
+							"name": "06- GET Arrival_Message_Body",
 							"event": [
 								{
 									"listen": "test",
@@ -2277,16 +1586,16 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/movements/arrivals/{{arrivalId}}/messages/66950ed491b68926/body",
+									"raw": "{{baseUrlContext}}/movements/arrivals/{{arrivalId}}/messages/{{messageId}}/body",
 									"host": [
-										"{{baseURL}}"
+										"{{baseUrlContext}}"
 									],
 									"path": [
 										"movements",
 										"arrivals",
 										"{{arrivalId}}",
 										"messages",
-										"66950ed491b68926",
+										"{{messageId}}",
 										"body"
 									]
 								}
@@ -2294,6 +1603,100 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Guarantee_Balance",
+			"item": [
+				{
+					"name": "POST GRN Balance Check GRN Type 0",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment = require('moment');",
+									"let now = moment();",
+									"now.add('14', 'days');",
+									"",
+									"let limitDate = now.format(\"YYYY-MM-DD\")",
+									"",
+									"let arrivalTime = moment();",
+									"arrivalTime.add('14', 'days');",
+									"",
+									"let LRN=\"TRATESTGB1\";",
+									"let charset = moment().format(\"YYMMDDHHmm\");",
+									"",
+									"LRN += charset;",
+									"",
+									"pm.collectionVariables.set(\"LRN\", LRN);",
+									"pm.collectionVariables.set(\"limitDate\", limitDate);",
+									"pm.collectionVariables.set(\"preparationDateAndTime\", moment().format(\"YYYY-MM-DDThh:mm:ss\"));",
+									"pm.collectionVariables.set(\"arrivalTime\", arrivalTime.format(\"YYYY-MM-DDThh:mm:ss\"));",
+									"pm.collectionVariables.set(\"messageIdentification\",_.random(11190913102542,55190913102542))"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.hmrc.2.0+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accessCode\": \"AC01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiGRNbaseURL}}/:grn/balance",
+							"host": [
+								"{{apiGRNbaseURL}}"
+							],
+							"path": [
+								":grn",
+								"balance"
+							],
+							"variable": [
+								{
+									"key": "grn",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

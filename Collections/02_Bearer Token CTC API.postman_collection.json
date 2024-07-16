@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c89cf1fa-0e69-4d7c-899c-d84a26959f47",
+		"_postman_id": "9f129f1c-da3b-4cce-ab1e-8df7e7d8b248",
 		"name": "02_Bearer Token CTC API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23355585",
-		"_collection_link": "https://bold-firefly-960380.postman.co/workspace/PHASE-4%25265_POSTMAN_COLLECTION~edbba689-fbcf-4ec7-94ff-05a9c8bc2c81/collection/23355585-c89cf1fa-0e69-4d7c-899c-d84a26959f47?action=share&source=collection_link&creator=23355585"
+		"_exporter_id": "33801679",
+		"_collection_link": "https://ctctradersapi.postman.co/workspace/CTC-API-1.0~af198059-fbec-4aef-9cd9-d226538f948d/collection/32226604-9f129f1c-da3b-4cce-ab1e-8df7e7d8b248?action=share&source=collection_link&creator=33801679"
 	},
 	"item": [
 		{
@@ -48,7 +48,8 @@
 									"    pm.expect(bearerToken).not.equal(null);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
@@ -57,7 +58,8 @@
 								"exec": [
 									"setTimeout(function(){}, [200]);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -69,14 +71,14 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							},
 							{
 								"key": "",
-								"type": "text",
 								"value": "",
+								"type": "text",
 								"disabled": true
 							}
 						],
@@ -125,7 +127,7 @@
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "{{eori}}",
+									"value": "{{enrolment_taxIdentifier_value}}",
 									"type": "text"
 								}
 							]
@@ -412,14 +414,14 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							},
 							{
 								"key": "",
-								"type": "text",
 								"value": "",
+								"type": "text",
 								"disabled": true
 							}
 						],
@@ -714,8 +716,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -770,7 +772,7 @@
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "9999912345",
+									"value": "{{eori}}",
 									"type": "text"
 								},
 								{
@@ -837,9 +839,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -883,12 +885,11 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
+									"",
+									"",
 									""
 								],
 								"type": "text/javascript",
@@ -901,8 +902,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -971,8 +972,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -1058,8 +1059,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -1185,9 +1186,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1231,11 +1232,9 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var code = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var string = code.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"pm.environment.set(\"code\",string);",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
+									"pm.environment.set(\"code\",code);",
 									""
 								],
 								"type": "text/javascript",
@@ -1248,8 +1247,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -1318,8 +1317,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -1396,7 +1395,8 @@
 									"var hrefpath = $hrefpath.split(\"=\")[1];",
 									"pm.environment.set(\"auth_id\",hrefpath)"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1405,8 +1405,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -1421,7 +1421,7 @@
 							"urlencoded": [
 								{
 									"key": "redirectionUrl",
-									"value": "https://www.qa.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"value": "https://www.qa.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support common-transit-convention-guarantee-balance&response_type=code",
 									"type": "text"
 								},
 								{
@@ -1461,7 +1461,7 @@
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].value",
-									"value": "{{eori}}",
+									"value": "9999912345",
 									"type": "text"
 								},
 								{
@@ -1528,9 +1528,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1574,11 +1574,8 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
 									""
 								],
@@ -1592,8 +1589,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -1662,8 +1659,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -1769,8 +1766,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -1896,9 +1893,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1942,11 +1939,8 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
 									""
 								],
@@ -1960,8 +1954,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -2030,8 +2024,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -2133,22 +2127,16 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {}
-					},
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
+								"value": "application/x-www-form-urlencoded"
 							},
 							{
 								"key": "",
 								"value": "",
-								"type": "text",
 								"disabled": true
 							}
 						],
@@ -2157,7 +2145,7 @@
 							"urlencoded": [
 								{
 									"key": "redirectionUrl",
-									"value": "https://test-www.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"value": "https://test-www.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support common-transit-convention-guarantee-balance&response_type=code",
 									"type": "text"
 								},
 								{
@@ -2263,9 +2251,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -2308,10 +2296,8 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
 									""
 								],
@@ -2325,8 +2311,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -2390,8 +2376,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -2496,8 +2482,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -2598,9 +2584,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -2643,11 +2629,8 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
 									""
 								],
@@ -2661,8 +2644,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -2730,8 +2713,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -2842,9 +2825,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -2899,8 +2882,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -2915,7 +2898,7 @@
 							"urlencoded": [
 								{
 									"key": "redirectionUrl",
-									"value": "https://www.staging.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support&response_type=code",
+									"value": "https://www.staging.tax.service.gov.uk/oauth/authorize?client_id={{client_Id}}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=common-transit-convention-traders common-transit-convention-traders-test-support common-transit-convention-guarantee-balance&response_type=code",
 									"type": "text"
 								},
 								{
@@ -2945,12 +2928,12 @@
 								},
 								{
 									"key": "enrolment[0].name",
-									"value": "HMCE-NCTS-ORG",
+									"value": "HMRC-CTC-ORG",
 									"type": "text"
 								},
 								{
 									"key": "enrolment[0].taxIdentifier[0].name",
-									"value": "VatRegNoTURN",
+									"value": "EORINumber",
 									"type": "text"
 								},
 								{
@@ -3118,9 +3101,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3164,11 +3147,8 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
 									""
 								],
@@ -3182,8 +3162,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -3250,8 +3230,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -3343,9 +3323,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3399,8 +3379,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							},
 							{
@@ -3622,9 +3602,9 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"type": "text"
 							}
 						],
 						"body": {
@@ -3668,11 +3648,8 @@
 									"});",
 									"",
 									"var responseBody = cheerio.load(pm.response.text());",
-									"var string = (responseBody('title').text()).split(\"=\")[1]",
-									"",
-									"var code = string.replaceAll(/GOV.UK/g,\"\")",
-									"",
-									"",
+									"var str = (responseBody('title').text()).split(\"=\")[1]",
+									"var code = str.replaceAll(/GOV.UK/g,\"\")",
 									"pm.environment.set(\"code\",code);",
 									""
 								],
@@ -3686,8 +3663,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
@@ -3754,8 +3731,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
 								"type": "text"
 							}
 						],
